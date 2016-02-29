@@ -19,6 +19,25 @@ public class MyActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        if (savedInstanceState != null) {
+            TextView homeScore = (TextView) findViewById(R.id.txtHomeScore);
+            homeScore.setText(""+savedInstanceState.getInt("homeScore"));
+
+            TextView awayScore = (TextView) findViewById(R.id.txtAwayScore);
+            homeScore.setText(""+savedInstanceState.getInt("awayScore"));
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        TextView homeScore = (TextView) findViewById(R.id.txtHomeScore);
+        outState.putInt("homeScore", Integer.parseInt(homeScore.getText().toString()));
+
+        TextView awayScore = (TextView) findViewById(R.id.txtAwayScore);
+        outState.putInt("awayScore", Integer.parseInt(awayScore.getText().toString()));
+
+        super.onSaveInstanceState(outState);
     }
 
     public void goalButtonClicked(View view) {
@@ -40,7 +59,7 @@ public class MyActivity extends Activity {
 
         Intent intent = new Intent(this, GoalActivity.class);
         intent.putExtra("Team",event.getTeam());
-        startActivity(intent);
+        //startActivity(intent);
     }
 
     public void refreshEvents() {

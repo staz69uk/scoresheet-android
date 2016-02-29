@@ -20,4 +20,10 @@ public class GoalActivity extends Activity {
         TextView view = (TextView) findViewById(R.id.goalHeading);
         view.setText(team + " goal");
     }
+
+    public void onDone(View view) {
+        Intent intent = new Intent(this, MyActivity.class);
+
+        startActivity(intent);
+    }
 }

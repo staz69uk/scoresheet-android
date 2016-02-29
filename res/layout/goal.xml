@@ -10,4 +10,10 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Goal"
             android:id="@+id/goalHeading" android:layout_gravity="center_horizontal" android:layout_weight="0.07"/>
+    <Button
+            android:layout_width="97dp"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:id="@+id/btnDone" android:layout_gravity="center_horizontal" android:layout_weight="0.07"
+            android:onClick="onDone"/>
 </LinearLayout>
