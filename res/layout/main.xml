@@ -7,7 +7,7 @@
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:layout_weight="0.64" android:textAlignment="center">
+            android:layout_weight="0.16" android:textAlignment="center">
         <Button
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
@@ -62,18 +62,11 @@
                 android:id="@+id/textView3" android:layout_gravity="right|top" android:gravity="center"
                 android:textStyle="italic"/>
     </FrameLayout>
-    <ScrollView
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="184dp"
-            android:id="@+id/scrollView" android:layout_gravity="center_horizontal" android:fillViewport="false"
-            >
-    </ScrollView>
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/eventList"
-            android:height="150dp" android:enabled="false" android:editable="false" android:layout_weight="0.15"/>
+            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+            android:layout_weight="0.64" android:id="@+id/fragmentContainer">
+    </LinearLayout>
 </LinearLayout>
 
