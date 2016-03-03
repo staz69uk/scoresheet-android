@@ -10,14 +10,11 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Game History"
             android:id="@+id/textView5" android:textSize="30dp" android:layout_weight="0.03"/>
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/historyText1" android:layout_weight="0.03"/>
     <ListView
             android:layout_width="match_parent"
             android:layout_height="262dp"
-            android:id="@+id/historyList" android:choiceMode="none"/>
+            android:id="@+id/historyList" android:choiceMode="none" android:layout_weight="0.59"/>
+    <Button android:layout_width="95dp" android:layout_height="wrap_content" android:text="Clear"
+            android:id="@+id/btnClearHistory" android:nestedScrollingEnabled="false"
+            android:layout_gravity="center_horizontal|right" android:layout_weight="0.03"/>
 </LinearLayout>

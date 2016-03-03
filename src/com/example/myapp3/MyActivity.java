@@ -3,26 +3,24 @@ package com.example.myapp3;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
-public class MyActivity extends Activity {
-    private List<GameEvent> events = new LinkedList<>();
+public class MyActivity extends Activity implements ModelAware {
     private GoalFragment goalFragment = new GoalFragment();
     private HistoryFragment historyFragment = new HistoryFragment();
+    private ScoresheetModel model = new ScoresheetModel();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        historyFragment.setModel(model);
         showFragment(historyFragment);
 
         if (savedInstanceState != null) {
@@ -47,33 +45,68 @@ public class MyActivity extends Activity {
 
     public void goalButtonClicked(View view) {
         Button btn = (Button)view;
-        TextView scoreText;
+//        TextView scoreText;
+        String homeAway;
         if (btn.getText().equals("Home Goal")) {
-            scoreText = (TextView) findViewById(R.id.txtHomeScore);
+            //scoreText = (TextView) findViewById(R.id.txtHomeScore);
+            homeAway = "Home";
         } else {
-            scoreText = (TextView) findViewById(R.id.txtAwayScore);
+            //scoreText = (TextView) findViewById(R.id.txtAwayScore);
+            homeAway = "Away";
         }
-        int current = Integer.parseInt(scoreText.getText().toString());
-        scoreText.setText(Integer.toString(current+1));
+//        int current = Integer.parseInt(scoreText.getText().toString());
+//        scoreText.setText(Integer.toString(current+1));
 
-        // Replace the history fragment with the goal fragment
-        showFragment(goalFragment);
+        GoalFragment fragment = new GoalFragment();
+        fragment.setModel(model);
+        fragment.homeAway = homeAway;
+        showFragment(fragment);
     }
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction tx = getFragmentManager().beginTransaction();
         tx.replace(R.id.fragmentContainer, fragment);
-        tx.addToBackStack("X1");
+        tx.addToBackStack(null);
         tx.commit();
+    }
+
+    public void showHistory() {
+        HistoryFragment h = new HistoryFragment();
+        h.setModel(model);
+        showFragment(h);
     }
 
     public void goalDoneButtonClicked(View view) {
         GameEvent event = new GoalEvent();
         event.setGameTime(""+new Date());
-        events.add(event);
+        model.getEvents().add(event);
         HistoryFragment h = new HistoryFragment();
-        h.showEvents(events);
+        h.setModel(model);
+        h.onModelUpdated(null);
         showFragment(h);
     }
 
+    public void clearHistory() {
+        model.getEvents().clear();
+    }
+
+    @Override
+    public void setModel(ScoresheetModel model) {
+        this.model = model;
+    }
+
+    @Override
+    public void onModelUpdated(ModelUpdate update) {
+        updateScores();
+    }
+
+    private void updateScores() {
+        updateScore(R.id.txtHomeScore, model.getHomeGoals());
+        updateScore(R.id.txtAwayScore, model.getAwayGoals());
+    }
+
+    private void updateScore(int fieldId, int score) {
+        TextView field = (TextView) findViewById(fieldId);
+        field.setText(Integer.toString(score));
+    }
 }

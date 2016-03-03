@@ -1,5 +1,8 @@
 package com.example.myapp3;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by steve on 29/02/16.
  */
@@ -8,6 +11,7 @@ public class GameEvent {
     protected String team = "Home";
     protected String gameTime = "00:00";
     protected String eventType = "Goal";
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
 
     public String getPlayer() {
         return player;
@@ -44,5 +48,9 @@ public class GameEvent {
     @Override
     public String toString() {
         return String.format("%s %-8s %-8s", gameTime, eventType, team);
+    }
+
+    public void setTimeFrom(Date dateTime) {
+        setGameTime(timeFormat.format(dateTime));
     }
 }
