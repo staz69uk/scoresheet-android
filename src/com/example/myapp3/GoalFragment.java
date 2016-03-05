@@ -42,12 +42,10 @@ public class GoalFragment extends Fragment implements ModelAware {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameClock clock = new GameClock(model.getPeriod());
-
                 GoalEvent event = new GoalEvent();
-                event.setPeriod(Integer.parseInt(periodField.getText().toString()));
                 event.setTeam(homeAway);
-                event.setGameTime(clock.gameTimeFromClock(clockField.getText().toString()));
+                event.setPeriod(Integer.parseInt(periodField.getText().toString()));
+                event.setClockTime(clockField.getText().toString());
                 event.setPlayer(scorerField.getText().toString());
                 event.setAssist1(Integer.parseInt("0"+assist1Field.getText().toString()));
                 event.setAssist2(Integer.parseInt("0"+assist2Field.getText().toString()));

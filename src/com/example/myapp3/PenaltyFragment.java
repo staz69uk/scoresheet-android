@@ -66,13 +66,13 @@ public class PenaltyFragment extends Fragment implements ModelAware {
     }
 
     public void penaltyDone(View view) {
-        GameClock clock = new GameClock(model.getPeriod());
         PenaltyEvent event = new PenaltyEvent();
-        event.setGameTime(clock.gameTimeFromClock(clockField.getText().toString()));
+        event.setPeriod(model.getPeriod());
+        event.setClockTime(clockField.getText().toString());
         event.setTeam(team);
         event.setPlayer(playerField.getText().toString());
         event.setSubType(penaltyField.getText().toString());
-        event.setMinutes(minutesField.getText().toString());
+        event.setMinutes(Integer.parseInt(minutesField.getText().toString()));
         model.addEvent(event);
 
         imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);

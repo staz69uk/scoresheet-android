@@ -45,10 +45,9 @@ public class MyActivity extends Activity implements ModelAware {
     }
 
     public void periodButtonClicked(View view) {
-        GameClock clock = new GameClock(model.getPeriod());
         GameEvent event = new PeriodEndEvent();
         event.setPeriod(model.getPeriod());
-        event.setGameTime(clock.gameTimeFromClock("0000"));
+        event.setClockTime("0000");
         model.addEvent(event);
         updateScores();
         showHistory();
@@ -95,6 +94,20 @@ public class MyActivity extends Activity implements ModelAware {
         h.setModel(model);
         showFragment(h);
         h.onModelUpdated(null);
+    }
+
+    public void reportButtonClicked(View view) {
+        ReportFragment fragment = new ReportFragment();
+        fragment.setModel(model);
+        switch (view.getId()) {
+            case R.id.btnReport:
+                fragment.setTitle("Game Report");
+                break;
+            case R.id.btnExport:
+                fragment.setTitle("Game Export");
+                break;
+        }
+        showFragment(fragment);
     }
 
     public void clearHistory() {

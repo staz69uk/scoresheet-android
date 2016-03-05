@@ -1,8 +1,6 @@
 package com.example.myapp3;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by steve on 02/03/16.
@@ -83,4 +81,9 @@ public class ScoresheetModel {
         }
         return period;
     }
+
+    public String fullReport() {
+        return new GameReport(this).report();
+    }
+
 }
