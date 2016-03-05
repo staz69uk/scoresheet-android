@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ public class MyActivity extends Activity implements ModelAware {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        Log.i("Staz", "MyActivity.onCreate");
 
         historyFragment.setModel(model);
         showFragment(historyFragment);
@@ -43,20 +46,35 @@ public class MyActivity extends Activity implements ModelAware {
         super.onSaveInstanceState(outState);
     }
 
+    public void periodButtonClicked(View view) {
+        GameEvent event = new GameEvent();
+        switch (model.getPeriod()) {
+            case 1:
+                event.setGameTime("20:00");
+                break;
+            case 2:
+                event.setGameTime("40:00");
+                break;
+            case 3:
+                event.setGameTime("60:00");
+                break;
+        }
+        event.setEventType("Period End");
+        event.setTeam("");
+        model.getEvents().add(event);
+        model.incPeriod();
+        updateScores();
+        showHistory();
+    }
+
     public void goalButtonClicked(View view) {
         Button btn = (Button)view;
-//        TextView scoreText;
         String homeAway;
-        if (btn.getText().equals("Home Goal")) {
-            //scoreText = (TextView) findViewById(R.id.txtHomeScore);
-            homeAway = "Home";
+        if (btn.getId() == R.id.btnHomeGoal) {
+            homeAway = model.getHomeTeam().getName();
         } else {
-            //scoreText = (TextView) findViewById(R.id.txtAwayScore);
-            homeAway = "Away";
+            homeAway = model.getAwayTeam().getName();
         }
-//        int current = Integer.parseInt(scoreText.getText().toString());
-//        scoreText.setText(Integer.toString(current+1));
-
         GoalFragment fragment = new GoalFragment();
         fragment.setModel(model);
         fragment.homeAway = homeAway;
@@ -74,16 +92,7 @@ public class MyActivity extends Activity implements ModelAware {
         HistoryFragment h = new HistoryFragment();
         h.setModel(model);
         showFragment(h);
-    }
-
-    public void goalDoneButtonClicked(View view) {
-        GameEvent event = new GoalEvent();
-        event.setGameTime(""+new Date());
-        model.getEvents().add(event);
-        HistoryFragment h = new HistoryFragment();
-        h.setModel(model);
         h.onModelUpdated(null);
-        showFragment(h);
     }
 
     public void clearHistory() {
@@ -103,6 +112,7 @@ public class MyActivity extends Activity implements ModelAware {
     private void updateScores() {
         updateScore(R.id.txtHomeScore, model.getHomeGoals());
         updateScore(R.id.txtAwayScore, model.getAwayGoals());
+        updateScore(R.id.txtPeriod, model.getPeriod());
     }
 
     private void updateScore(int fieldId, int score) {

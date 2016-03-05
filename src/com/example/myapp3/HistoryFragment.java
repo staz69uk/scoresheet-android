@@ -2,6 +2,7 @@ package com.example.myapp3;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +38,14 @@ public class HistoryFragment extends Fragment implements ModelAware {
             }
         });
 
+        Log.i("Staz","history createView");
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         refreshList();
     }
 

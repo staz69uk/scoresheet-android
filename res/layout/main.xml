@@ -7,18 +7,7 @@
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:layout_weight="0.16" android:textAlignment="center">
-        <Button
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:text="Home Goal"
-                android:id="@+id/btnHomeGoal" android:layout_gravity="left|bottom" android:gravity="center"
-                android:onClick="goalButtonClicked" android:nestedScrollingEnabled="false"/>
-        <Button
-                android:layout_width="133dp"
-                android:layout_height="wrap_content"
-                android:text="Away Goal"
-                android:id="@+id/btnAwayGoal" android:layout_gravity="right|bottom" android:onClick="goalButtonClicked"/>
+            android:layout_weight="0.14" android:textAlignment="center">
         <TextView
                 android:layout_width="93dp"
                 android:layout_height="wrap_content"
@@ -26,7 +15,7 @@
                 android:text="0"
                 android:id="@+id/txtAwayScore" android:layout_gravity="right|center_vertical" android:textColor="#ff132a"
                 android:textAlignment="center" android:textStyle="bold" android:numeric="integer"
-                android:singleLine="true" android:gravity="center"/>
+                android:singleLine="true" android:gravity="center" android:textSize="30dp"/>
         <TextView
                 android:layout_width="106dp"
                 android:layout_height="42dp"
@@ -34,13 +23,14 @@
                 android:text="0"
                 android:id="@+id/txtHomeScore" android:layout_gravity="center_vertical" android:textAlignment="center"
                 android:typeface="sans" android:textColor="#ff132a" android:textStyle="bold"
-                android:gravity="center"/>
+                android:gravity="center" android:textSize="30dp"/>
         <TextView
                 android:layout_width="48dp"
                 android:layout_height="42dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="1"
-                android:id="@+id/txtPeriod" android:layout_gravity="center" android:gravity="center"/>
+                android:id="@+id/txtPeriod" android:layout_gravity="center" android:gravity="center"
+                android:textSize="24dp"/>
         <TextView
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"

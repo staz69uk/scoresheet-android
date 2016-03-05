@@ -7,6 +7,7 @@ import java.util.Date;
  * Created by steve on 29/02/16.
  */
 public class GameEvent {
+    protected int period = 0;
     protected String player = "0";
     protected String team = "Home";
     protected String gameTime = "00:00";
@@ -52,5 +53,13 @@ public class GameEvent {
 
     public void setTimeFrom(Date dateTime) {
         setGameTime(timeFormat.format(dateTime));
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
+    }
+
+    public int getPeriod() {
+        return period;
     }
 }
