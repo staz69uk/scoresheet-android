@@ -9,11 +9,14 @@ import java.util.List;
  */
 public class ScoresheetModel {
     private List<GameEvent> events = new LinkedList<>();
-    private int period = 1;
     private Team homeTeam = new Team("Home");
     private Team awayTeam = new Team("Away");
     private Date gameDateTime = new Date();
     private String gameLocation = "";
+
+    public void addEvent(GameEvent event) {
+        events.add(event);
+    }
 
     public Date getGameDateTime() {
         return gameDateTime;
@@ -72,14 +75,12 @@ public class ScoresheetModel {
     }
 
     public int getPeriod() {
+        int period = 1;
+        for (GameEvent event : events) {
+            if (event instanceof PeriodEndEvent) {
+                period++;
+            }
+        }
         return period;
-    }
-
-    public void setPeriod(int period) {
-        this.period = period;
-    }
-
-    public void incPeriod() {
-        period += 1;
     }
 }

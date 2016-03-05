@@ -47,22 +47,11 @@ public class MyActivity extends Activity implements ModelAware {
     }
 
     public void periodButtonClicked(View view) {
-        GameEvent event = new GameEvent();
-        switch (model.getPeriod()) {
-            case 1:
-                event.setGameTime("20:00");
-                break;
-            case 2:
-                event.setGameTime("40:00");
-                break;
-            case 3:
-                event.setGameTime("60:00");
-                break;
-        }
-        event.setEventType("Period End");
-        event.setTeam("");
-        model.getEvents().add(event);
-        model.incPeriod();
+        GameClock clock = new GameClock(model.getPeriod());
+        GameEvent event = new PeriodEndEvent();
+        event.setPeriod(model.getPeriod());
+        event.setGameTime(clock.gameTimeFromClock("0000"));
+        model.addEvent(event);
         updateScores();
         showHistory();
     }
