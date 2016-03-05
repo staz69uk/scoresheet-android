@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by steve on 05/03/16.
@@ -58,6 +59,7 @@ public class ReportFragment extends Fragment implements ModelAware {
         ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData myClip = ClipData.newPlainText("text", report.getText());
         clipboard.setPrimaryClip(myClip);
+        Toast.makeText(getActivity().getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
     }
 
     @Override
