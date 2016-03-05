@@ -6,8 +6,8 @@
               android:weightSum="1" android:textAlignment="center">
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:layout_weight="0.14" android:textAlignment="center">
+            android:layout_height="98dp" android:layout_gravity="center_horizontal"
+            android:textAlignment="center">
         <TextView
                 android:layout_width="93dp"
                 android:layout_height="wrap_content"
@@ -55,8 +55,8 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:layout_weight="0.64" android:id="@+id/fragmentContainer">
+            android:layout_height="fill_parent" android:layout_gravity="center_horizontal"
+            android:id="@+id/fragmentContainer">
     </LinearLayout>
 </LinearLayout>
 

@@ -1,5 +1,7 @@
 package com.example.myapp3;
 
+import android.text.Editable;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,6 +14,7 @@ public class GameEvent {
     protected String team = "Home";
     protected String gameTime = "00:00";
     protected String eventType = "Goal";
+    protected String subType = "";
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
 
     public String getPlayer() {
@@ -61,5 +64,13 @@ public class GameEvent {
 
     public int getPeriod() {
         return period;
+    }
+
+    public void setSubType(String subType) {
+        this.subType = subType;
+    }
+
+    public String getSubType() {
+        return subType;
     }
 }

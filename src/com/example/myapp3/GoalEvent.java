@@ -7,7 +7,6 @@ public class GoalEvent extends GameEvent {
 
     private int assist1 = 0;
     private int assist2 = 0;
-    private String goalType = "Even";
 
     public int getAssist1() {
         return assist1;
@@ -33,6 +32,6 @@ public class GoalEvent extends GameEvent {
         } else if (assist1 > 0) {
             assists = String.format(" from %d", assist1);
         }
-        return String.format("%s %s %s (%s) scored by %s %s", gameTime, team, eventType, goalType, getPlayer(), assists);
+        return String.format("%s %s %s (%s) scored by %s %s", gameTime, team, eventType, subType, getPlayer(), assists);
     }
 }

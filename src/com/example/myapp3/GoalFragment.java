@@ -34,6 +34,7 @@ public class GoalFragment extends Fragment implements ModelAware {
         EditText scorerField = (EditText)view.findViewById(R.id.fldScoredBy);
         EditText assist1Field = (EditText)view.findViewById(R.id.fldAssist1);
         EditText assist2Field = (EditText)view.findViewById(R.id.fldAssist2);
+        EditText goalTypeField = (EditText)view.findViewById(R.id.fldGoalType);
 
         imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -50,6 +51,7 @@ public class GoalFragment extends Fragment implements ModelAware {
                 event.setPlayer(scorerField.getText().toString());
                 event.setAssist1(Integer.parseInt("0"+assist1Field.getText().toString()));
                 event.setAssist2(Integer.parseInt("0"+assist2Field.getText().toString()));
+                event.setSubType(goalTypeField.getText().toString());
 
                 model.getEvents().add(event);
 
