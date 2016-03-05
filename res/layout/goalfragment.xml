@@ -2,19 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:weightSum="1">
+              android:layout_height="fill_parent" android:weightSum="1" android:padding="2dp">
 
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Goal Scored"
-            android:id="@+id/txtGoalScoredTitle" android:textSize="30dp" android:editable="false"/>
+            android:id="@+id/txtGoalScoredTitle" android:textSize="30dp" android:editable="false"
+            android:layout_weight="0.03" android:background="#667e7e7e" android:padding="3dp"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-    >
+            android:layout_height="32dp"
+            android:layout_weight="0.06">
         <TextView android:layout_width="200dp" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Period:           "
                   android:id="@+id/txtPeriod" android:textSize="30dp" android:textColor="#a7a7a7"
@@ -27,8 +28,8 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="58dp" android:layout_gravity="center_horizontal"
-    >
+            android:layout_height="32dp" android:layout_gravity="center_horizontal"
+            android:layout_weight="0.06">
         <TextView
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
@@ -53,8 +54,8 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:layout_weight="0.14">
+            android:layout_height="32dp" android:layout_gravity="center_horizontal"
+            android:layout_weight="0.06">
         <TextView
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
@@ -68,6 +69,25 @@
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/fldScoredBy" android:textSize="30dp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="32dp" android:layout_gravity="center_horizontal"
+            android:layout_weight="0.06">
+        <TextView android:layout_width="200dp" android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceLarge" android:text="Assists:"
+                  android:id="@+id/textView6" android:textSize="30dp" android:textColor="#a7a7a7"/>
+        <EditText android:layout_width="129dp" android:layout_height="wrap_content" android:inputType="number"
+                  android:ems="10" android:id="@+id/fldAssist1" android:textSize="30dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" and "
+                android:id="@+id/textView8" android:textSize="30dp"/>
+        <EditText android:layout_width="106dp" android:layout_height="wrap_content" android:inputType="number"
+                  android:ems="10" android:id="@+id/fldAssist2" android:textSize="30dp"/>
     </LinearLayout>
     <Button
             android:layout_width="wrap_content"
