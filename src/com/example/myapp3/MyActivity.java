@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Date;
-
 public class MyActivity extends Activity implements ModelAware {
     private GoalFragment goalFragment = new GoalFragment();
     private HistoryFragment historyFragment = new HistoryFragment();
@@ -67,6 +65,21 @@ public class MyActivity extends Activity implements ModelAware {
         GoalFragment fragment = new GoalFragment();
         fragment.setModel(model);
         fragment.homeAway = homeAway;
+        showFragment(fragment);
+    }
+
+    public void penaltyButtonClicked(View view) {
+        Button btn = (Button)view;
+        String team;
+        if (btn.getId() == R.id.btnHomePen) {
+            team = model.getHomeTeam().getName();
+        } else {
+            team = model.getAwayTeam().getName();
+        }
+
+        PenaltyFragment fragment = new PenaltyFragment();
+        fragment.setModel(model);
+        fragment.setTeam(team);
         showFragment(fragment);
     }
 

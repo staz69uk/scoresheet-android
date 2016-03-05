@@ -7,7 +7,7 @@
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:layout_weight="0.19">
+            android:layout_weight="0.12">
         <Button android:layout_width="180dp" android:layout_height="40dp" android:text="Home Goal"
                 android:id="@+id/btnHomeGoal" android:layout_gravity="left|top" android:gravity="center"
                 android:onClick="goalButtonClicked" android:nestedScrollingEnabled="false" android:layout_row="4"
@@ -19,15 +19,17 @@
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:text="Home Pen"
-                android:id="@+id/btnHomePen" android:layout_gravity="left|bottom"/>
-        <Button android:layout_width="90dp" android:layout_height="40dp" android:text="Next"
-                android:id="@+id/btnNextPeriod" android:layout_gravity="center"
-                android:onClick="periodButtonClicked"/>
+                android:id="@+id/btnHomePen" android:layout_gravity="left|bottom"
+                android:onClick="penaltyButtonClicked"/>
         <Button
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:text="Away Pen"
-                android:id="@+id/btnAwayPen" android:layout_gravity="right|bottom"/>
+                android:id="@+id/btnAwayPen" android:layout_gravity="right|bottom"
+                android:onClick="penaltyButtonClicked"/>
+        <Button android:layout_width="90dp" android:layout_height="40dp" android:text="Next"
+                android:id="@+id/btnNextPeriod" android:layout_gravity="center_horizontal|top"
+                android:onClick="periodButtonClicked"/>
     </FrameLayout>
     <TextView
             android:layout_width="fill_parent"
