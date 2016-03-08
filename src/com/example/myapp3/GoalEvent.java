@@ -8,6 +8,22 @@ public class GoalEvent extends GameEvent {
     private int assist1 = 0;
     private int assist2 = 0;
 
+    public GoalEvent() {
+        super();
+        super.setEventType("Goal");
+    }
+
+    public GoalEvent(int period, String time, String team, String goalType, int scorer, int assist1, int assist2) {
+        this();
+        setPeriod(period);
+        setClockTime(time);
+        setTeam(team);
+        setSubType(goalType);
+        setPlayer(""+scorer);
+        setAssist1(assist1);
+        setAssist2(assist2);
+    }
+
     public int getAssist1() {
         return assist1;
     }

@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by steve on 05/03/16.
@@ -68,12 +69,16 @@ public class PenaltyFragment extends Fragment implements ModelAware {
     public void penaltyDone(View view) {
         PenaltyEvent event = new PenaltyEvent();
         event.setPeriod(model.getPeriod());
-        event.setClockTime(clockField.getText().toString());
-        event.setTeam(team);
-        event.setPlayer(playerField.getText().toString());
-        event.setSubType(penaltyField.getText().toString());
-        event.setMinutes(Integer.parseInt(minutesField.getText().toString()));
-        model.addEvent(event);
+        try {
+            event.setClockTime(clockField.getText().toString());
+            event.setTeam(team);
+            event.setPlayer(playerField.getText().toString());
+            event.setSubType(penaltyField.getText().toString());
+            event.setMinutes(Integer.parseInt(minutesField.getText().toString()));
+            model.addEvent(event);
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(getActivity().getApplicationContext(), "Error, not created", Toast.LENGTH_LONG);
+        }
 
         imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
         ((MyActivity)getActivity()).onModelUpdated(null);

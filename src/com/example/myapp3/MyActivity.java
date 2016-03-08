@@ -4,12 +4,21 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+import org.json.JSONException;
+
+import java.io.*;
 
 public class MyActivity extends Activity implements ModelAware {
+    public static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
     private GoalFragment goalFragment = new GoalFragment();
     private HistoryFragment historyFragment = new HistoryFragment();
     private ScoresheetModel model = new ScoresheetModel();
@@ -84,7 +93,7 @@ public class MyActivity extends Activity implements ModelAware {
 
     private void showFragment(Fragment fragment) {
         FragmentTransaction tx = getFragmentManager().beginTransaction();
-        tx.replace(R.id.fragmentContainer, fragment);
+        tx.replace(R.id.fragmentContainer, fragment, MAIN_FRAGMENT);
         tx.addToBackStack(null);
         tx.commit();
     }
@@ -97,16 +106,13 @@ public class MyActivity extends Activity implements ModelAware {
     }
 
     public void reportButtonClicked(View view) {
+        showReport(ReportFragment.GAME_REPORT);
+    }
+
+    private void showReport(String title) {
         ReportFragment fragment = new ReportFragment();
         fragment.setModel(model);
-        switch (view.getId()) {
-            case R.id.btnReport:
-                fragment.setTitle("Game Report");
-                break;
-            case R.id.btnExport:
-                fragment.setTitle("Game Export");
-                break;
-        }
+        fragment.setTitle(title);
         showFragment(fragment);
     }
 
@@ -133,5 +139,130 @@ public class MyActivity extends Activity implements ModelAware {
     private void updateScore(int fieldId, int score) {
         TextView field = (TextView) findViewById(fieldId);
         field.setText(Integer.toString(score));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.optionsmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuClear:
+                clearHistory();
+                refreshModel();
+                return true;
+            case R.id.menuExport:
+                exportGameJson();
+                return true;
+            case R.id.menuImport:
+                importGameJson();
+                return true;
+            case R.id.menuRefresh:
+                refreshModel();
+                return true;
+            case R.id.menuTestData:
+                addTestData();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void addTestData() {
+        model.addEvent(new GoalEvent(1,"1950","Home","E",41,13,2));
+        model.addEvent(new GoalEvent(1,"1830","Away","E",2,1,0));
+        model.addEvent(new PenaltyEvent(1, "1515", "Away", "Hook", "2", 2));
+        model.addEvent(new GoalEvent(1,"0824","Home","SH",12,93,41));
+        model.addEvent(new PeriodEndEvent(1));
+        model.addEvent(new GoalEvent(2,"1813","Home","PP",24,41,0));
+        refreshModel();
+    }
+
+    private void importGameJson() {
+        String json = null;
+        String result = "Unknown";
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File file = new File(dir, "gamedata.json");
+        if (file.exists()) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                    sb.append("\n");
+                }
+                reader.close();
+                json = sb.toString();
+                try {
+                    Json.fromJson(model,json);
+                    result = "Loaded gamedata.json";
+                } catch (JSONException e) {
+                    result = "Error parsing gamedata.json : " + e.getMessage();
+                }
+                refreshModel();
+            } catch (IOException e) {
+                result = "Error reading gamedata.json : " + e.getMessage();
+            }
+        } else {
+            result = "No exported data found";
+        }
+        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+    }
+
+    private void exportGameJson() {
+        String json = null;
+        try {
+            json = Json.toJson(model);
+        } catch (JSONException e) {
+            json = e.getMessage();
+        }
+
+        String baseName = "gamedata";
+        String fileName = baseName + ".json";
+        String result = "Unknown";
+        try {
+            String state = Environment.getExternalStorageState();
+            if (!Environment.MEDIA_MOUNTED.equals(state)) {
+                throw new IOException("External storage not mounted for writing");
+            }
+            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+            dir.mkdirs();
+            File file = new File(dir, fileName);
+            if (file.exists()) {
+                copyFile(file, new File(dir,baseName+".bkp"));
+            }
+            FileWriter writer = new FileWriter(file);
+            writer.write(json);
+            writer.close();
+            result = "Saved " + fileName;
+        } catch (IOException e) {
+            result = "Error saving file " + fileName + " : " + e.getMessage();
+        }
+        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+    }
+
+    public static void copyFile(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst);
+
+        // Transfer bytes from in to out
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
+    }
+
+    private void refreshModel() {
+        updateScores();
+        ModelAware visibleFragment = (ModelAware)getFragmentManager().findFragmentByTag(MAIN_FRAGMENT);
+        visibleFragment.onModelUpdated(null);
     }
 }

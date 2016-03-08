@@ -45,14 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
             android:layout_weight="0.12">
-        <Button android:layout_width="180dp" android:layout_height="wrap_content" android:text="Clear"
-                android:id="@+id/btnClearHistory" android:nestedScrollingEnabled="false"
-                android:layout_gravity="right|top" android:layout_weight="0.03"/>
         <Button android:layout_width="180dp" android:layout_height="wrap_content" android:text="Game Report"
                 android:id="@+id/btnReport" android:nestedScrollingEnabled="false"
-                android:layout_gravity="left|top" android:layout_weight="0.03" android:onClick="reportButtonClicked"/>
-        <Button android:layout_width="180dp" android:layout_height="wrap_content" android:text="Export"
-                android:id="@+id/btnExport" android:nestedScrollingEnabled="false" android:layout_gravity="center_horizontal|top"
-                android:layout_weight="0.03" android:onClick="reportButtonClicked"/>
+                android:layout_gravity="center_horizontal|top" android:layout_weight="0.03" android:onClick="reportButtonClicked"/>
     </FrameLayout>
 </LinearLayout>

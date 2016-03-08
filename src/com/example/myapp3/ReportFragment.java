@@ -10,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by steve on 05/03/16.
@@ -22,6 +25,8 @@ public class ReportFragment extends Fragment implements ModelAware {
     private View view;
     private TextView report;
     private String title = "Report";
+    public static final String GAME_REPORT = "Game Report";
+    public static final String GAME_EXPORT = "Game Export";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,16 +46,42 @@ public class ReportFragment extends Fragment implements ModelAware {
             }
         });
 
+        Button saveButton = (Button)view.findViewById(R.id.btnReportSave);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doSave();
+            }
+        });
+
         return view;
+    }
+
+    private void doSave() {
+        String result = "Unknown";
+        File dir = getActivity().getFilesDir();
+        try {
+            FileOutputStream output = context().openFileOutput("gamedata.json",Context.MODE_PRIVATE);
+            output.write(report.getText().toString().getBytes());
+            output.close();
+            result = "Saved gamedata.json";
+        } catch (IOException e) {
+            result = "Error saving file";
+        }
+        Toast.makeText(context(), result, Toast.LENGTH_LONG).show();
+    }
+
+    private Context context() {
+        return getActivity().getApplicationContext();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (title.equals("Game Report")) {
+        if (title.equals(GAME_REPORT)) {
             report.setText(model.fullReport());
-        } else if (title.equals("Game Export")) {
-            report.setText(Json.toJson(model));
+        } else if (title.equals(GAME_EXPORT)) {
+            report.setText(Json.toJsonOld(model));
         }
 
     }
@@ -59,7 +90,7 @@ public class ReportFragment extends Fragment implements ModelAware {
         ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData myClip = ClipData.newPlainText("text", report.getText());
         clipboard.setPrimaryClip(myClip);
-        Toast.makeText(getActivity().getApplicationContext(), "Copied to clipboard", Toast.LENGTH_LONG).show();
+        Toast.makeText(context(), "Copied to clipboard", Toast.LENGTH_LONG).show();
     }
 
     @Override

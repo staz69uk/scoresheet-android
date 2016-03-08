@@ -12,10 +12,15 @@
             android:layout_width="match_parent"
             android:layout_height="66dp" android:layout_gravity="center_horizontal">
         <Button
-                android:layout_width="wrap_content"
+                android:layout_width="102dp"
                 android:layout_height="wrap_content"
                 android:text="Copy All"
                 android:id="@+id/btnCopyAll" android:layout_gravity="right|top"/>
+        <Button
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:id="@+id/btnReportSave" android:layout_gravity="left|top"/>
     </FrameLayout>
     <TextView
             android:layout_width="fill_parent"

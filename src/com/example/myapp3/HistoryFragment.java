@@ -28,18 +28,6 @@ public class HistoryFragment extends Fragment implements ModelAware {
         adapter = new ArrayAdapter<String>(getActivity(), basiclistentry, new LinkedList<String>());
         eventList.setAdapter(adapter);
 
-        Button clearButton = (Button)view.findViewById(R.id.btnClearHistory);
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter.clear();
-                adapter.notifyDataSetChanged();
-                ((MyActivity)getActivity()).clearHistory();
-            }
-        });
-
-        Log.i("Staz","history createView");
-
         return view;
     }
 

@@ -11,6 +11,12 @@ public class PeriodEndEvent extends GameEvent {
         setPlayer("");
     }
 
+    public PeriodEndEvent(int period) {
+        this();
+        super.period = period;
+        super.setClockTime("0000");
+    }
+
     @Override
     public String toString() {
         return String.format("%s Period %d ended", gameTime, period);
