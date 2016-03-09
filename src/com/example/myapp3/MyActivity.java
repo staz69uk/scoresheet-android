@@ -18,6 +18,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MyActivity extends Activity implements ModelAware {
     public static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
@@ -265,7 +267,9 @@ public class MyActivity extends Activity implements ModelAware {
         }
 
         String baseName = "gamedata";
-        String fileName = baseName + ".json";
+        String dateStr = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
+        String mainFileName = String.format("%s-%s.json", baseName, dateStr);
+        String lastFileName = baseName + ".json";
         String result = "Unknown";
         try {
             String state = Environment.getExternalStorageState();
@@ -273,17 +277,16 @@ public class MyActivity extends Activity implements ModelAware {
                 throw new IOException("External storage not mounted for writing");
             }
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            dir.mkdirs();
-            File file = new File(dir, fileName);
-            if (file.exists()) {
-                copyFile(file, new File(dir,baseName+".bkp"));
-            }
+            File scoresDir = new File(dir,"Scoresheets");
+            scoresDir.mkdirs();
+            File file = new File(scoresDir, mainFileName);
             FileWriter writer = new FileWriter(file);
             writer.write(json);
             writer.close();
-            result = "Saved " + fileName;
+            copyFile(file, new File(scoresDir,lastFileName));
+            result = "Saved " + lastFileName;
         } catch (IOException e) {
-            result = "Error saving file " + fileName + " : " + e.getMessage();
+            result = "Error saving file " + lastFileName + " : " + e.getMessage();
         }
         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
     }
