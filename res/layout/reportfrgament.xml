@@ -20,7 +20,7 @@
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
                 android:text="Save"
-                android:id="@+id/btnReportSave" android:layout_gravity="left|top"/>
+                android:id="@+id/btnReportSave" android:layout_gravity="left|top" android:visibility="invisible"/>
     </FrameLayout>
     <TextView
             android:layout_width="fill_parent"
