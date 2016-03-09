@@ -14,6 +14,7 @@ public class ScoresheetModel {
 
     public void addEvent(GameEvent event) {
         events.add(event);
+        sortEvents();
     }
 
     public Date getGameDateTime() {
@@ -66,6 +67,15 @@ public class ScoresheetModel {
             }
         }
         return goals;
+    }
+
+    public void sortEvents() {
+        Collections.sort(events, new Comparator<GameEvent>() {
+            @Override
+            public int compare(GameEvent event1, GameEvent event2) {
+                return event1.getGameTime().compareTo(event2.getGameTime());
+            }
+        });
     }
 
     public int getAwayGoals() {

@@ -1,8 +1,10 @@
 package com.example.myapp3;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -117,7 +119,13 @@ public class MyActivity extends Activity implements ModelAware {
     }
 
     public void clearHistory() {
-        model.getEvents().clear();
+        yesNoDialog("Clear all events?", new Runnable() {
+                    @Override
+                    public void run() {
+                        model.getEvents().clear();
+                        refreshModel();
+                    }
+                });
     }
 
     @Override
@@ -153,7 +161,6 @@ public class MyActivity extends Activity implements ModelAware {
         switch (item.getItemId()) {
             case R.id.menuClear:
                 clearHistory();
-                refreshModel();
                 return true;
             case R.id.menuExport:
                 exportGameJson();
@@ -167,22 +174,57 @@ public class MyActivity extends Activity implements ModelAware {
             case R.id.menuTestData:
                 addTestData();
                 return true;
+            case R.id.menuAbout:
+                showAbout();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    private void showAbout() {
+        // Inflate the about message contents
+        View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
+
+        // When linking text, force to always use default color. This works
+        // around a pressed color state bug.
+        TextView textView = (TextView) messageView.findViewById(R.id.txtAbout);
+        int defaultColor = textView.getTextColors().getDefaultColor();
+        textView.setTextColor(defaultColor);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.mipmap.ic_launcher_ih);
+        builder.setTitle(R.string.app_name);
+        builder.setView(messageView);
+        builder.create();
+        builder.show();
+    }
+
     private void addTestData() {
-        model.addEvent(new GoalEvent(1,"1950","Home","E",41,13,2));
-        model.addEvent(new GoalEvent(1,"1830","Away","E",2,1,0));
-        model.addEvent(new PenaltyEvent(1, "1515", "Away", "Hook", "2", 2));
-        model.addEvent(new GoalEvent(1,"0824","Home","SH",12,93,41));
-        model.addEvent(new PeriodEndEvent(1));
-        model.addEvent(new GoalEvent(2,"1813","Home","PP",24,41,0));
-        refreshModel();
+        yesNoDialog("Add test events?", new Runnable() {
+            @Override
+            public void run() {
+                model.addEvent(new GoalEvent(1,"1950","Home","E",41,13,2));
+                model.addEvent(new GoalEvent(1,"1830","Away","E",2,1,0));
+                model.addEvent(new PenaltyEvent(1, "1515", "Away", "Hook", "2", 2));
+                model.addEvent(new GoalEvent(1,"0824","Home","SH",12,93,41));
+                model.addEvent(new PeriodEndEvent(1));
+                model.addEvent(new GoalEvent(2,"1813","Home","PP",24,41,0));
+                refreshModel();
+            }
+        });
     }
 
     private void importGameJson() {
+        yesNoDialog("Import game data from file?", new Runnable() {
+            @Override
+            public void run() {
+                doImportGameJson();
+            }
+        });
+    }
+
+    private void doImportGameJson() {
         String json = null;
         String result = "Unknown";
         File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
@@ -260,9 +302,37 @@ public class MyActivity extends Activity implements ModelAware {
         out.close();
     }
 
-    private void refreshModel() {
+    public void refreshModel() {
         updateScores();
+        model.sortEvents();
         ModelAware visibleFragment = (ModelAware)getFragmentManager().findFragmentByTag(MAIN_FRAGMENT);
         visibleFragment.onModelUpdated(null);
+    }
+
+    public void yesNoDialog(String prompt, Runnable action) {
+        questionDialog(prompt, "Yes", "No", action);
+    }
+
+    public void questionDialog(String prompt, String yesButton, String noButton, final Runnable action) {
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int button) {
+                switch (button) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        action.run();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MyActivity.this);
+        builder
+                .setMessage(prompt)
+                .setPositiveButton(yesButton,listener)
+                .setNegativeButton(noButton,listener)
+                .show();
+
     }
 }

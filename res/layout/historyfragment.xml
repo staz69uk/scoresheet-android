@@ -36,7 +36,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Game History"
-            android:id="@+id/textView5" android:textSize="20dp" android:layout_weight="0.03"/>
+            android:id="@+id/textView5" android:textSize="20dp" android:layout_weight="0.06"
+            android:background="#667e7e7e"/>
     <ListView
             android:layout_width="match_parent"
             android:layout_height="262dp"
@@ -44,7 +45,7 @@
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:layout_weight="0.12">
+            android:layout_weight="0.04">
         <Button android:layout_width="180dp" android:layout_height="wrap_content" android:text="Game Report"
                 android:id="@+id/btnReport" android:nestedScrollingEnabled="false"
                 android:layout_gravity="center_horizontal|top" android:layout_weight="0.03" android:onClick="reportButtonClicked"/>

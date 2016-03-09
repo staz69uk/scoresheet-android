@@ -13,62 +13,62 @@
                   android:layout_gravity="center_horizontal">
         <TextView android:layout_width="200dp" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Period:           "
-                  android:id="@+id/textView10" android:textSize="30dp" android:textColor="#a7a7a7"/>
-        <EditText android:layout_width="240dp" android:layout_height="wrap_content" android:inputType="number"
-                  android:ems="10" android:id="@+id/fldPenaltyPeriod" android:textSize="30dp" android:textIsSelectable="false"
-                  android:selectAllOnFocus="false" android:textColor="#ff0700" android:focusable="true"
+                  android:id="@+id/textView10" android:textColor="#a7a7a7"/>
+        <EditText android:layout_width="109dp" android:layout_height="wrap_content" android:inputType="number"
+                  android:ems="10" android:id="@+id/fldPenaltyPeriod" android:textIsSelectable="false"
+                  android:selectAllOnFocus="false" android:focusable="true"
                   android:numeric="integer"/>
     </LinearLayout>
     <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"
     >
         <TextView android:layout_width="200dp" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Game clock:"
-                  android:id="@+id/textView11" android:textSize="30dp" android:textColor="#a7a7a7"/>
-        <EditText android:layout_width="240dp" android:layout_height="66dp" android:inputType="number"
-                  android:ems="10" android:id="@+id/fldPenaltyClock" android:textSize="30dp" android:textIsSelectable="false"
-                  android:selectAllOnFocus="false" android:textColor="#ff0700" android:focusable="true"
+                  android:id="@+id/textView11" android:textColor="#a7a7a7"/>
+        <EditText android:layout_width="240dp" android:layout_height="wrap_content" android:inputType="number"
+                  android:ems="10" android:id="@+id/fldPenaltyClock" android:textIsSelectable="false"
+                  android:selectAllOnFocus="false" android:focusable="true"
                   android:numeric="integer"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:layout_weight="0.53">
+    >
         <TextView android:layout_width="200dp" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Minutes:"
-                  android:id="@+id/textView12" android:textSize="30dp" android:textColor="#a7a7a7"/>
-        <EditText android:layout_width="242dp" android:layout_height="wrap_content" android:inputType="number"
-                  android:ems="10" android:id="@+id/fldPenaltyMins" android:textSize="30dp"
-                  android:textIsSelectable="false" android:selectAllOnFocus="false" android:textColor="#ff0700"
+                  android:id="@+id/textView12" android:textColor="#a7a7a7"/>
+        <EditText android:layout_width="105dp" android:layout_height="wrap_content" android:inputType="number"
+                  android:ems="10" android:id="@+id/fldPenaltyMins"
+                  android:textIsSelectable="false" android:selectAllOnFocus="false"
                   android:focusable="true" android:numeric="integer" android:text="2"/>
     </LinearLayout>
     <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp"
     >
         <TextView android:layout_width="200dp" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Penalty:"
-                  android:id="@+id/textView11" android:textSize="30dp" android:textColor="#a7a7a7"/>
+                  android:id="@+id/textView11" android:textColor="#a7a7a7"/>
         <EditText android:layout_width="212dp" android:layout_height="wrap_content" android:inputType="text"
-                  android:ems="10" android:id="@+id/fldPenaltyCode" android:textSize="30dp"
+                  android:ems="10" android:id="@+id/fldPenaltyCode"
                   android:textIsSelectable="false" android:selectAllOnFocus="false" android:focusable="true"
         />
     </LinearLayout>
     <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp"
-                  android:layout_weight="0.00">
+    >
         <TextView android:layout_width="200dp" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Player:"
-                  android:id="@+id/txtPlayer" android:textSize="30dp" android:textColor="#a7a7a7"/>
-        <EditText android:layout_width="240dp" android:layout_height="wrap_content" android:inputType="number"
-                  android:ems="10" android:id="@+id/fldPenaltyPlayer" android:textSize="30dp"/>
+                  android:id="@+id/txtPlayer" android:textColor="#a7a7a7"/>
+        <EditText android:layout_width="107dp" android:layout_height="wrap_content" android:inputType="number"
+                  android:ems="10" android:id="@+id/fldPenaltyPlayer"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:layout_weight="0.04" android:weightSum="1">
+            android:weightSum="1">
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Done"
-                android:id="@+id/btnPenaltyDone" android:layout_weight="0.09" android:textSize="30dp"/>
+                android:id="@+id/btnPenaltyDone" android:layout_weight="0.09"/>
     </LinearLayout>
 </LinearLayout>

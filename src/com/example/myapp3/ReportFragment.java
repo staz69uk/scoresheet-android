@@ -83,7 +83,6 @@ public class ReportFragment extends Fragment implements ModelAware {
         } else if (title.equals(GAME_EXPORT)) {
             report.setText(Json.toJsonOld(model));
         }
-
     }
 
     public void doCopyAll() {

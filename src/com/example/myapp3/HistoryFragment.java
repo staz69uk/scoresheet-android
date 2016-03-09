@@ -28,6 +28,22 @@ public class HistoryFragment extends Fragment implements ModelAware {
         adapter = new ArrayAdapter<String>(getActivity(), basiclistentry, new LinkedList<String>());
         eventList.setAdapter(adapter);
 
+        eventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String item = (String) adapterView.getItemAtPosition(position);
+                ((MyActivity)getActivity()).yesNoDialog("Delete '" + item + "'?", new Runnable() {
+                    @Override
+                    public void run() {
+                        model.getEvents().remove((int)id);
+                        ((MyActivity)getActivity()).refreshModel();
+                        Toast.makeText(getActivity().getApplicationContext(), "Deleting '" + item + "'", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
+        });
+
         return view;
     }
 

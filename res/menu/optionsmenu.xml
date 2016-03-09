@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuRefresh" android:title="Refresh" />
-    <item android:id="@+id/menuClear" android:title="Clear" />
     <item android:id="@+id/menuExport" android:title="Export" />
     <item android:id="@+id/menuImport" android:title="Import" />
+    <item android:id="@+id/menuRefresh" android:title="Refresh" />
+    <item android:id="@+id/menuClear" android:title="Clear" />
     <item android:id="@+id/menuTestData" android:title="TestData" />
+    <item android:id="@+id/menuAbout" android:title="About" />
 </menu>

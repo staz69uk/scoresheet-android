@@ -19,6 +19,6 @@ public class PeriodEndEvent extends GameEvent {
 
     @Override
     public String toString() {
-        return String.format("%s Period %d ended", gameTime, period);
+        return String.format("%s - Period %d ended", gameTime, period);
     }
 }

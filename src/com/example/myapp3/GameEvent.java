@@ -51,7 +51,7 @@ public class GameEvent {
 
     @Override
     public String toString() {
-        return String.format("%s %-8s %-8s", gameTime, eventType, team);
+        return String.format("%s - %-8s %-8s", gameTime, eventType, team);
     }
 
     public void setTimeFrom(Date dateTime) {

@@ -31,6 +31,6 @@ public class PenaltyEvent extends GameEvent {
 
     @Override
     public String toString() {
-        return String.format("%s %s %s %dm (%s) for %s", gameTime, team, eventType, minutes, subType, player);
+        return String.format("%s - %s %s %dm (%s) for %s", gameTime, team, eventType, minutes, subType, player);
     }
 }

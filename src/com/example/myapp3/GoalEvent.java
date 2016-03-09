@@ -48,6 +48,6 @@ public class GoalEvent extends GameEvent {
         } else if (assist1 > 0) {
             assists = String.format(" from %d", assist1);
         }
-        return String.format("%s %s %s (%s) scored by %s %s", gameTime, team, eventType, subType, getPlayer(), assists);
+        return String.format("%s - %s %s (%s) scored by %s %s", gameTime, team, eventType, subType, getPlayer(), assists);
     }
 }
