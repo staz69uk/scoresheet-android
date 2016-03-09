@@ -29,7 +29,7 @@ public class GameReport {
         reportEvents(GoalEvent.class, model.getAwayTeam().getName(), sb);
         sb.append(sep);
 
-        sb.append("HOME PENALTIES\n");
+        sb.append("AWAY PENALTIES\n");
         reportEvents(PenaltyEvent.class, model.getAwayTeam().getName(), sb);
         sb.append(sep);
 

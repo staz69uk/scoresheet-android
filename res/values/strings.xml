@@ -3,6 +3,9 @@
     <string name="app_name">Ice Hockey Score Sheet</string>
     <string name="homeText">Home Goal</string>
     <string name="aboutText">
+        \n
+        Version 0.1\n
+        \n
         By Steve Leach\n
         \n
         Copyright (c) 2016\n
