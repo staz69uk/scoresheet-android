@@ -1,4 +1,4 @@
-package com.example.myapp3;
+package org.steveleach.scoresheet;
 
 import android.app.Fragment;
 import android.content.ClipData;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.myapp3.R;
 import org.steveleach.scoresheet.ModelAware;
 import org.steveleach.scoresheet.ModelUpdate;
 import org.steveleach.scoresheet.ScoresheetModel;

@@ -1,4 +1,4 @@
-package com.example.myapp3;
+package org.steveleach.scoresheet;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.example.myapp3.R;
+import com.example.myapp3.ScoresheetActivity;
 import org.steveleach.scoresheet.GoalEvent;
 import org.steveleach.scoresheet.ModelAware;
 import org.steveleach.scoresheet.ModelUpdate;
