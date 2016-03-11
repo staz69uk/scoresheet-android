@@ -10,6 +10,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import org.steveleach.scoresheet.model.GoalEvent;
+import org.steveleach.scoresheet.model.ModelAware;
+import org.steveleach.scoresheet.model.ModelUpdate;
+import org.steveleach.scoresheet.model.ScoresheetModel;
 
 /**
  * Created by steve on 01/03/16.

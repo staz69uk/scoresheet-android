@@ -1,4 +1,4 @@
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.model;
 
 /**
  * Created by steve on 02/03/16.

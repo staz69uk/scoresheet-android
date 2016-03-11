@@ -1,7 +1,6 @@
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.model;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by steve on 29/02/16.
@@ -52,10 +51,6 @@ public class GameEvent {
         return String.format("%s - %-8s %-8s", gameTime, eventType, team);
     }
 
-    public void setTimeFrom(Date dateTime) {
-        setGameTime(timeFormat.format(dateTime));
-    }
-
     public int getPeriod() {
         return period;
     }
@@ -80,7 +75,7 @@ public class GameEvent {
         setGameTime(gameTimeFromClock(clockTime));
     }
 
-    String gameTimeFromClock(final String clockTime) {
+    public String gameTimeFromClock(final String clockTime) {
         if (clockTime.length() != 4) {
             throw new IllegalArgumentException("Clock time must be 4 digits");
         }

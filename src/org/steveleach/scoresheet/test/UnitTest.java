@@ -1,9 +1,6 @@
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.test;
 
-import android.content.Context;
-import junit.framework.Assert;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
@@ -16,6 +13,11 @@ import static org.mockito.Mockito.when;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.steveleach.scoresheet.SystemContext;
+import org.steveleach.scoresheet.io.AndroidScoresheetStore;
+import org.steveleach.scoresheet.io.FileManager;
+import org.steveleach.scoresheet.io.JsonCodec;
+import org.steveleach.scoresheet.model.*;
 
 /**
  * Created by steve on 05/03/16.
@@ -64,41 +66,6 @@ public class UnitTest {
         event.setPeriod(3);
         assertEquals("47:26", event.gameTimeFromClock("1234"));
         assertEquals("59:49", event.gameTimeFromClock("0011"));
-    }
-
-    private GoalEvent goalEvent(Team team, int period, String time, String player, int assist1, int assist2) {
-        GoalEvent event = goalEvent(team);
-        event.setSubType("Even");
-        event.setPeriod(period);
-        event.setGameTime(time);
-        event.setPlayer(player);
-        event.setAssist1(assist1);
-        event.setAssist2(assist2);
-        return event;
-    }
-
-    private PenaltyEvent penaltyEvent(Team team, int period, String time, String player, int minutes) {
-        PenaltyEvent event = new PenaltyEvent();
-        event.setTeam(team.getName());
-        event.setPeriod(period);
-        event.setGameTime(time);
-        event.setPlayer(player);
-        event.setSubType("HOOK");
-        event.setMinutes(minutes);
-        return event;
-    }
-
-    private ScoresheetModel _sampleModel() {
-        ScoresheetModel model = new ScoresheetModel();
-        model.addEvent(goalEvent(model.getHomeTeam(), 1, "05:00", "23", 1, 0 ));
-        model.addEvent(goalEvent(model.getHomeTeam(), 1, "06:00", "35", 23, 4));
-        model.addEvent(penaltyEvent(model.getHomeTeam(), 1, "06:00", "35", 2));
-        model.addEvent(new PeriodEndEvent());
-        model.addEvent(goalEvent(model.getAwayTeam(), 2, "29:00", "6", 0, 0));
-        model.addEvent(new PeriodEndEvent());
-        model.addEvent(goalEvent(model.getHomeTeam(), 3, "42:00", "16", 4, 1));
-
-        return model;
     }
 
     @Test
@@ -159,5 +126,46 @@ public class UnitTest {
         assertEquals(model1.getEvents().size(), model2.getEvents().size());
         assertEquals(model1.getAwayGoals(), model2.getAwayGoals());
         assertEquals(model1.getAwayTeam().getName(), model2.getAwayTeam().getName());
+    }
+
+    @Test
+    public void testTeam() {
+        Team team = new Team("Reds");
+        assertEquals("Reds",team.getName());
+        team.setName("Blues");
+        assertEquals("Blues",team.getName());
+        team = new Team();
+        assertEquals("",team.getName());
+    }
+
+    @Test
+    public void testModelAware() {
+        ScoresheetModel model = new ScoresheetModel();
+        final boolean[] hasModel = new boolean[] {false};
+        ModelAware receiver = new ModelAware() {
+            @Override
+            public void setModel(ScoresheetModel model) {
+                hasModel[0] = true;
+            }
+            @Override
+            public void onModelUpdated(ModelUpdate update) {
+                assertEquals("Something", update.getSummary());
+            }
+        };
+        receiver.setModel(model);
+        ModelUpdate update = new ModelUpdate("Something");
+        receiver.onModelUpdated(update);
+        assertTrue(hasModel[0]);
+    }
+
+    @Test
+    public void testGenericGameEvent() {
+        assertEquals("00:00 - Goal     Home    ", new GameEvent().toString());
+    }
+
+    @Test
+    public void testPeriodEnd() {
+        PeriodEndEvent event = new PeriodEndEvent(2);
+        assertEquals("40:00 - Period 2 ended", event.toString());
     }
 }

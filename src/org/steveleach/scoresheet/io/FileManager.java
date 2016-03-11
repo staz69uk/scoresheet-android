@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2016, Steve Leach
  */
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.io;
 
 import java.io.*;
 import java.text.SimpleDateFormat;

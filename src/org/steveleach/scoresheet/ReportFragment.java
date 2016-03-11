@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.steveleach.scoresheet.model.ModelAware;
+import org.steveleach.scoresheet.model.ModelUpdate;
+import org.steveleach.scoresheet.model.ScoresheetModel;
 
 import java.io.File;
 import java.io.FileOutputStream;

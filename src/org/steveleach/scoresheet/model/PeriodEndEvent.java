@@ -1,4 +1,4 @@
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.model;
 
 /**
  * Created by steve on 05/03/16.
@@ -13,7 +13,7 @@ public class PeriodEndEvent extends GameEvent {
 
     public PeriodEndEvent(int period) {
         this();
-        super.period = period;
+        setPeriod(period);
         super.setClockTime("0000");
     }
 

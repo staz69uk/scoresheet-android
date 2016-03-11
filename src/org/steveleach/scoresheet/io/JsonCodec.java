@@ -1,9 +1,9 @@
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.io;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.steveleach.scoresheet.*;
+import org.steveleach.scoresheet.model.*;
 
 import java.util.Date;
 

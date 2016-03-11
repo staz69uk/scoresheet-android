@@ -1,4 +1,4 @@
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.model;
 
 import java.util.TreeMap;
 
