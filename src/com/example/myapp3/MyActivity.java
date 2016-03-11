@@ -38,23 +38,13 @@ public class MyActivity extends Activity implements ModelAware {
         showFragment(historyFragment);
 
         if (savedInstanceState != null) {
-            TextView homeScore = (TextView) findViewById(R.id.txtHomeScore);
-            homeScore.setText(""+savedInstanceState.getInt("homeScore"));
-
-            TextView awayScore = (TextView) findViewById(R.id.txtAwayScore);
-            homeScore.setText(""+savedInstanceState.getInt("awayScore"));
+            // Reserved
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        TextView homeScore = (TextView) findViewById(R.id.txtHomeScore);
-        outState.putInt("homeScore", Integer.parseInt(homeScore.getText().toString()));
-
-        TextView awayScore = (TextView) findViewById(R.id.txtAwayScore);
-        outState.putInt("awayScore", Integer.parseInt(awayScore.getText().toString()));
-
-        super.onSaveInstanceState(outState);
+        // Reserved
     }
 
     public void periodButtonClicked(View view) {
@@ -137,7 +127,7 @@ public class MyActivity extends Activity implements ModelAware {
 
     @Override
     public void onModelUpdated(ModelUpdate update) {
-        updateScores();
+        refreshModel();
     }
 
     private void updateScores() {
@@ -153,8 +143,7 @@ public class MyActivity extends Activity implements ModelAware {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.optionsmenu, menu);
+        getMenuInflater().inflate(R.menu.optionsmenu, menu);
         return true;
     }
 
@@ -206,12 +195,7 @@ public class MyActivity extends Activity implements ModelAware {
         yesNoDialog("Add test events?", new Runnable() {
             @Override
             public void run() {
-                model.addEvent(new GoalEvent(1,"1950","Home","E",41,13,2));
-                model.addEvent(new GoalEvent(1,"1830","Away","E",2,1,0));
-                model.addEvent(new PenaltyEvent(1, "1515", "Away", "Hook", "2", 2));
-                model.addEvent(new GoalEvent(1,"0824","Home","SH",12,93,41));
-                model.addEvent(new PeriodEndEvent(1));
-                model.addEvent(new GoalEvent(2,"1813","Home","PP",24,41,0));
+                ModelManager.addTestEvents(model);
                 refreshModel();
             }
         });
@@ -233,15 +217,12 @@ public class MyActivity extends Activity implements ModelAware {
         File file = new File(scoresDir, "gamedata.json");
         if (file.exists()) {
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                    sb.append("\n");
-                }
-                reader.close();
-                json = sb.toString();
+                json = loadTextFileContent(file);
+
+            } catch (IOException e) {
+                result = "Error reading gamedata.json : " + e.getMessage();
+            }
+            if (json != null) {
                 try {
                     Json.fromJson(model,json);
                     result = "Loaded gamedata.json";
@@ -249,13 +230,26 @@ public class MyActivity extends Activity implements ModelAware {
                     result = "Error parsing gamedata.json : " + e.getMessage();
                 }
                 refreshModel();
-            } catch (IOException e) {
-                result = "Error reading gamedata.json : " + e.getMessage();
             }
         } else {
             result = "No exported data found";
         }
         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+    }
+
+    private String loadTextFileContent(File file) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        try {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+                sb.append("\n");
+            }
+        } finally {
+            reader.close();
+        }
+        return sb.toString();
     }
 
     private File getScoresDirectory() {
