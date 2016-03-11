@@ -1,7 +1,5 @@
 package org.steveleach.scoresheet;
 
-import android.text.Editable;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,13 +7,13 @@ import java.util.Date;
  * Created by steve on 29/02/16.
  */
 public class GameEvent {
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
     protected int period = 0;
     protected String player = "0";
     protected String team = "Home";
     protected String gameTime = "00:00";
     protected String eventType = "Goal";
     protected String subType = "";
-    private final SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
 
     public String getPlayer() {
         return player;
@@ -58,20 +56,20 @@ public class GameEvent {
         setGameTime(timeFormat.format(dateTime));
     }
 
-    public void setPeriod(int period) {
-        this.period = period;
-    }
-
     public int getPeriod() {
         return period;
     }
 
-    public void setSubType(String subType) {
-        this.subType = subType;
+    public void setPeriod(int period) {
+        this.period = period;
     }
 
     public String getSubType() {
         return subType;
+    }
+
+    public void setSubType(String subType) {
+        this.subType = subType;
     }
 
     /**

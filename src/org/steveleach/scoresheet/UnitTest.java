@@ -1,11 +1,11 @@
 package org.steveleach.scoresheet;
 
-import org.json.JSONException;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
 //import org.junit.runner.RunWith;
 //import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by steve on 05/03/16.

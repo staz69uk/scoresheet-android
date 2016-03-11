@@ -23,6 +23,9 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Main Activity for the Scoresheet app.
+ */
 public class ScoresheetActivity extends Activity implements ModelAware {
     public static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
     private HistoryFragment historyFragment = new HistoryFragment();
@@ -197,7 +200,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     }
 
     private void importGameJson() {
-        yesNoDialog("Import game data from file?", new Runnable() {
+        yesNoDialog("Load game data from file?", new Runnable() {
             @Override
             public void run() {
                 doImportGameJson();
@@ -235,7 +238,17 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         return new File(dir,"Scoresheets");
     }
 
+
     private void exportGameJson() {
+        yesNoDialog("Save game data to file?", new Runnable() {
+            @Override
+            public void run() {
+                doExportGameJson();
+            }
+        });
+    }
+
+    private void doExportGameJson() {
         String result = "Unknown";
         String json = null;
         try {
