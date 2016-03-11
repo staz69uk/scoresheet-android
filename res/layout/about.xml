@@ -4,6 +4,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:weightSum="1" android:padding="20dip">
 
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Version"
+              android:id="@+id/txtAppVersion" android:layout_gravity="center_horizontal" android:layout_weight="0.07"
+              android:paddingTop="20dip" android:textSize="20dp"/>
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

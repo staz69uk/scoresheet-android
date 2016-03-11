@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.myapp3.R;
 
 /**
  * Created by steve on 05/03/16.

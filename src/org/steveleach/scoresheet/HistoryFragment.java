@@ -6,11 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.example.myapp3.R;
 
 import java.util.LinkedList;
-
-import static com.example.myapp3.R.layout.basiclistentry;
 
 /**
  * Created by steve on 01/03/16.
@@ -25,7 +22,7 @@ public class HistoryFragment extends Fragment implements ModelAware {
         View view = inflater.inflate(R.layout.historyfragment, container, false);
         eventList = (ListView)view.findViewById(R.id.historyList);
 
-        adapter = new ArrayAdapter<String>(getActivity(), basiclistentry, new LinkedList<String>());
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.basiclistentry, new LinkedList<String>());
         eventList.setAdapter(adapter);
 
         eventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

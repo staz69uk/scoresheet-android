@@ -7,7 +7,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -180,12 +183,26 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         int defaultColor = textView.getTextColors().getDefaultColor();
         textView.setTextColor(defaultColor);
 
+        TextView version = (TextView) messageView.findViewById(R.id.txtAppVersion);
+        version.setTextColor(defaultColor);
+        version.setText("Version " + getVersionName());
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_launcher_ih);
         builder.setTitle(R.string.app_name);
         builder.setView(messageView);
         builder.create();
         builder.show();
+    }
+
+    private String getVersionName() {
+        try {
+            Context context = getApplicationContext();
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            return pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "Unknown!";
+        }
     }
 
     private void addTestData() {

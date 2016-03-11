@@ -2,14 +2,5 @@
 <resources>
     <string name="app_name">Ice Hockey Score Sheet</string>
     <string name="homeText">Home Goal</string>
-    <string name="aboutText">
-        \n
-        Version 0.1\n
-        \n
-        By Steve Leach\n
-        \n
-        Copyright (c) 2016\n
-        \n
-        For the Guildford Smoke
-    </string>
+    <string name="aboutText">By Steve Leach\n\nCopyright (c) 2016\n\nFor the Guildford Smoke</string>
 </resources>
