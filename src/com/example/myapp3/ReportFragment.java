@@ -82,8 +82,6 @@ public class ReportFragment extends Fragment implements ModelAware {
         super.onResume();
         if (title.equals(GAME_REPORT)) {
             report.setText(model.fullReport());
-        } else if (title.equals(GAME_EXPORT)) {
-            report.setText(Json.toJsonOld(model));
         }
     }
 

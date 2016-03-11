@@ -86,9 +86,4 @@ public class UnitTest {
     public void testFullReport() {
         System.out.println(sampleModel().fullReport());
     }
-
-    @Test
-    public void testToJson() throws JSONException {
-        System.out.println(Json.toJsonOld(sampleModel()));
-    }
 }
