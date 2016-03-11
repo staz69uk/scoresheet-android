@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import org.steveleach.scoresheet.GoalEvent;
+import org.steveleach.scoresheet.ModelAware;
+import org.steveleach.scoresheet.ModelUpdate;
 import org.steveleach.scoresheet.ScoresheetModel;
 
 /**

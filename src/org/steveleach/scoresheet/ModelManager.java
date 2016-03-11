@@ -1,4 +1,4 @@
-package com.example.myapp3;
+package org.steveleach.scoresheet;
 
 import org.steveleach.scoresheet.GoalEvent;
 import org.steveleach.scoresheet.PenaltyEvent;
