@@ -24,7 +24,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MyActivity extends Activity implements ModelAware {
+public class ScoresheetActivity extends Activity implements ModelAware {
     public static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
     private HistoryFragment historyFragment = new HistoryFragment();
     private ScoresheetModel model = new ScoresheetModel();
@@ -34,11 +34,9 @@ public class MyActivity extends Activity implements ModelAware {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Log.i("Staz", "MyActivity.onCreate");
+        Log.i("Staz", "ScoresheetActivity.onCreate");
 
         showHistory();
-        //historyFragment.setModel(model);
-        //showFragment(historyFragment);
 
         if (savedInstanceState != null) {
             // Reserved
@@ -300,7 +298,7 @@ public class MyActivity extends Activity implements ModelAware {
             }
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MyActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ScoresheetActivity.this);
         builder
                 .setMessage(prompt)
                 .setPositiveButton(yesButton,listener)

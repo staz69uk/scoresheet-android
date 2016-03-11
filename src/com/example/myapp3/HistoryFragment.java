@@ -2,7 +2,6 @@ package com.example.myapp3;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +31,11 @@ public class HistoryFragment extends Fragment implements ModelAware {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String item = (String) adapterView.getItemAtPosition(position);
-                ((MyActivity)getActivity()).yesNoDialog("Delete '" + item + "'?", new Runnable() {
+                ((ScoresheetActivity)getActivity()).yesNoDialog("Delete '" + item + "'?", new Runnable() {
                     @Override
                     public void run() {
                         model.getEvents().remove((int)id);
-                        ((MyActivity)getActivity()).refreshModel();
+                        ((ScoresheetActivity)getActivity()).refreshModel();
                         Toast.makeText(getActivity().getApplicationContext(), "Deleting '" + item + "'", Toast.LENGTH_SHORT).show();
                     }
                 });

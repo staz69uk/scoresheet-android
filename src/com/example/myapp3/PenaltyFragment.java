@@ -81,8 +81,8 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         }
 
         imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
-        ((MyActivity)getActivity()).onModelUpdated(null);
-        ((MyActivity)getActivity()).showHistory();
+        ((ScoresheetActivity)getActivity()).onModelUpdated(null);
+        ((ScoresheetActivity)getActivity()).showHistory();
     }
 
     @Override
