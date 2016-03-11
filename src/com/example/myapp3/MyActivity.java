@@ -229,8 +229,8 @@ public class MyActivity extends Activity implements ModelAware {
     private void doImportGameJson() {
         String json = null;
         String result = "Unknown";
-        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        File file = new File(dir, "gamedata.json");
+        File scoresDir = getScoresDirectory();
+        File file = new File(scoresDir, "gamedata.json");
         if (file.exists()) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -258,6 +258,11 @@ public class MyActivity extends Activity implements ModelAware {
         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
     }
 
+    private File getScoresDirectory() {
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        return new File(dir,"Scoresheets");
+    }
+
     private void exportGameJson() {
         String json = null;
         try {
@@ -276,8 +281,7 @@ public class MyActivity extends Activity implements ModelAware {
             if (!Environment.MEDIA_MOUNTED.equals(state)) {
                 throw new IOException("External storage not mounted for writing");
             }
-            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            File scoresDir = new File(dir,"Scoresheets");
+            File scoresDir = getScoresDirectory();
             scoresDir.mkdirs();
             File file = new File(scoresDir, mainFileName);
             FileWriter writer = new FileWriter(file);
