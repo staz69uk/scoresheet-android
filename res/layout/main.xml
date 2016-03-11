@@ -12,21 +12,21 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Home"
+                android:text="@string/defaultHomeTeamName"
                 android:id="@+id/textView" android:layout_gravity="left|top" android:gravity="center_vertical|center|center_horizontal"
                 android:textStyle="italic" android:textSize="40dp"/>
         <TextView
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Period"
+                android:text="@string/period"
                 android:id="@+id/textView2" android:layout_gravity="center_horizontal|top" android:textStyle="italic"
                 android:textSize="40dp"/>
         <TextView
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Away"
+                android:text="@string/defaultAwayTeamName"
                 android:id="@+id/textView3" android:layout_gravity="right|top" android:gravity="center"
                 android:textStyle="italic" android:textSize="40dp"/>
         <TextView

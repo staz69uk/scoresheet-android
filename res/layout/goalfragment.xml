@@ -8,7 +8,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Goal Scored"
+            android:text="@string/goalScoredTitle"
             android:id="@+id/txtGoalScoredTitle" android:editable="false"
             android:background="#667e7e7e" android:padding="3dp"/>
     <LinearLayout

@@ -3,4 +3,15 @@
     <string name="app_name">Ice Hockey Score Sheet</string>
     <string name="homeText">Home Goal</string>
     <string name="aboutText">By Steve Leach\n\nCopyright (c) 2016\n\nFor the Guildford Smoke</string>
+    <string name="defaultHomeTeamName">Home</string>
+    <string name="defaultAwayTeamName">Away</string>
+    <string name="period">Period</string>
+    <string name="homeGoalButtonText">Home Goal</string>
+    <string name="awayGoalButtonText">Away Goal</string>
+    <string name="homePenButtonText">Home Pen</string>
+    <string name="awayPenButtonText">Away Pen</string>
+    <string name="nextPeriodButtonText">Next</string>
+    <string name="gameHistoryTitle">Game History</string>
+    <string name="gameReportButton">Game Report</string>
+    <string name="goalScoredTitle">Goal Scored</string>
 </resources>
