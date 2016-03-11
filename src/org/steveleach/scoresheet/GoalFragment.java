@@ -11,11 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.myapp3.R;
-import com.example.myapp3.ScoresheetActivity;
-import org.steveleach.scoresheet.GoalEvent;
-import org.steveleach.scoresheet.ModelAware;
-import org.steveleach.scoresheet.ModelUpdate;
-import org.steveleach.scoresheet.ScoresheetModel;
 
 /**
  * Created by steve on 01/03/16.

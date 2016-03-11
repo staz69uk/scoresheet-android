@@ -7,11 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.example.myapp3.R;
-import com.example.myapp3.ScoresheetActivity;
-import org.steveleach.scoresheet.GameEvent;
-import org.steveleach.scoresheet.ModelAware;
-import org.steveleach.scoresheet.ModelUpdate;
-import org.steveleach.scoresheet.ScoresheetModel;
 
 import java.util.LinkedList;
 

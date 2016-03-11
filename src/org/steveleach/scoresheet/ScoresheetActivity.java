@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2016, Steve Leach
  */
-package com.example.myapp3;
+package org.steveleach.scoresheet;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,8 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.myapp3.R;
 import org.json.JSONException;
-import org.steveleach.scoresheet.*;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
