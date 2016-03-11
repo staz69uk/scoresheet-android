@@ -1,4 +1,4 @@
-package com.example.myapp3;
+package org.steveleach.scoresheet;
 
 /**
  * Created by steve on 05/03/16.

@@ -1,4 +1,4 @@
-package com.example.myapp3;
+package org.steveleach.scoresheet;
 
 import android.text.Editable;
 

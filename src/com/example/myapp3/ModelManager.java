@@ -1,5 +1,10 @@
 package com.example.myapp3;
 
+import org.steveleach.scoresheet.GoalEvent;
+import org.steveleach.scoresheet.PenaltyEvent;
+import org.steveleach.scoresheet.PeriodEndEvent;
+import org.steveleach.scoresheet.ScoresheetModel;
+
 /**
  * Created by steve on 11/03/16.
  */

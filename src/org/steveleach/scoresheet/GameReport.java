@@ -1,4 +1,9 @@
-package com.example.myapp3;
+package org.steveleach.scoresheet;
+
+import org.steveleach.scoresheet.GameEvent;
+import org.steveleach.scoresheet.GoalEvent;
+import org.steveleach.scoresheet.PenaltyEvent;
+import org.steveleach.scoresheet.ScoresheetModel;
 
 import java.util.TreeMap;
 

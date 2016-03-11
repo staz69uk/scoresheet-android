@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.steveleach.scoresheet.PenaltyEvent;
+import org.steveleach.scoresheet.ScoresheetModel;
 
 /**
  * Created by steve on 05/03/16.

@@ -1,8 +1,9 @@
-package com.example.myapp3;
+package org.steveleach.scoresheet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.steveleach.scoresheet.*;
 
 import java.util.Date;
 
