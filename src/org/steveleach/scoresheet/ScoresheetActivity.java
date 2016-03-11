@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.myapp3.R;
 import org.json.JSONException;
 
 import java.io.*;
