@@ -26,7 +26,6 @@ import java.util.Date;
 
 public class MyActivity extends Activity implements ModelAware {
     public static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
-    private GoalFragment goalFragment = new GoalFragment();
     private HistoryFragment historyFragment = new HistoryFragment();
     private ScoresheetModel model = new ScoresheetModel();
 
@@ -37,8 +36,9 @@ public class MyActivity extends Activity implements ModelAware {
 
         Log.i("Staz", "MyActivity.onCreate");
 
-        historyFragment.setModel(model);
-        showFragment(historyFragment);
+        showHistory();
+        //historyFragment.setModel(model);
+        //showFragment(historyFragment);
 
         if (savedInstanceState != null) {
             // Reserved
