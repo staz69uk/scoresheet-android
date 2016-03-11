@@ -4,15 +4,20 @@
 package org.steveleach.scoresheet;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * File System helper.
  *
  * Created by steve on 11/03/16.
  */
-public class FileSystem {
+public class FileManager {
 
-    public static void writeTextFile(File file, String text) throws IOException {
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    private File baseDir = new File(".");
+
+    public void writeTextFile(File file, String text) throws IOException {
         FileWriter writer = new FileWriter(file);
         try {
             writer.write(text);
@@ -21,7 +26,7 @@ public class FileSystem {
         }
     }
 
-    public static String readTextFileContent(File file) throws IOException {
+    public String readTextFileContent(File file) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = new BufferedReader(new FileReader(file));
         try {
@@ -36,7 +41,7 @@ public class FileSystem {
         return sb.toString();
     }
 
-    public static void copyFile(File src, File dst) throws IOException {
+    public void copyFile(File src, File dst) throws IOException {
         InputStream in = new FileInputStream(src);
         OutputStream out = new FileOutputStream(dst);
 
@@ -53,4 +58,21 @@ public class FileSystem {
         }
     }
 
+    public void setBaseDirectory(File baseDir) {
+        this.baseDir = baseDir;
+    }
+
+    public File getMainFile(String baseName) {
+        String dateStr = DATE_FORMAT.format(new Date());
+        String mainFileName = String.format("%s-%s.json", baseName, dateStr);
+        return new File(baseDir,mainFileName);
+    }
+
+    public File getLastFile(String baseName) {
+        return new File(baseDir,baseName+".json");
+    }
+
+    public void ensureBaseDirectoryExists() {
+        baseDir.mkdirs();
+    }
 }

@@ -12,31 +12,28 @@ import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.json.JSONException;
-
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Main Activity for the Scoresheet app.
  */
 public class ScoresheetActivity extends Activity implements ModelAware {
     public static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
-    private HistoryFragment historyFragment = new HistoryFragment();
     private ScoresheetModel model = new ScoresheetModel();
+    private FileManager fileManager = new FileManager();
+    private AndroidScoresheetStore scoresheetFolder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        scoresheetFolder = new AndroidScoresheetStore(fileManager,new JsonCodec(),new SystemContext(getApplicationContext()));
 
         Log.i("Staz", "ScoresheetActivity.onCreate");
 
@@ -50,6 +47,10 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         // Reserved
+    }
+
+    public void setFileManager(FileManager fileManager) {
+        this.fileManager = fileManager;
     }
 
     public void periodButtonClicked(View view) {
@@ -219,81 +220,25 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         yesNoDialog("Load game data from file?", new Runnable() {
             @Override
             public void run() {
-                doImportGameJson();
+                String result = scoresheetFolder.loadInto(model);
+                refreshModel();
+                toast(result);
             }
         });
     }
-
-    private void doImportGameJson() {
-        String result = "Unknown";
-        File file = new File(getScoresDirectory(), "gamedata.json");
-        if (file.exists()) {
-            String json = null;
-            try {
-                json = FileSystem.readTextFileContent(file);
-            } catch (IOException e) {
-                result = "Error reading gamedata.json : " + e.getMessage();
-            }
-            if (json != null) {
-                try {
-                    Json.fromJson(model,json);
-                    result = "Loaded gamedata.json";
-                } catch (JSONException e) {
-                    result = "Error parsing gamedata.json : " + e.getMessage();
-                }
-                refreshModel();
-            }
-        } else {
-            result = "No exported data found";
-        }
-        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-    }
-
-    private File getScoresDirectory() {
-        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        return new File(dir,"Scoresheets");
-    }
-
 
     private void exportGameJson() {
         yesNoDialog("Save game data to file?", new Runnable() {
             @Override
             public void run() {
-                doExportGameJson();
+                String result = scoresheetFolder.save(model);
+                toast(result);
             }
         });
     }
 
-    private void doExportGameJson() {
-        String result = "Unknown";
-        String json = null;
-        try {
-            json = Json.toJson(model);
-        } catch (JSONException e) {
-            result = "Error building JSON : " + e.getMessage();
-        }
-
-        if (json != null) {
-            String baseName = "gamedata";
-            String dateStr = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
-            String mainFileName = String.format("%s-%s.json", baseName, dateStr);
-            String lastFileName = baseName + ".json";
-            try {
-                String state = Environment.getExternalStorageState();
-                if (!Environment.MEDIA_MOUNTED.equals(state)) {
-                    throw new IOException("External storage not mounted for writing");
-                }
-                File scoresDir = getScoresDirectory();
-                scoresDir.mkdirs();
-                File file = new File(scoresDir, mainFileName);
-                FileSystem.writeTextFile(file, json);
-                FileSystem.copyFile(file, new File(scoresDir, lastFileName));
-                result = "Saved " + lastFileName;
-            } catch (IOException e) {
-                result = "Error saving file " + lastFileName + " : " + e.getMessage();
-            }
-        }
-        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+    private void toast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     public void refreshModel() {

@@ -10,9 +10,9 @@ import java.util.Date;
 /**
  * Created by steve on 05/03/16.
  */
-public class Json {
+public class JsonCodec {
 
-    public static String toJson(ScoresheetModel model) throws JSONException {
+    public String toJson(ScoresheetModel model) throws JSONException {
         JSONObject root = new JSONObject();
         root.put("@content", "Ice Hockey Scoresheet Data");
         root.put("@version", "1.00");
@@ -45,10 +45,14 @@ public class Json {
         return root.toString(4);
     }
 
-    public static void fromJson(ScoresheetModel model, String json) throws JSONException {
+    public void fromJson(ScoresheetModel model, String json) throws JSONException {
         model.getEvents().clear();
 
         JSONObject root = new JSONObject(json);
+
+        model.getHomeTeam().setName(root.optString("homeTeamName","Home"));
+        model.getAwayTeam().setName(root.optString("awayTeamName","Home"));
+
         JSONArray jsonEvents = root.getJSONArray("events");
         for (int n = 0; n < jsonEvents.length(); n++) {
             JSONObject jsonEvent = (JSONObject) jsonEvents.get(n);

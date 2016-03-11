@@ -14,4 +14,5 @@
     <string name="gameHistoryTitle">Game History</string>
     <string name="gameReportButton">Game Report</string>
     <string name="goalScoredTitle">Goal Scored</string>
+    <string name="scoresheetFolder">Scoresheets</string>
 </resources>

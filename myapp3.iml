@@ -13,6 +13,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
     </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="org.mockito:mockito-core:1.10.19" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit4">
         <CLASSES>
@@ -23,8 +25,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" scope="TEST" name="org.json:json:20160212" level="application" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="TEST" name="org.mockito:mockito-core:1.10.19" level="project" />
   </component>
 </module>
