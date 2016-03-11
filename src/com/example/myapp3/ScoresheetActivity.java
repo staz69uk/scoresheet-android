@@ -58,28 +58,23 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     }
 
     public void goalButtonClicked(View view) {
-        Button btn = (Button)view;
-        String homeAway;
-        if (btn.getId() == R.id.btnHomeGoal) {
-            homeAway = model.getHomeTeam().getName();
-        } else {
-            homeAway = model.getAwayTeam().getName();
-        }
+        String team = getTeamForView(view, R.id.btnHomeGoal);
         GoalFragment fragment = new GoalFragment();
         fragment.setModel(model);
-        fragment.homeAway = homeAway;
+        fragment.setTeam(team);
         showFragment(fragment);
     }
 
-    public void penaltyButtonClicked(View view) {
-        Button btn = (Button)view;
-        String team;
-        if (btn.getId() == R.id.btnHomePen) {
-            team = model.getHomeTeam().getName();
+    private String getTeamForView(View view, int homeId) {
+        if (view.getId() == homeId) {
+            return model.getHomeTeam().getName();
         } else {
-            team = model.getAwayTeam().getName();
+            return model.getAwayTeam().getName();
         }
+    }
 
+    public void penaltyButtonClicked(View view) {
+        String team = getTeamForView(view, R.id.btnHomePen);
         PenaltyFragment fragment = new PenaltyFragment();
         fragment.setModel(model);
         fragment.setTeam(team);

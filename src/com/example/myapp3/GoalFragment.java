@@ -16,7 +16,7 @@ import android.widget.TextView;
  */
 public class GoalFragment extends Fragment implements ModelAware {
 
-    public String homeAway = "Home";
+    private String team = "Home";
     private ScoresheetModel model = null;
     private View view = null;
     private EditText periodField = null;
@@ -27,7 +27,7 @@ public class GoalFragment extends Fragment implements ModelAware {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.goalfragment, container, false);
         TextView title = (TextView) view.findViewById(R.id.txtGoalScoredTitle);
-        title.setText(homeAway + " Goal Scored");
+        title.setText(team + " Goal Scored");
 
         periodField = (EditText)view.findViewById(R.id.fldPeriod);
         clockField = (EditText)view.findViewById(R.id.fldClock);
@@ -43,7 +43,7 @@ public class GoalFragment extends Fragment implements ModelAware {
             @Override
             public void onClick(View view) {
                 GoalEvent event = new GoalEvent();
-                event.setTeam(homeAway);
+                event.setTeam(team);
                 event.setPeriod(Integer.parseInt(periodField.getText().toString()));
                 event.setClockTime(clockField.getText().toString());
                 event.setPlayer(scorerField.getText().toString());
@@ -79,5 +79,9 @@ public class GoalFragment extends Fragment implements ModelAware {
     @Override
     public void onModelUpdated(ModelUpdate update) {
 
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
 }
