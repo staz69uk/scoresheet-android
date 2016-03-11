@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2016, Steve Leach
+ */
 package com.example.myapp3;
 
 import android.app.Activity;
@@ -9,13 +12,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
+import org.steveleach.scoresheet.FileSystem;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -211,14 +214,12 @@ public class MyActivity extends Activity implements ModelAware {
     }
 
     private void doImportGameJson() {
-        String json = null;
         String result = "Unknown";
-        File scoresDir = getScoresDirectory();
-        File file = new File(scoresDir, "gamedata.json");
+        File file = new File(getScoresDirectory(), "gamedata.json");
         if (file.exists()) {
+            String json = null;
             try {
-                json = loadTextFileContent(file);
-
+                json = FileSystem.readTextFileContent(file);
             } catch (IOException e) {
                 result = "Error reading gamedata.json : " + e.getMessage();
             }
@@ -237,70 +238,41 @@ public class MyActivity extends Activity implements ModelAware {
         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
     }
 
-    private String loadTextFileContent(File file) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        try {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-                sb.append("\n");
-            }
-        } finally {
-            reader.close();
-        }
-        return sb.toString();
-    }
-
     private File getScoresDirectory() {
         File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         return new File(dir,"Scoresheets");
     }
 
     private void exportGameJson() {
+        String result = "Unknown";
         String json = null;
         try {
             json = Json.toJson(model);
         } catch (JSONException e) {
-            json = e.getMessage();
+            result = "Error building JSON : " + e.getMessage();
         }
 
-        String baseName = "gamedata";
-        String dateStr = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
-        String mainFileName = String.format("%s-%s.json", baseName, dateStr);
-        String lastFileName = baseName + ".json";
-        String result = "Unknown";
-        try {
-            String state = Environment.getExternalStorageState();
-            if (!Environment.MEDIA_MOUNTED.equals(state)) {
-                throw new IOException("External storage not mounted for writing");
+        if (json != null) {
+            String baseName = "gamedata";
+            String dateStr = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
+            String mainFileName = String.format("%s-%s.json", baseName, dateStr);
+            String lastFileName = baseName + ".json";
+            try {
+                String state = Environment.getExternalStorageState();
+                if (!Environment.MEDIA_MOUNTED.equals(state)) {
+                    throw new IOException("External storage not mounted for writing");
+                }
+                File scoresDir = getScoresDirectory();
+                scoresDir.mkdirs();
+                File file = new File(scoresDir, mainFileName);
+                FileSystem.writeTextFile(file, json);
+                FileSystem.copyFile(file, new File(scoresDir, lastFileName));
+                result = "Saved " + lastFileName;
+            } catch (IOException e) {
+                result = "Error saving file " + lastFileName + " : " + e.getMessage();
             }
-            File scoresDir = getScoresDirectory();
-            scoresDir.mkdirs();
-            File file = new File(scoresDir, mainFileName);
-            FileWriter writer = new FileWriter(file);
-            writer.write(json);
-            writer.close();
-            copyFile(file, new File(scoresDir,lastFileName));
-            result = "Saved " + lastFileName;
-        } catch (IOException e) {
-            result = "Error saving file " + lastFileName + " : " + e.getMessage();
         }
         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-    }
-
-    public static void copyFile(File src, File dst) throws IOException {
-        InputStream in = new FileInputStream(src);
-        OutputStream out = new FileOutputStream(dst);
-
-        // Transfer bytes from in to out
-        byte[] buf = new byte[1024];
-        int len;
-        while ((len = in.read(buf)) > 0) {
-            out.write(buf, 0, len);
-        }
-        in.close();
-        out.close();
     }
 
     public void refreshModel() {
