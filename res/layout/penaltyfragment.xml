@@ -46,8 +46,8 @@
     >
         <TextView android:layout_width="200dp" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Penalty:"
-                  android:id="@+id/textView11" android:textColor="#a7a7a7"/>
-        <EditText android:layout_width="212dp" android:layout_height="wrap_content" android:inputType="text"
+                  android:id="@+id/textView11a" android:textColor="#a7a7a7"/>
+        <AutoCompleteTextView android:layout_width="212dp" android:layout_height="wrap_content" android:inputType="textAutoComplete|text|textCapCharacters"
                   android:ems="10" android:id="@+id/fldPenaltyCode"
                   android:textIsSelectable="false" android:selectAllOnFocus="false" android:focusable="true"
         />

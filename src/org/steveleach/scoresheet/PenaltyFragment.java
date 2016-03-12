@@ -7,10 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import org.steveleach.scoresheet.model.ModelAware;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.model.PenaltyEvent;
@@ -25,7 +22,7 @@ public class PenaltyFragment extends Fragment implements ModelAware {
     private View view;
     private EditText periodField;
     private EditText clockField;
-    private EditText penaltyField;
+    private AutoCompleteTextView penaltyField;
     private EditText playerField;
     private InputMethodManager imgr;
     private EditText minutesField;
@@ -45,9 +42,14 @@ public class PenaltyFragment extends Fragment implements ModelAware {
 
         periodField = (EditText)view.findViewById(R.id.fldPenaltyPeriod);
         clockField = (EditText)view.findViewById(R.id.fldPenaltyClock);
-        penaltyField = (EditText)view.findViewById(R.id.fldPenaltyCode);
+        penaltyField = (AutoCompleteTextView)view.findViewById(R.id.fldPenaltyCode);
         playerField = (EditText)view.findViewById(R.id.fldPenaltyPlayer);
         minutesField = (EditText)view.findViewById(R.id.fldPenaltyMins);
+
+        String[] penaltyCodes = getActivity().getResources().getStringArray(R.array.penaltyCodes);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line,penaltyCodes);
+        penaltyField.setAdapter(adapter);
+        penaltyField.setThreshold(1);
 
         imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 

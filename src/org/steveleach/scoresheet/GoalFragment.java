@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.*;
 import org.steveleach.scoresheet.model.GoalEvent;
 import org.steveleach.scoresheet.model.ModelAware;
 import org.steveleach.scoresheet.model.ModelUpdate;
@@ -38,7 +36,12 @@ public class GoalFragment extends Fragment implements ModelAware {
         EditText scorerField = (EditText)view.findViewById(R.id.fldScoredBy);
         EditText assist1Field = (EditText)view.findViewById(R.id.fldAssist1);
         EditText assist2Field = (EditText)view.findViewById(R.id.fldAssist2);
-        EditText goalTypeField = (EditText)view.findViewById(R.id.fldGoalType);
+        AutoCompleteTextView goalTypeField = (AutoCompleteTextView)view.findViewById(R.id.fldGoalType);
+
+        String[] goalCodes = getActivity().getResources().getStringArray(R.array.goalCodes);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line,goalCodes);
+        goalTypeField.setAdapter(adapter);
+        goalTypeField.setThreshold(1);
 
         imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
