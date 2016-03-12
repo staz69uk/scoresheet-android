@@ -138,12 +138,12 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     private void updateScores() {
         updateScore(R.id.txtHomeScore, model.getHomeGoals());
         updateScore(R.id.txtAwayScore, model.getAwayGoals());
-        updateScore(R.id.txtPeriod, model.getPeriod());
+        updateScore(R.id.txtPeriod, model.getPeriod() > 3 ? "OT" : model.getPeriod());
     }
 
-    private void updateScore(int fieldId, int score) {
+    private void updateScore(int fieldId, Object score) {
         TextView field = (TextView) findViewById(fieldId);
-        field.setText(Integer.toString(score));
+        field.setText(score.toString());
     }
 
     @Override

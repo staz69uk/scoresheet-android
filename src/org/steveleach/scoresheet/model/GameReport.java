@@ -53,8 +53,8 @@ public class GameReport {
     }
 
     private void reportPenaltyTotals(StringBuilder sb) {
-        int[] homeMins = {0,0,0};
-        int[] awayMins = {0,0,0};
+        int[] homeMins = {0,0,0,0};
+        int[] awayMins = {0,0,0,0};
         for (GameEvent event : model.getEvents()) {
             if (event instanceof PenaltyEvent) {
                 PenaltyEvent penalty = (PenaltyEvent)event;
@@ -67,15 +67,23 @@ public class GameReport {
                 }
             }
         }
-        int homeTotal = homeMins[0] + homeMins[1] + homeMins[2];
-        int awayTotal = awayMins[0] + awayMins[1] + awayMins[2];
-        sb.append(String.format("%s : %d %d %d = %d\n",model.getHomeTeam().getName(), homeMins[0], homeMins[1], homeMins[2], homeTotal));
-        sb.append(String.format("%s : %d %d %d = %d\n",model.getAwayTeam().getName(), awayMins[0], awayMins[1], awayMins[2], awayTotal));
+        int homeTotal = sum(homeMins);
+        int awayTotal = sum(awayMins);
+        sb.append(String.format("%s : %d %d %d %d = %d\n",model.getHomeTeam().getName(), homeMins[0], homeMins[1], homeMins[2], homeMins[3], homeTotal));
+        sb.append(String.format("%s : %d %d %d %d = %d\n",model.getAwayTeam().getName(), awayMins[0], awayMins[1], awayMins[2], awayMins[3], awayTotal));
+    }
+
+    private int sum(int[] values) {
+        int sum = 0;
+        for (int value : values) {
+            sum += value;
+        }
+        return sum;
     }
 
     private void reportPeriodScores(StringBuilder sb) {
-        int[] homeScores = {0,0,0};
-        int[] awayScores = {0,0,0};
+        int[] homeScores = {0,0,0,0};
+        int[] awayScores = {0,0,0,0};
         for (GameEvent event : model.getEvents()) {
             if (event instanceof GoalEvent) {
                 int periodIndex = event.getPeriod()-1;
@@ -87,8 +95,8 @@ public class GameReport {
                 }
             }
         }
-        sb.append(String.format("%s : %d %d %d = %d\n",model.getHomeTeam().getName(), homeScores[0], homeScores[1], homeScores[2], model.getHomeGoals()));
-        sb.append(String.format("%s : %d %d %d = %d\n",model.getAwayTeam().getName(), awayScores[0], awayScores[1], awayScores[2], model.getAwayGoals()));
+        sb.append(String.format("%s : %d %d %d %d = %d\n",model.getHomeTeam().getName(), homeScores[0], homeScores[1], homeScores[2], homeScores[3], model.getHomeGoals()));
+        sb.append(String.format("%s : %d %d %d %d = %d\n",model.getAwayTeam().getName(), awayScores[0], awayScores[1], awayScores[2], awayScores[2],model.getAwayGoals()));
     }
 
     class PlayerStats {

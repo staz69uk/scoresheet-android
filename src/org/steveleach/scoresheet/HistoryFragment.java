@@ -20,6 +20,7 @@ public class HistoryFragment extends Fragment implements ModelAware {
     private ListView eventList = null;
     private ArrayAdapter<String> adapter = null;
     private ScoresheetModel model = new ScoresheetModel();
+    private Button nextPeriodButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,6 +29,8 @@ public class HistoryFragment extends Fragment implements ModelAware {
 
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.basiclistentry, new LinkedList<String>());
         eventList.setAdapter(adapter);
+
+        nextPeriodButton = (Button)view.findViewById(R.id.btnNextPeriod);
 
         eventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -55,6 +58,9 @@ public class HistoryFragment extends Fragment implements ModelAware {
     }
 
     private void refreshList() {
+        if (nextPeriodButton != null) {
+            nextPeriodButton.setEnabled(model.getPeriod() <= 3);
+        }
         if (adapter != null) {
             adapter.clear();
             for (GameEvent event : model.getEvents()) {
