@@ -60,7 +60,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     public void periodButtonClicked(View view) {
         GameEvent event = new PeriodEndEvent();
         event.setPeriod(model.getPeriod());
-        event.setClockTime("0000");
+        event.setClockTime("0000",model.getRules());
         model.addEvent(event);
         updateScores();
         showHistory();

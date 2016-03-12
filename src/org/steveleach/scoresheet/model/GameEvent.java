@@ -71,11 +71,11 @@ public class GameEvent {
      * IMPORTANT - make sure the period is set correctly before use.
      * @param clockTime
      */
-    public void setClockTime(String clockTime) {
-        setGameTime(gameTimeFromClock(clockTime));
+    public void setClockTime(String clockTime, GameRules rules) {
+        setGameTime(gameTimeFromClock(clockTime, rules));
     }
 
-    public String gameTimeFromClock(String clockTime) {
+    public String gameTimeFromClock(String clockTime, GameRules rules) {
         if ((clockTime == null) || (clockTime.length() < 3)) {
             return "00:00";
         }
@@ -83,10 +83,11 @@ public class GameEvent {
             clockTime = "0" + clockTime;
         }
         try {
+            int periodMins = rules.getPeriodMinutes();
             int mins = getIntValue(clockTime, 0, 2);
             int secs = getIntValue(clockTime, 2, 4);
             int remainingSecs = mins * 60 + secs;
-            int totalSecsPlayed = 20 * 60 - remainingSecs + ((period - 1) * 20 * 60);
+            int totalSecsPlayed = periodMins * 60 - remainingSecs + ((period - 1) * periodMins * 60);
             int minsPlayed = totalSecsPlayed / 60;
             int secsPlayed = totalSecsPlayed % 60;
             return String.format("%02d:%02d", minsPlayed, secsPlayed);

@@ -55,29 +55,32 @@ public class UnitTest {
 
     @Test
     public void testClockConversion() {
+        GameRules rules = new GameRules();
         GameEvent event = new GameEvent();
         event.setPeriod(1);
-        assertEquals("00:05", event.gameTimeFromClock("1955"));
-        assertEquals("15:00", event.gameTimeFromClock("0500"));
-        assertEquals("15:30", event.gameTimeFromClock("0430"));
-        assertEquals("07:26", event.gameTimeFromClock("1234"));
+        assertEquals("00:05", event.gameTimeFromClock("1955", rules));
+        assertEquals("15:00", event.gameTimeFromClock("0500", rules));
+        assertEquals("15:30", event.gameTimeFromClock("0430", rules));
+        assertEquals("07:26", event.gameTimeFromClock("1234", rules));
         event.setPeriod(2);
-        assertEquals("27:26", event.gameTimeFromClock("1234"));
+        assertEquals("27:26", event.gameTimeFromClock("1234", rules));
         event.setPeriod(3);
-        assertEquals("47:26", event.gameTimeFromClock("1234"));
-        assertEquals("59:49", event.gameTimeFromClock("0011"));
-        assertEquals("59:49", event.gameTimeFromClock("011"));
+        assertEquals("47:26", event.gameTimeFromClock("1234", rules));
+        assertEquals("59:49", event.gameTimeFromClock("0011", rules));
+        assertEquals("59:49", event.gameTimeFromClock("011", rules));
     }
 
     @Test
     public void testBadClockConversions() {
+        GameRules rules = new GameRules();
         GameEvent event = new GameEvent();
         event.setPeriod(1);
-        assertEquals("00:00", event.gameTimeFromClock(null));
-        assertEquals("00:00", event.gameTimeFromClock(""));
-        assertEquals("00:00", event.gameTimeFromClock("Hello"));
-        assertEquals("00:00", event.gameTimeFromClock("12"));
-        assertEquals("00:00", event.gameTimeFromClock("12:34"));
+        assertEquals("00:00", event.gameTimeFromClock(null, rules));
+        assertEquals("00:00", event.gameTimeFromClock("", rules));
+        assertEquals("00:00", event.gameTimeFromClock("Hello", rules));
+        assertEquals("00:00", event.gameTimeFromClock("12", rules));
+        assertEquals("00:00", event.gameTimeFromClock("12:34", rules));
+        assertEquals("00:00", event.gameTimeFromClock("1234", null));
     }
 
     @Test
@@ -89,7 +92,7 @@ public class UnitTest {
         //System.out.println(report);
         assertTrue(report.contains("01:30 - Away Goal (E) scored by 2  from 1"));
         assertTrue(report.contains("2 : goals=1, assists=0, pen.mins=2"));
-        assertTrue(report.contains("Home : 2 1 0 = 3"));
+        assertTrue(report.contains("Home : 2 1 0 0 = 3"));
     }
 
     @Test
@@ -177,7 +180,7 @@ public class UnitTest {
 
     @Test
     public void testPeriodEnd() {
-        PeriodEndEvent event = new PeriodEndEvent(2);
+        PeriodEndEvent event = new PeriodEndEvent(2, new GameRules());
         assertEquals("40:00 - Period 2 ended", event.toString());
     }
 }

@@ -13,6 +13,7 @@ public class ScoresheetModel {
     private String gameLocation = "";
     private String competition = "";
     private List<GameOfficial> officials = new LinkedList<>();
+    private GameRules rules = new GameRules();
     private int homeTimeouts = 0;
     private int awayTimeouts = 0;
 
@@ -132,4 +133,11 @@ public class ScoresheetModel {
         return new GameReport(this).report();
     }
 
+    public GameRules getRules() {
+        return rules;
+    }
+
+    public void setRules(GameRules rules) {
+        this.rules = rules;
+    }
 }
