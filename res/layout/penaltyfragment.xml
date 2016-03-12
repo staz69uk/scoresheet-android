@@ -49,7 +49,10 @@
                   android:id="@+id/textView11a" android:textColor="#a7a7a7"/>
         <AutoCompleteTextView android:layout_width="212dp" android:layout_height="wrap_content" android:inputType="textAutoComplete|text|textCapCharacters"
                   android:ems="10" android:id="@+id/fldPenaltyCode"
-                  android:textIsSelectable="false" android:selectAllOnFocus="false" android:focusable="true"
+                  android:textIsSelectable="false"
+                  android:selectAllOnFocus="false" android:focusable="true"
+                  android:imeOptions="actionNext"
+                  android:singleLine="true"
         />
     </LinearLayout>
     <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp"

@@ -3,6 +3,8 @@ package org.steveleach.scoresheet;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,15 @@ public class GoalFragment extends Fragment implements ModelAware {
         EditText assist1Field = (EditText)view.findViewById(R.id.fldAssist1);
         EditText assist2Field = (EditText)view.findViewById(R.id.fldAssist2);
         AutoCompleteTextView goalTypeField = (AutoCompleteTextView)view.findViewById(R.id.fldGoalType);
+
+        clockField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(4) });
+        periodField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(1) });
+        scorerField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
+        assist1Field.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
+        assist2Field.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
+        goalTypeField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
+
+        clockField.setOnFocusChangeListener(new MinLengthFocusChangeListener(3));
 
         String[] goalCodes = getActivity().getResources().getStringArray(R.array.goalCodes);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line,goalCodes);

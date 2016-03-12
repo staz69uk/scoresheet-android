@@ -54,10 +54,14 @@
         <TextView android:layout_width="200dp" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Goal type:"
                   android:id="@+id/textView9" android:textColor="#a7a7a7"/>
-        <AutoCompleteTextView android:layout_width="175dp" android:layout_height="wrap_content" android:inputType="textAutoComplete|text|textCapCharacters"
-                  android:ems="10" android:id="@+id/fldGoalType" android:textIsSelectable="false"
-                  android:selectAllOnFocus="true" android:focusable="true"
-                  android:text="E"/>
+        <AutoCompleteTextView android:layout_width="175dp" android:layout_height="wrap_content"
+                              android:inputType="textAutoComplete|text|textCapCharacters"
+                              android:ems="10" android:id="@+id/fldGoalType"
+                              android:textIsSelectable="false"
+                              android:selectAllOnFocus="true" android:focusable="true"
+                              android:imeOptions="actionNext"
+                              android:singleLine="true"
+                              android:text="E" android:autoText="false"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"

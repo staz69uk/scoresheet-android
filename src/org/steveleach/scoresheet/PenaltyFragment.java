@@ -3,6 +3,7 @@ package org.steveleach.scoresheet;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,14 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         penaltyField = (AutoCompleteTextView)view.findViewById(R.id.fldPenaltyCode);
         playerField = (EditText)view.findViewById(R.id.fldPenaltyPlayer);
         minutesField = (EditText)view.findViewById(R.id.fldPenaltyMins);
+
+        clockField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(4) });
+        periodField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(1) });
+        penaltyField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(5) });
+        minutesField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(2) });
+        playerField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
+
+        clockField.setOnFocusChangeListener(new MinLengthFocusChangeListener(3));
 
         String[] penaltyCodes = getActivity().getResources().getStringArray(R.array.penaltyCodes);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line,penaltyCodes);

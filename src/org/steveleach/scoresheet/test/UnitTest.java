@@ -66,6 +66,18 @@ public class UnitTest {
         event.setPeriod(3);
         assertEquals("47:26", event.gameTimeFromClock("1234"));
         assertEquals("59:49", event.gameTimeFromClock("0011"));
+        assertEquals("59:49", event.gameTimeFromClock("011"));
+    }
+
+    @Test
+    public void testBadClockConversions() {
+        GameEvent event = new GameEvent();
+        event.setPeriod(1);
+        assertEquals("00:00", event.gameTimeFromClock(null));
+        assertEquals("00:00", event.gameTimeFromClock(""));
+        assertEquals("00:00", event.gameTimeFromClock("Hello"));
+        assertEquals("00:00", event.gameTimeFromClock("12"));
+        assertEquals("00:00", event.gameTimeFromClock("12:34"));
     }
 
     @Test

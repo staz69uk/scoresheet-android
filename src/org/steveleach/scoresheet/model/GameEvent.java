@@ -75,17 +75,28 @@ public class GameEvent {
         setGameTime(gameTimeFromClock(clockTime));
     }
 
-    public String gameTimeFromClock(final String clockTime) {
-        if (clockTime.length() != 4) {
-            throw new IllegalArgumentException("Clock time must be 4 digits");
+    public String gameTimeFromClock(String clockTime) {
+        if ((clockTime == null) || (clockTime.length() < 3)) {
+            return "00:00";
         }
-        int mins = Integer.parseInt(clockTime.substring(0,2));
-        int secs = Integer.parseInt(clockTime.substring(2,4));
-        int remainingSecs = mins * 60 + secs;
-        int totalSecsPlayed = 20 * 60 - remainingSecs + ((period-1)*20*60);
-        int minsPlayed = totalSecsPlayed / 60;
-        int secsPlayed = totalSecsPlayed % 60;
-        return String.format("%02d:%02d",minsPlayed,secsPlayed);
+        if (clockTime.length() == 3) {
+            clockTime = "0" + clockTime;
+        }
+        try {
+            int mins = getIntValue(clockTime, 0, 2);
+            int secs = getIntValue(clockTime, 2, 4);
+            int remainingSecs = mins * 60 + secs;
+            int totalSecsPlayed = 20 * 60 - remainingSecs + ((period - 1) * 20 * 60);
+            int minsPlayed = totalSecsPlayed / 60;
+            int secsPlayed = totalSecsPlayed % 60;
+            return String.format("%02d:%02d", minsPlayed, secsPlayed);
+        } catch (NullPointerException | NumberFormatException e) {
+            return "00:00";
+        }
+    }
+
+    public int getIntValue(String text, int start, int end) {
+        return Integer.parseInt(text.substring(start,end));
     }
 
 }
