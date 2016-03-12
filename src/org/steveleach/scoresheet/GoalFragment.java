@@ -48,6 +48,9 @@ public class GoalFragment extends Fragment implements ModelAware {
         goalTypeField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
 
         clockField.setOnFocusChangeListener(new MinLengthFocusChangeListener(3));
+        scorerField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
+        periodField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
+        goalTypeField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
 
         String[] goalCodes = getActivity().getResources().getStringArray(R.array.goalCodes);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line,goalCodes);

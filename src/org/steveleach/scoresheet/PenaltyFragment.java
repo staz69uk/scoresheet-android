@@ -54,6 +54,10 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         playerField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
 
         clockField.setOnFocusChangeListener(new MinLengthFocusChangeListener(3));
+        playerField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
+        periodField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
+        minutesField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
+        penaltyField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
 
         String[] penaltyCodes = getActivity().getResources().getStringArray(R.array.penaltyCodes);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line,penaltyCodes);
