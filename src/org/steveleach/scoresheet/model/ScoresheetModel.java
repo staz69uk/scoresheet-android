@@ -11,6 +11,10 @@ public class ScoresheetModel {
     private Team awayTeam = new Team("Away");
     private Date gameDateTime = new Date();
     private String gameLocation = "";
+    private String competition = "";
+    private List<GameOfficial> officials = new LinkedList<>();
+    private int homeTimeouts = 0;
+    private int awayTimeouts = 0;
 
     public void addEvent(GameEvent event) {
         events.add(event);
@@ -90,6 +94,38 @@ public class ScoresheetModel {
             }
         }
         return period;
+    }
+
+    public String getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(String competition) {
+        this.competition = competition;
+    }
+
+    public List<GameOfficial> getOfficials() {
+        return officials;
+    }
+
+    public void setOfficials(List<GameOfficial> officials) {
+        this.officials = officials;
+    }
+
+    public int getHomeTimeouts() {
+        return homeTimeouts;
+    }
+
+    public void setHomeTimeouts(int homeTimeouts) {
+        this.homeTimeouts = homeTimeouts;
+    }
+
+    public int getAwayTimeouts() {
+        return awayTimeouts;
+    }
+
+    public void setAwayTimeouts(int awayTimeouts) {
+        this.awayTimeouts = awayTimeouts;
     }
 
     public String fullReport() {
