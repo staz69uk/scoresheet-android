@@ -3,10 +3,7 @@ package org.steveleach.scoresheet.test;
 import org.json.JSONException;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.when;
 
@@ -182,5 +179,41 @@ public class UnitTest {
     public void testPeriodEnd() {
         PeriodEndEvent event = new PeriodEndEvent(2, new GameRules());
         assertEquals("40:00 - Period 2 ended", event.toString());
+    }
+
+    @Test
+    public void testModelExtras() {
+        ScoresheetModel model = new ScoresheetModel();
+        model.addOfficial(GameOfficial.Role.REFEREE, "Fred");
+        assertEquals(1, model.getOfficials().size());
+        assertEquals(GameOfficial.Role.REFEREE, model.getOfficials().get(0).getRole());
+
+        assertEquals(3,model.getRules().getRegulationPeriods());
+        assertEquals(20,model.getRules().getPeriodMinutes());
+        assertEquals(5,model.getRules().getOvertimeMinutes());
+        assertFalse(model.getRules().isAllowTie());
+
+        model.getHomeTeam().getPlayers().put(25,"John Smith");
+        model.getHomeTeam().getPlayers().put(57,"John Johnson");
+        assertEquals(2, model.getHomeTeam().getPlayers().size());
+
+        model.setHomeTeam(new Team());
+        model.setAwayTeam(new Team());
+        model.setRules(new GameRules());
+
+        new ModelManager();
+
+        PenaltyEvent event = new PenaltyEvent();
+        event.setGameTime(null);
+        assertEquals("00:00", event.finishTime());
+    }
+
+    @Test
+    public void validateBeans() {
+        BeanTester tester = new BeanTester();
+        tester.testBean(GameRules.class);
+        tester.testBean(GameOfficial.class);
+        tester.testBean(Team.class);
+        tester.testBean(ScoresheetModel.class);
     }
 }

@@ -29,8 +29,4 @@ public class Team {
     public Map<Integer, String> getPlayers() {
         return players;
     }
-
-    public void setPlayers(Map<Integer, String> players) {
-        this.players = players;
-    }
 }

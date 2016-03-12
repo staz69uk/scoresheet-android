@@ -9,7 +9,7 @@ public class GameOfficial {
 
     private String name;
 
-    private enum Role {
+    public enum Role {
         REFEREE, LINESMAN, SUPERVISOR, SCORER, TIMEKEEPER, GOALJUDGE
     }
 
@@ -18,8 +18,9 @@ public class GameOfficial {
     }
 
     public GameOfficial(Role role, String name) {
-        this.role = role;
-        this.name = name;
+        this();
+        setRole(role);
+        setName(name);
     }
 
     public Role getRole() {

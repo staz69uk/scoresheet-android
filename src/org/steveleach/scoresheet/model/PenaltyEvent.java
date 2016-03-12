@@ -34,7 +34,7 @@ public class PenaltyEvent extends GameEvent {
         return String.format("%s - %s %s %dm (%s) for %s (%s)", gameTime, team, eventType, minutes, subType, player, finishTime());
     }
 
-    private String finishTime() {
+    public String finishTime() {
         try {
             String startTime = getGameTime();
             int mins = Integer.parseInt(startTime.substring(0, 2));

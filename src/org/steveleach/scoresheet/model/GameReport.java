@@ -61,7 +61,6 @@ public class GameReport {
                 int periodIndex = event.getPeriod()-1;
                 if (event.getTeam().equals(model.getHomeTeam().getName())) {
                     homeMins[periodIndex] += penalty.getMinutes();
-
                 } else {
                     awayMins[periodIndex] += penalty.getMinutes();
                 }

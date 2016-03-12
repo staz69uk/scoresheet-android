@@ -109,10 +109,6 @@ public class ScoresheetModel {
         return officials;
     }
 
-    public void setOfficials(List<GameOfficial> officials) {
-        this.officials = officials;
-    }
-
     public int getHomeTimeouts() {
         return homeTimeouts;
     }
@@ -139,5 +135,9 @@ public class ScoresheetModel {
 
     public void setRules(GameRules rules) {
         this.rules = rules;
+    }
+
+    public void addOfficial(GameOfficial.Role role, String name) {
+        officials.add(new GameOfficial(role,name));
     }
 }
