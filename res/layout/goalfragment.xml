@@ -18,7 +18,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:weightSum="1" android:padding="2dp"
+              android:layout_height="match_parent" android:weightSum="1"
               android:theme="@style/AppTheme">
 
     <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="@string/goalScoredTitle"
             android:id="@+id/txtGoalScoredTitle" android:editable="false"
-            android:padding="3dp" style="@style/AppHeader"/>
+            style="@style/AppHeader"/>
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

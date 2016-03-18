@@ -205,7 +205,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         version.setText("Version " + getVersionName());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(R.mipmap.ic_launcher_ih);
+        builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle(R.string.app_name);
         builder.setView(messageView);
         builder.create();

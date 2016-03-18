@@ -23,7 +23,6 @@
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
               android:text="Penalty"
               android:id="@+id/txtPenaltyTitle" android:editable="false"
-              android:padding="3dp"
               android:layout_gravity="center_horizontal" style="@style/AppHeader"/>
     <ScrollView
             android:layout_width="match_parent"
