@@ -55,21 +55,21 @@ public class ReportFragment extends Fragment implements ModelAware {
         TextView title = (TextView)view.findViewById(R.id.reportTitle);
         title.setText(this.title);
 
-        Button copyAllButton = (Button)view.findViewById(R.id.btnCopyAll);
-        copyAllButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doCopyAll();
-            }
-        });
-
-        Button saveButton = (Button)view.findViewById(R.id.btnReportSave);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doSave();
-            }
-        });
+//        Button copyAllButton = (Button)view.findViewById(R.id.btnCopyAll);
+//        copyAllButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                doCopyAll();
+//            }
+//        });
+//
+//        Button saveButton = (Button)view.findViewById(R.id.btnReportSave);
+//        saveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                doSave();
+//            }
+//        });
 
         return view;
     }

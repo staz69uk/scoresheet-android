@@ -36,8 +36,8 @@
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_gravity="center_horizontal">
                 <TextView android:layout_width="200dp" android:layout_height="wrap_content"
-                          android:textAppearance="?android:attr/textAppearanceLarge" android:text="Period:           "
-                          android:id="@+id/textView10" android:textColor="#a7a7a7"/>
+                          android:text="Period:           "
+                          android:id="@+id/textView10" android:textColor="@color/appdark"/>
                 <EditText android:layout_width="109dp" android:layout_height="wrap_content" android:inputType="number"
                           android:ems="10" android:id="@+id/fldPenaltyPeriod" android:textIsSelectable="false"
                           android:selectAllOnFocus="false" android:focusable="true"
@@ -46,8 +46,8 @@
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"
             >
                 <TextView android:layout_width="200dp" android:layout_height="wrap_content"
-                          android:textAppearance="?android:attr/textAppearanceLarge" android:text="Game clock:"
-                          android:id="@+id/textView11" android:textColor="#a7a7a7"/>
+                          android:text="Game clock:"
+                          android:id="@+id/textView11" android:textColor="@color/appdark"/>
                 <EditText android:layout_width="240dp" android:layout_height="wrap_content" android:inputType="number"
                           android:ems="10" android:id="@+id/fldPenaltyClock" android:textIsSelectable="false"
                           android:selectAllOnFocus="false" android:focusable="true"
@@ -59,8 +59,8 @@
                     android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
             >
                 <TextView android:layout_width="200dp" android:layout_height="wrap_content"
-                          android:textAppearance="?android:attr/textAppearanceLarge" android:text="Minutes:"
-                          android:id="@+id/textView12" android:textColor="#a7a7a7"/>
+                          android:text="Minutes:"
+                          android:id="@+id/textView12" android:textColor="@color/appdark"/>
                 <EditText android:layout_width="105dp" android:layout_height="wrap_content" android:inputType="number"
                           android:ems="10" android:id="@+id/fldPenaltyMins"
                           android:textIsSelectable="false" android:selectAllOnFocus="true"
@@ -69,8 +69,8 @@
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp"
             >
                 <TextView android:layout_width="200dp" android:layout_height="wrap_content"
-                          android:textAppearance="?android:attr/textAppearanceLarge" android:text="Penalty:"
-                          android:id="@+id/textView11a" android:textColor="#a7a7a7"/>
+                          android:text="Penalty:"
+                          android:id="@+id/textView11a" android:textColor="@color/appdark"/>
                 <AutoCompleteTextView android:layout_width="212dp" android:layout_height="wrap_content" android:inputType="textAutoComplete|text|textCapCharacters"
                           android:ems="10" android:id="@+id/fldPenaltyCode"
                           android:textIsSelectable="false"
@@ -82,8 +82,8 @@
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp"
             >
                 <TextView android:layout_width="200dp" android:layout_height="wrap_content"
-                          android:textAppearance="?android:attr/textAppearanceLarge" android:text="Player:"
-                          android:id="@+id/txtPlayer" android:textColor="#a7a7a7"/>
+                          android:text="Player:"
+                          android:id="@+id/txtPlayer" android:textColor="@color/appdark"/>
                 <EditText android:layout_width="107dp" android:layout_height="wrap_content" android:inputType="number"
                           android:ems="10" android:id="@+id/fldPenaltyPlayer"/>
             </LinearLayout>

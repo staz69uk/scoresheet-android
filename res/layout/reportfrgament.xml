@@ -27,17 +27,6 @@
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal">
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Copy All"
-                android:id="@+id/btnCopyAll" android:layout_gravity="right|top" style="@style/AppButton"
-                android:paddingLeft="30dp" android:paddingRight="30dp"/>
-        <Button
-                android:layout_width="102dp"
-                android:layout_height="wrap_content"
-                android:text="Save"
-                android:id="@+id/btnReportSave" android:layout_gravity="left|top" android:visibility="invisible"/>
     </FrameLayout>
     <TextView
             android:layout_width="fill_parent"

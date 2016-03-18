@@ -35,7 +35,7 @@
                 android:layout_width="59dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Small"
+                android:text="@string/period"
                 android:id="@+id/textView2" android:layout_gravity="center_horizontal|top" android:textStyle="italic"
                 android:textSize="20dp" android:textAlignment="center"/>
         <TextView

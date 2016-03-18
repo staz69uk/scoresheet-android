@@ -26,11 +26,11 @@
     </style>
     <style name="AppButton" parent="@android:style/Widget.Holo.Light.Button">
         <item name="android:background">@color/appblue</item>
-        <item name="android:padding">2dp</item>
-        <item name="android:layout_margin">2dp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:layout_margin">4dp</item>
     </style>
     <style name="AppHeader" parent="@android:style/Widget.Holo.Light.TextView">
         <item name="android:background">@color/appgrey</item>
-        <item name="android:padding">4dip</item>
+        <item name="android:padding">6dip</item>
     </style>
 </resources>
