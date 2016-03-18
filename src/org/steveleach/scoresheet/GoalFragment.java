@@ -18,16 +18,18 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import org.steveleach.scoresheet.model.GoalEvent;
 import org.steveleach.scoresheet.model.ModelAware;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.model.ScoresheetModel;
+
+import static android.view.inputmethod.EditorInfo.*;
 
 /**
  * Created by steve on 01/03/16.
@@ -53,6 +55,8 @@ public class GoalFragment extends Fragment implements ModelAware {
         EditText assist1Field = (EditText)view.findViewById(R.id.fldAssist1);
         EditText assist2Field = (EditText)view.findViewById(R.id.fldAssist2);
         AutoCompleteTextView goalTypeField = (AutoCompleteTextView)view.findViewById(R.id.fldGoalType);
+
+        //goalTypeField.setImeOptions(IME_ACTION_NEXT|TYPE_CLASS_TEXT|TYPE_TEXT_FLAG_CAP_CHARACTERS|TYPE_TEXT_VARIATION_SHORT_MESSAGE|TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
         clockField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(4) });
         periodField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(1) });
