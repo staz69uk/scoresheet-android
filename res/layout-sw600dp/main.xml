@@ -51,7 +51,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="0"
                 android:id="@+id/txtHomeScore" android:layout_gravity="left|bottom" android:textAlignment="center"
-                android:typeface="sans" android:textColor="#2dff21" android:textStyle="bold"
+                android:typeface="sans" android:textColor="@color/appblue" android:textStyle="bold"
                 android:gravity="center" android:textSize="40dp"/>
         <TextView
                 android:layout_width="120dp"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="0"
-                android:id="@+id/txtAwayScore" android:layout_gravity="right|bottom" android:textColor="#ff132a"
+                android:id="@+id/txtAwayScore" android:layout_gravity="right|bottom" android:textColor="@color/appblue"
                 android:textAlignment="center" android:textStyle="bold" android:numeric="integer"
                 android:singleLine="true" android:gravity="center" android:textSize="40dp"/>
     </FrameLayout>

@@ -35,8 +35,8 @@ public class PenaltyEvent extends GameEvent {
         super.team = team;
         super.player = player;
         this.minutes = minutes;
-    }
 
+}
     public int getMinutes() {
         return minutes;
     }

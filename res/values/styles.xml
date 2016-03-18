@@ -16,8 +16,20 @@
 -->
 
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme">
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowActionBar">true</item>
+        <item name="android:actionBarStyle">@style/AppActionBar</item>
+    </style>
+    <style name="AppActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/appblue</item>
+    </style>
+    <style name="AppButton" parent="@android:style/Widget.Holo.Light.Button">
+        <item name="android:background">@color/appblue</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+    <style name="AppHeader" parent="@android:style/Widget.Holo.Light.TextView">
+        <item name="android:background">@color/appgrey</item>
     </style>
 </resources>

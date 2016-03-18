@@ -18,15 +18,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:weightSum="1" android:padding="2dp">
+              android:layout_height="match_parent" android:weightSum="1" android:padding="2dp"
+              android:theme="@style/AppTheme">
 
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/goalScoredTitle"
             android:id="@+id/txtGoalScoredTitle" android:editable="false"
-            android:background="#667e7e7e" android:padding="3dp"/>
+            android:padding="3dp" style="@style/AppHeader"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -36,7 +36,9 @@
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Period:           "
                   android:id="@+id/txtPeriod" android:textColor="#a7a7a7"
         />
-        <EditText android:layout_width="80dp" android:layout_height="wrap_content" android:inputType="number"
+        <EditText android:layout_width="80dp" android:layout_height="wrap_content"
+                  android:inputType="number"
+                  android:imeOptions="actionNext"
                   android:ems="10" android:id="@+id/fldPeriod" android:textIsSelectable="false"
                   android:selectAllOnFocus="false" android:focusable="true"
                   android:numeric="integer" android:layout_weight="0.04"/>
@@ -57,6 +59,7 @@
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:imeOptions="actionNext"
                 android:ems="10"
                 android:id="@+id/fldClock"
                 android:textIsSelectable="false" android:selectAllOnFocus="false"
@@ -136,6 +139,6 @@
                 android:text="Done"
                 android:id="@+id/btnDone"
                 android:onClick="goalDoneButtonClicked"
-                android:layout_gravity="center_horizontal" style="@style/AppTheme"/>
+                android:layout_gravity="center_horizontal" style="@style/AppButton" android:theme="@style/AppButton"/>
     </LinearLayout>
 </LinearLayout>
