@@ -31,5 +31,6 @@
     </style>
     <style name="AppHeader" parent="@android:style/Widget.Holo.Light.TextView">
         <item name="android:background">@color/appgrey</item>
+        <item name="android:padding">4dip</item>
     </style>
 </resources>

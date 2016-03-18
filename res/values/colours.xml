@@ -2,4 +2,5 @@
 <resources>
     <color name="appblue">#33b5e5</color>
     <color name="appgrey">#dddddd</color>
+    <color name="appdark">#222233</color>
 </resources>

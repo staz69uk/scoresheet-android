@@ -27,107 +27,116 @@
             android:text="@string/goalScoredTitle"
             android:id="@+id/txtGoalScoredTitle" android:editable="false"
             android:padding="3dp" style="@style/AppHeader"/>
-    <LinearLayout
-            android:orientation="horizontal"
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp" android:weightSum="1">
-        <TextView android:layout_width="200dp" android:layout_height="wrap_content"
-                  android:textAppearance="?android:attr/textAppearanceLarge" android:text="Period:           "
-                  android:id="@+id/txtPeriod" android:textColor="#a7a7a7"
-        />
-        <EditText android:layout_width="80dp" android:layout_height="wrap_content"
-                  android:inputType="number"
-                  android:imeOptions="actionNext"
-                  android:ems="10" android:id="@+id/fldPeriod" android:textIsSelectable="false"
-                  android:selectAllOnFocus="false" android:focusable="true"
-                  android:numeric="integer" android:layout_weight="0.04"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:padding="4dp">
-        <TextView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Game clock:"
-                android:id="@+id/textView7" android:textColor="#a7a7a7"
-        />
-        <EditText
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:imeOptions="actionNext"
-                android:ems="10"
-                android:id="@+id/fldClock"
-                android:textIsSelectable="false" android:selectAllOnFocus="false"
-                android:focusable="true" android:numeric="integer"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:padding="4dp">
-        <TextView android:layout_width="200dp" android:layout_height="wrap_content"
-                  android:textAppearance="?android:attr/textAppearanceLarge" android:text="Goal type:"
-                  android:id="@+id/textView9" android:textColor="#a7a7a7"/>
-        <AutoCompleteTextView android:layout_width="175dp" android:layout_height="wrap_content"
-                              android:inputType="textAutoComplete|text|textCapCharacters"
-                              android:ems="10" android:id="@+id/fldGoalType"
-                              android:textIsSelectable="false"
-                              android:selectAllOnFocus="true" android:focusable="true"
-                              android:imeOptions="actionNext"
-                              android:singleLine="true"
-                              android:text="E" android:autoText="false"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal">
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:padding="4dp">
-        <TextView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Scored by:   "
-                android:id="@+id/textView4" android:textColor="#a7a7a7"
-        />
-        <EditText
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/fldScoredBy"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:padding="4dp">
-        <TextView android:layout_width="200dp" android:layout_height="wrap_content"
-                  android:textAppearance="?android:attr/textAppearanceLarge" android:text="Assist 1:"
-                  android:id="@+id/textView6" android:textColor="#a7a7a7"/>
-        <EditText android:layout_width="120dp" android:layout_height="wrap_content" android:inputType="number"
-                  android:ems="10" android:id="@+id/fldAssist1"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:padding="4dp">
-        <TextView android:layout_width="200dp" android:layout_height="wrap_content"
-                  android:textAppearance="?android:attr/textAppearanceLarge" android:text="Assist 2:"
-                  android:id="@+id/textView13" android:textColor="#a7a7a7"/>
-        <EditText android:layout_width="120dp" android:layout_height="wrap_content" android:inputType="number"
-                  android:ems="10" android:id="@+id/fldAssist2"/>
-    </LinearLayout>
+            android:id="@+id/scrollView" android:layout_gravity="center_horizontal">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp" android:weightSum="1">
+                <TextView android:layout_width="200dp" android:layout_height="wrap_content"
+                          android:textAppearance="?android:attr/textAppearanceLarge" android:text="Period:           "
+                          android:id="@+id/txtPeriod" android:textColor="#a7a7a7"
+                />
+                <EditText android:layout_width="80dp" android:layout_height="wrap_content"
+                          android:inputType="number"
+                          android:imeOptions="actionNext"
+                          android:ems="10" android:id="@+id/fldPeriod" android:textIsSelectable="false"
+                          android:selectAllOnFocus="false" android:focusable="true"
+                          android:numeric="integer" android:layout_weight="0.04"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                    android:padding="4dp">
+                <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Game clock:"
+                        android:id="@+id/textView7" android:textColor="#a7a7a7"
+                />
+                <EditText
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:imeOptions="actionNext"
+                        android:ems="10"
+                        android:id="@+id/fldClock"
+                        android:textIsSelectable="false" android:selectAllOnFocus="false"
+                        android:focusable="true" android:numeric="integer"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                    android:padding="4dp">
+                <TextView android:layout_width="200dp" android:layout_height="wrap_content"
+                          android:textAppearance="?android:attr/textAppearanceLarge" android:text="Goal type:"
+                          android:id="@+id/textView9" android:textColor="#a7a7a7"/>
+                <AutoCompleteTextView android:layout_width="175dp" android:layout_height="wrap_content"
+                                      android:inputType="textAutoComplete|text|textCapCharacters"
+                                      android:ems="10" android:id="@+id/fldGoalType"
+                                      android:textIsSelectable="false"
+                                      android:selectAllOnFocus="true" android:focusable="true"
+                                      android:imeOptions="actionNext"
+                                      android:singleLine="true"
+                                      android:text="E" android:autoText="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_gravity="center_horizontal">
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                    android:padding="4dp">
+                <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Scored by:   "
+                        android:id="@+id/textView4" android:textColor="#a7a7a7"
+                />
+                <EditText
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/fldScoredBy"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                    android:padding="4dp">
+                <TextView android:layout_width="200dp" android:layout_height="wrap_content"
+                          android:textAppearance="?android:attr/textAppearanceLarge" android:text="Assist 1:"
+                          android:id="@+id/textView6" android:textColor="#a7a7a7"/>
+                <EditText android:layout_width="120dp" android:layout_height="wrap_content" android:inputType="number"
+                          android:ems="10" android:id="@+id/fldAssist1"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                    android:padding="4dp">
+                <TextView android:layout_width="200dp" android:layout_height="wrap_content"
+                          android:textAppearance="?android:attr/textAppearanceLarge" android:text="Assist 2:"
+                          android:id="@+id/textView13" android:textColor="#a7a7a7"/>
+                <EditText android:layout_width="120dp" android:layout_height="wrap_content" android:inputType="number"
+                          android:ems="10" android:id="@+id/fldAssist2"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -135,10 +144,11 @@
             android:padding="4dp">
         <Button
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:text="Done"
                 android:id="@+id/btnDone"
                 android:onClick="goalDoneButtonClicked"
-                android:layout_gravity="center_horizontal" style="@style/AppButton" android:theme="@style/AppButton"/>
+                android:layout_gravity="center_horizontal" style="@style/AppButton"
+                android:theme="@style/AppButton"/>
     </LinearLayout>
 </LinearLayout>

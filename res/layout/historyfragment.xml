@@ -23,10 +23,9 @@
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/gameHistoryTitle"
-            android:id="@+id/textView5" android:textSize="20dp" android:layout_weight="0.06"
-            style="@style/AppHeader"/>
+            android:id="@+id/textView5"
+            style="@style/AppHeader" android:textIsSelectable="false"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -72,12 +71,12 @@
     </LinearLayout>
     <ListView
             android:layout_width="fill_parent"
-            android:layout_height="262dp"
-            android:id="@+id/historyList" android:choiceMode="none" android:layout_weight="0.59"/>
+            android:layout_height="fill_parent"
+            android:id="@+id/historyList" android:choiceMode="none" android:layout_weight="1"/>
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.04" android:layout_gravity="bottom">
+            android:layout_gravity="bottom">
         <Button android:layout_width="180dp" android:layout_height="wrap_content" android:text="@string/gameReportButton"
                 android:id="@+id/btnReport" android:nestedScrollingEnabled="false"
                 android:layout_gravity="center" android:layout_weight="0.03" android:onClick="reportButtonClicked"
