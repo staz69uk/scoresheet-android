@@ -261,6 +261,13 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         updateScores();
         model.sortEvents();
         ModelAware visibleFragment = (ModelAware)getFragmentManager().findFragmentByTag(MAIN_FRAGMENT);
+        if (visibleFragment == null) {
+            // This should not happen
+            HistoryFragment fragment = new HistoryFragment();
+            fragment.setModel(model);
+            showFragment(fragment);
+            visibleFragment = fragment;
+        }
         visibleFragment.onModelUpdated(null);
     }
 
