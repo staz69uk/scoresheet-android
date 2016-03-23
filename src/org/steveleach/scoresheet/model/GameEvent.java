@@ -116,4 +116,8 @@ public class GameEvent {
         return Integer.parseInt(text.substring(start,end));
     }
 
+    public String reportText() {
+        return this.toString();
+    }
+
 }

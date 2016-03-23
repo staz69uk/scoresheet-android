@@ -61,4 +61,9 @@ public class PenaltyEvent extends GameEvent {
             return "00:00";
         }
     }
+
+    @Override
+    public String reportText() {
+        return String.format("Player %s : %dm for %s, given %s, start %s, end %s", getPlayer(), getMinutes(), getSubType(), getGameTime(), getGameTime(), finishTime());
+    }
 }

@@ -87,9 +87,10 @@ public class UnitTest {
         String report = model.fullReport();
 
         //System.out.println(report);
-        assertTrue(report.contains("01:30 - Away Goal (E) scored by 2  from 1"));
+        assertTrue(report.contains("01:30 - Away Goal (E) scored by 2 from 1"));
         assertTrue(report.contains("2 : goals=1, assists=0, pen.mins=2"));
         assertTrue(report.contains("Home : 2 1 0 0 = 3"));
+        assertTrue(report.contains("Player 2 : 2m for Hook, given 04:45, start 04:45, end 06:45"));
     }
 
     @Test
@@ -206,6 +207,17 @@ public class UnitTest {
         PenaltyEvent event = new PenaltyEvent();
         event.setGameTime(null);
         assertEquals("00:00", event.finishTime());
+    }
+
+    @Test
+    public void validatePenalty() {
+        PenaltyEvent event = new PenaltyEvent();
+        event.setPeriod(2);
+        event.setClockTime("1500",new GameRules());
+        event.setMinutes(10);
+        event.setPlayer("21");
+        event.setSubType("FIGHT");
+        assertEquals("25:00 - Home Penalty 10m (FIGHT) for 21 (35:00)", event.toString());
     }
 
     @Test

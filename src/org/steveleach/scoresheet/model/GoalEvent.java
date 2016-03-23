@@ -60,9 +60,9 @@ public class GoalEvent extends GameEvent {
     public String toString() {
         String assists = "";
         if (assist2 > 0) {
-            assists = String.format(" from %d, %d", assist1, assist2);
+            assists = String.format("from %d, %d", assist1, assist2);
         } else if (assist1 > 0) {
-            assists = String.format(" from %d", assist1);
+            assists = String.format("from %d", assist1);
         }
         return String.format("%s - %s %s (%s) scored by %s %s", gameTime, team, eventType, subType, getPlayer(), assists);
     }

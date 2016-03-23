@@ -162,7 +162,7 @@ public class GameReport {
     private void reportEvents(Class<?> eventClass, String team, StringBuilder sb) {
         for (GameEvent event : model.getEvents()) {
             if (event.getClass().equals(eventClass) && (event.getTeam().equals(team))) {
-                sb.append(event.toString());
+                sb.append(event.reportText());
                 sb.append("\n");
             }
         }
