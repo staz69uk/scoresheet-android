@@ -33,35 +33,35 @@ public class GameReport {
         String sep = "\n";
         StringBuilder sb = new StringBuilder();
 
-        sb.append("HOME GOALS\n");
-        reportEvents(GoalEvent.class, model.getHomeTeam().getName(), sb);
-        sb.append(sep);
-
-        sb.append("HOME PENALTIES\n");
-        reportEvents(PenaltyEvent.class, model.getHomeTeam().getName(), sb);
-        sb.append(sep);
-
-        sb.append("AWAY GOALS\n");
-        reportEvents(GoalEvent.class, model.getAwayTeam().getName(), sb);
-        sb.append(sep);
-
-        sb.append("AWAY PENALTIES\n");
-        reportEvents(PenaltyEvent.class, model.getAwayTeam().getName(), sb);
-        sb.append(sep);
-
-        sb.append("HOME PLAYERS\n");
+        sb.append("HOME - TEAM\n");
         reportPlayers(model.getHomeTeam().getName(), sb);
         sb.append(sep);
 
-        sb.append("AWAY PLAYERS\n");
+        sb.append("SCORING - HOME\n");
+        reportEvents(GoalEvent.class, model.getHomeTeam().getName(), sb);
+        sb.append(sep);
+
+        sb.append("PENALTIES - HOME\n");
+        reportEvents(PenaltyEvent.class, model.getHomeTeam().getName(), sb);
+        sb.append(sep);
+
+        sb.append("AWAY - TEAM\n");
         reportPlayers(model.getAwayTeam().getName(), sb);
+        sb.append(sep);
+
+        sb.append("SCORING - AWAY\n");
+        reportEvents(GoalEvent.class, model.getAwayTeam().getName(), sb);
+        sb.append(sep);
+
+        sb.append("PENALTIES - AWAY\n");
+        reportEvents(PenaltyEvent.class, model.getAwayTeam().getName(), sb);
         sb.append(sep);
 
         sb.append("PERIOD SCORES\n");
         reportPeriodScores(sb);
         sb.append(sep);
 
-        sb.append("PENALTY TOTALS\n");
+        sb.append("PENALTY MINUTES\n");
         reportPenaltyTotals(sb);
         sb.append(sep);
 

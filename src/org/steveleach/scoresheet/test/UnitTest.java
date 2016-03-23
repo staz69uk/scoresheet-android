@@ -90,7 +90,7 @@ public class UnitTest {
         assertTrue(report.contains("01:30 - Away Goal (E) scored by 2 from 1"));
         assertTrue(report.contains("2 : goals=1, assists=0, pen.mins=2"));
         assertTrue(report.contains("Home : 2 1 0 0 = 3"));
-        assertTrue(report.contains("Player 2 : 2m for Hook, given 04:45, start 04:45, end 06:45"));
+        assertTrue(report.contains("P 2, 2m for Hook @ 04:45, 04:45 - 06:45"));
     }
 
     @Test
