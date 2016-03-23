@@ -94,7 +94,7 @@
                 <Button
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Done"
+                        android:text="@string/doneButtonText"
                         android:id="@+id/btnPenaltyDone" android:layout_weight="0.09" style="@style/AppButton"/>
             </LinearLayout>
         </LinearLayout>
