@@ -14,6 +14,8 @@
 */
 package org.steveleach.scoresheet.model;
 
+import org.steveleach.scoresheet.io.WeakList;
+
 import java.util.*;
 
 /**
@@ -32,6 +34,7 @@ public class ScoresheetModel {
     private GameRules rules = new GameRules();
     private int homeTimeouts = 0;
     private int awayTimeouts = 0;
+    private WeakList<ModelAware> listeners = new WeakList<>();
 
     public void addEvent(GameEvent event) {
         events.add(event);
@@ -156,4 +159,35 @@ public class ScoresheetModel {
     public void addOfficial(GameOfficial.Role role, String name) {
         officials.add(new GameOfficial(role,name));
     }
+
+    /**
+     * Adds a new listener to this model.
+     *
+     * The listener will be notified of model changes.
+     * Listeners are held via weak references, and so the listener list
+     * will not prevent the listener being garbage collected.
+     *
+     * @param listener
+     */
+    public void addListener(ModelAware listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Notify all listeners that the model has been updated.
+     *
+     * @param update
+     */
+    public void notifyListeners(ModelUpdate update) {
+        listeners.removeDeadItems();
+
+        for (ModelAware listener : listeners) {
+            if (listener != null) {
+                listener.onModelUpdated(update);
+            }
+        }
+    }
+
+
+
 }

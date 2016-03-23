@@ -16,6 +16,9 @@ import org.steveleach.scoresheet.io.FileManager;
 import org.steveleach.scoresheet.io.JsonCodec;
 import org.steveleach.scoresheet.model.*;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by steve on 05/03/16.
  */
@@ -227,5 +230,30 @@ public class UnitTest {
         tester.testBean(GameOfficial.class);
         tester.testBean(Team.class);
         tester.testBean(ScoresheetModel.class);
+    }
+
+    @Test
+    public void testModelListener() {
+        ScoresheetModel model = new ScoresheetModel();
+
+        final AtomicBoolean flag = new AtomicBoolean(false);
+
+        ModelAware listener = new ModelAware() {
+            @Override
+            public void setModel(ScoresheetModel model) {
+                // nothing to see here
+            }
+
+            @Override
+            public void onModelUpdated(ModelUpdate update) {
+                flag.set(true);
+            }
+        };
+
+        model.addListener(listener);
+
+        model.notifyListeners(new ModelUpdate("Updated"));
+
+        assertTrue(flag.get());
     }
 }
