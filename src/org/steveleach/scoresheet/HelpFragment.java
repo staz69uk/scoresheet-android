@@ -21,19 +21,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import java.util.Locale;
+
 /**
  * Created by steve on 26/03/16.
  */
 public class HelpFragment extends Fragment {
     private View view;
+    public static final String DEFAULT_LANGUAGE = "en";
+    private String[] supportedLanguages = {DEFAULT_LANGUAGE};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.helpfragment, container, false);
 
         WebView webView = (WebView) view.findViewById(R.id.helpWebView);
-        webView.loadUrl("file:///android_asset/html/help-en.html");
+        webView.loadUrl("file:///android_asset/html/help-"+getSupportedLanguage()+".html");
 
         return view;
+    }
+
+    /**
+     * Returns the current device default language, if it is supported.
+     * Returns "en" otherwise.
+     */
+    private String getSupportedLanguage() {
+        String language = Locale.getDefault().getLanguage();
+
+        boolean isSupported = false;
+        for (String lang : supportedLanguages) {
+            if (lang.equals(language)) {
+                isSupported = true;
+            }
+        }
+        if (! isSupported) {
+            language = DEFAULT_LANGUAGE;
+        }
+        return language;
     }
 }
