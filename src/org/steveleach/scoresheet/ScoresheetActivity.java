@@ -185,9 +185,17 @@ public class ScoresheetActivity extends Activity implements ModelAware {
             case R.id.menuAbout:
                 showAbout();
                 return true;
+            case R.id.menuHelp:
+                showHelp();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showHelp() {
+        HelpFragment fragment = new HelpFragment();
+        showFragment(fragment);
     }
 
     private void showAbout() {

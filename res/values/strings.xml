@@ -31,6 +31,7 @@
     <string name="gameHistoryTitle">Game History</string>
     <string name="gameReportButton">GAME REPORT</string>
     <string name="goalScoredTitle">Goal Scored</string>
+    <string name="helpTitle">Ice Hockey Scoresheet Help</string>
     <string name="scoresheetFolder">Scoresheets</string>
     <string-array name="goalCodes">
         <item>E</item>

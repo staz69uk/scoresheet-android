@@ -1,0 +1,204 @@
+<html>
+<body>
+<h1>How to use Ice Hockey Scoresheet</h1>
+<h2>Basics</h2>
+<p>
+    The <b>game</b> is recorded as a series of <b>events</b>. There are several types of event&hellip;
+</p>
+<p>
+    * <b>Goal</b> scored (home or away)<br/>
+    * <b>Penalty</b> (home or away)<br/>
+    * <b>End of period</b>
+</p>
+<p>
+    Every event includes the time that it happens; this can be either the <b>clock time</b> within a period
+    (which counts down within the period) or the <b>game time</b>, which counts up from the start of the first period.
+    You record new events using the period and clock time, and they are automatically converted into game time for you.
+</p>
+<p>
+    Once you have recorded the events for the game, the <b>Game Report</b> will display
+    all the details in the format required by the EIHA official score sheet.
+</p>
+<p style="color:red">
+    <b><i>Important</i></b> - make sure you write down the game events on a piece of paper as well as recording them in
+    the scoresheet app. If the app crashes and loses the entire game record you may need to fill in the official
+    scoresheet manually.
+</p>
+<h2>User Interface Layout</h2>
+<p>
+    The <b>scoreboard</b> is shown at the top of the screen, with the home and away goal totals, and the current period.
+    Above the scoreboard is the title bar, which includes the <b>options menu</b>. The options menu lets you start a new game,
+    save or load games, etc.
+</p>
+<p>
+    Below the scoreboard you will normally see the <b>Game History</b>, a list of all the events recorded so far for the
+    game. Between the scoreboard and the events list are a set of buttons for recording new events. Below the events
+    list is the <b>Game Report</b> button which is used to access the game report, with all the information needed to
+    fill in the official scoresheet.
+</p>
+<h3>Adding Events</h3>
+<p>
+    Events are added to the game using the five new event buttons.
+</p>
+<p>
+    * HOME GOAL<br/>
+    * HOME PENALTY<br/>
+    * NEXT (period)<br/>
+    * AWAY GOAL<br/>
+    * AWAY PENALTY
+</p>
+<p>
+    When adding goal or penalty events you will be prompted to enter additional information.
+</p>
+<p>
+    The correct period <i>should</i> have been identified, but you can change it if necessary.
+</p>
+<p>
+    The game clock time should be entered as it appears on the rink's scoreboard, as a four digit number with <i>no
+    punctuation</i>. For example, if the clock shows 15 minutes 27 seconds left in the period, you should enter
+        &quot;1527&quot;.
+    If the clock shows 9:32 remaining, enter &quot;0932&quot; and if there are only 23 seconds left in the period
+        then enter &quot;0023&quot;.
+</p>
+<p>
+    The clock time will be <i>automatically</i> converted to game time (since the start of period 1) when the event is
+    added to the game history.
+</p>
+<h3>Adding Goals</h3>
+<p>
+    The default goal type is &quot;E&quot; (the code for &quot;Even handed&quot;) but you can change this. As you start
+    to type, valid options (E, SH, PP, DP, PS, PG, ENG) will be presented for you to select.
+</p>
+<p>
+    You <i>must</i> enter the player number for the goal scorer. You can also add player numbers for either one or
+    two assists.
+</p>
+<h3>Adding Penalties</h3>
+<p>
+    The default for penalty minutes is 2, but this can be changed as appropriate.
+</p>
+<p>
+    Penalty codes can be entered, and as with goal type valid codes are shown as you type. You can generally just type
+    the first letter or two of the penalty code and then select the correct value from the list. See the end of this
+    help text for a list of valid penalty codes.
+</p>
+<p>
+    You <i>must</i> enter the number of the player receiving the penalty.
+</p>
+<p>
+    Note that the time recorded for the penalty will be used for both the awarded time and the start time; delayed
+    penalties are not currently supported. The end time is calculated automatically.
+</p>
+<h3>Deleting or changing events</h3>
+<p>
+    You can <b>delete</b> events by holding down on them for a second or two in the game history, and then selecting
+    &quot;Yes&quot; at the prompt.
+</p>
+<p>
+    You cannot currently edit and existing event. If you get an event wrong, just delete it and create it again. This
+    works even if the event is not in the current period, as long as you specify the change the period for the event
+    when (re)creating it.
+</p>
+<h2>Game Report</h2>
+<p>
+    The <b>Game Report</b> shows all the information for the game in the format required by the EIHA score sheet...
+</p>
+<p>
+    * Home player stats (goals/assists/penalty minutes)<br/>
+    * Home scoring<br/>
+    * Home penalties<br/>
+    * Away player stats<br/>
+    * Away scoring<br/>
+    * Away penalties<br/>
+    * Period scores<br/>
+    * Period penalty minutes
+</p>
+<p>
+    You can simply copy the information from the game report screen into the written score sheet.
+</p>
+<p>
+    All clock conversions and calculations are performed automatically from the game events.
+</p>
+<h2>Miscellaneous</h2>
+<p>
+    To close this help screen, just use the Android <b>back</b> button.
+</p>
+<p>
+    Don't forget to <b>save</b> regularly using the options menu in case the app crashes.
+    If it does, launch it again and then select <b>Load Game</b> from the options menu.
+</p>
+<p>
+    Loading and saving do not currently require a file name. A history of all previous saves is kept and <i>can</i> be
+    retrieved, though there is no mechanism in the app itself to retrieve old saves.
+</p>
+<p>
+    If the app gets "confused" and doesn't appear to display correctly, try the <b>"Refresh!"</b> option from the options menu.
+</p>
+<p>
+    Don't use the <b>TestData!</b> option. It just adds a set of standard events to the game to help with testing.
+</p>
+<h3>Penalty codes</h3>
+<p>
+    ABUSE
+    ADJ-E
+    ATT-B
+    ATT-K
+    ATT-S
+    ALTRC
+    BENCH
+    BDYCH
+    BOARD
+    BR-ST
+    BUT-E
+    CHARG
+    CHE-B
+    CLIP
+    CROSS
+    DAN-E
+    DELAY
+    DIS-N
+    ELBOW
+    EX-RP
+    F-OFF
+    FAL-P
+    FIGHT
+    GA-MI
+    GR-MI
+    HANDP
+    H-BUT
+    HI-ST
+    HOLD
+    HO-MA
+    HO-ST
+    HOOK
+    IL-EQ
+    IL-ST
+    INTRF
+    INT-S
+    KICK
+    KNEE
+    L-CRE
+    L-PEB
+    L-PLB
+    MATCH
+    MISC
+    MOLST
+    OBS-L
+    PEN-S
+    P-GRE
+    P-HOL
+    P-OUT
+    REFUS
+    ROUGH
+    SLASH
+    SPEAR
+    STA-L
+    THR-P
+    THR-S
+    TOO-M
+    TRIP
+    UN-SP
+    UNN-R
+</p>
+</body>
+</html>
