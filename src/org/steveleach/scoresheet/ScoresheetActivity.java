@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.json.JSONException;
 import org.steveleach.scoresheet.io.AndroidScoresheetStore;
 import org.steveleach.scoresheet.io.FileManager;
 import org.steveleach.scoresheet.io.JsonCodec;
@@ -40,8 +41,11 @@ import org.steveleach.scoresheet.model.*;
  */
 public class ScoresheetActivity extends Activity implements ModelAware {
     public static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
+    public static final String STATE_KEY = "MODEL_JSON";
+    public static final String LOG_TAG = "IHSS";
     private ScoresheetModel model = new ScoresheetModel();
     private FileManager fileManager = new FileManager();
+    private JsonCodec jsonCodec = new JsonCodec();
     private AndroidScoresheetStore scoresheetFolder;
 
     @Override
@@ -49,26 +53,44 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        scoresheetFolder = new AndroidScoresheetStore(fileManager,new JsonCodec(),new SystemContext(getApplicationContext()));
+        scoresheetFolder = new AndroidScoresheetStore(fileManager,jsonCodec,new SystemContext(getApplicationContext()));
 
-        Log.i("Staz", "ScoresheetActivity.onCreate");
+        Log.i(LOG_TAG, "ScoresheetActivity.onCreate");
 
         showHistory();
-
-        if (savedInstanceState != null) {
-            // Reserved
-        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(LOG_TAG, "On resume");
         model.addListener(this);
     }
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.i(LOG_TAG, "ScoresheetActivity.onRestoreInstanceState");
+        String jsonText = savedInstanceState.getString(STATE_KEY);
+        Log.i(LOG_TAG, "JSON size = " + jsonText.length());
+        try {
+            jsonCodec.fromJson(model, jsonText);
+        } catch (JSONException e) {
+            toast("Error parsing json: " + e.getMessage());
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
-        // Reserved
+        Log.i(LOG_TAG, "ScoresheetActivity.onSaveInstanceState");
+        try {
+            String modelJson = jsonCodec.toJson(model);
+            Log.i(LOG_TAG, "JSON size = " + modelJson.length());
+            outState.putCharSequence(STATE_KEY, modelJson);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "Error creating json: " + e.getMessage());
+            toast("Error creating json: " + e.getMessage());
+        }
     }
 
     public void setFileManager(FileManager fileManager) {
@@ -148,7 +170,6 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     @Override
     public void onModelUpdated(ModelUpdate update) {
         updateScores();
-        //refreshModel();
     }
 
     private void updateScores() {
@@ -266,6 +287,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     }
 
     private void toast(String message) {
+        Log.i(LOG_TAG, message);
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 

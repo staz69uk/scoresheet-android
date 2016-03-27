@@ -57,37 +57,12 @@ public class ReportFragment extends Fragment implements ModelAware {
         return view;
     }
 
-    private void doSave() {
-        String result = "Unknown";
-        File dir = getActivity().getFilesDir();
-        try {
-            FileOutputStream output = context().openFileOutput("gamedata.json",Context.MODE_PRIVATE);
-            output.write(report.getText().toString().getBytes());
-            output.close();
-            result = "Saved gamedata.json";
-        } catch (IOException e) {
-            result = "Error saving file";
-        }
-        Toast.makeText(context(), result, Toast.LENGTH_LONG).show();
-    }
-
-    private Context context() {
-        return getActivity().getApplicationContext();
-    }
-
     @Override
     public void onResume() {
         super.onResume();
         if (title.equals(GAME_REPORT)) {
             report.setText(model.fullReport());
         }
-    }
-
-    public void doCopyAll() {
-        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData myClip = ClipData.newPlainText("text", report.getText());
-        clipboard.setPrimaryClip(myClip);
-        Toast.makeText(context(), "Copied to clipboard", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -97,7 +72,9 @@ public class ReportFragment extends Fragment implements ModelAware {
     }
 
     @Override
-    public void onModelUpdated(ModelUpdate update) {}
+    public void onModelUpdated(ModelUpdate update) {
+        report.setText(model.fullReport());
+    }
 
     public void setTitle(String title) {
         this.title = title;
