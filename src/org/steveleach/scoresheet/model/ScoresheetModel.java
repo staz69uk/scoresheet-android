@@ -194,12 +194,18 @@ public class ScoresheetModel {
 
         for (ModelAware listener : listeners) {
             if (listener != null) {
-                // TODO - wrap in an exception handler
-                listener.onModelUpdated(update);
+                notifyListener(listener,update);
             }
         }
     }
 
-
+    private void notifyListener(ModelAware listener, ModelUpdate update) {
+        // Don't let a bad listener spoil everything
+        try {
+            listener.onModelUpdated(update);
+        } catch (RuntimeException e) {
+            // silently ignore
+        }
+    }
 
 }

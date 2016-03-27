@@ -21,8 +21,7 @@ import java.text.SimpleDateFormat;
  *
  * @author Steve Leach
  */
-public class GameEvent {
-    // TODO - make abstract
+public abstract class GameEvent {
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
     protected int period = 0;
     protected String player = "0";
@@ -61,11 +60,6 @@ public class GameEvent {
 
     public void setEventType(String eventType) {
         this.eventType = eventType;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s - %-8s %-8s", gameTime, eventType, team);
     }
 
     public int getPeriod() {

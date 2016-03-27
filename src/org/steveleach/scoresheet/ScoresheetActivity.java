@@ -284,7 +284,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
             fragment.setModel(model);
             showFragment(fragment);
         }
-        model.notifyListeners(new ModelUpdate(""));
+        model.notifyListeners(new ModelUpdate());
     }
 
     public void yesNoDialog(String prompt, Runnable action) {

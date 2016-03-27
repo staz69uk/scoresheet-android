@@ -52,6 +52,17 @@ public class UnitTest {
     @Mock
     SystemContext context;
 
+    public static void addTestEvents(ScoresheetModel model) {
+        GameRules rules = model.getRules();
+        model.addEvent(new GoalEvent(model.getPeriod(),"1950","Home","E",41,13,2,rules));
+        model.addEvent(new GoalEvent(model.getPeriod(),"1830","Away","E",2,1,0,rules));
+        model.addEvent(new PenaltyEvent(model.getPeriod(), "1515", "Away", "Hook", "2", 2,rules));
+        model.addEvent(new GoalEvent(model.getPeriod(),"0824","Home","SH",12,93,41,rules));
+        model.addEvent(new PeriodEndEvent(model.getPeriod(),rules));
+        model.addEvent(new GoalEvent(model.getPeriod(),"1813","Home","PP",24,41,0,rules));
+        model.addEvent(new PenaltyEvent(model.getPeriod(), "1213", "Home", "Fight", "2", 5,rules));
+    }
+
     @Test
     public void validateModel() {
         ScoresheetModel model = new ScoresheetModel();
@@ -74,7 +85,7 @@ public class UnitTest {
     @Test
     public void testClockConversion() {
         GameRules rules = new GameRules();
-        GameEvent event = new GameEvent();
+        GoalEvent event = new GoalEvent();
         event.setPeriod(1);
         assertEquals("00:05", event.gameTimeFromClock("1955", rules));
         assertEquals("15:00", event.gameTimeFromClock("0500", rules));
@@ -91,7 +102,7 @@ public class UnitTest {
     @Test
     public void testBadClockConversions() {
         GameRules rules = new GameRules();
-        GameEvent event = new GameEvent();
+        GoalEvent event = new GoalEvent();
         event.setPeriod(1);
         assertEquals("00:00", event.gameTimeFromClock(null, rules));
         assertEquals("00:00", event.gameTimeFromClock("", rules));
@@ -104,7 +115,7 @@ public class UnitTest {
     @Test
     public void testFullReport() {
         ScoresheetModel model = new ScoresheetModel();
-        ModelManager.addTestEvents(model);
+        addTestEvents(model);
         String report = model.fullReport();
 
         //System.out.println(report);
@@ -131,7 +142,7 @@ public class UnitTest {
     @Test
     public void testSampleData() {
         ScoresheetModel model = new ScoresheetModel();
-        ModelManager.addTestEvents(model);
+        addTestEvents(model);
 
         assertEquals(2, model.getPeriod());
         assertEquals(3, model.getHomeGoals());
@@ -143,7 +154,7 @@ public class UnitTest {
         JsonCodec codec = new JsonCodec();
         ScoresheetModel model1 = new ScoresheetModel();
         model1.setAwayTeam(new Team("Badguys"));
-        ModelManager.addTestEvents(model1);
+        addTestEvents(model1);
 
         assertNotEquals(0, model1.getEvents().size());
 
@@ -193,11 +204,6 @@ public class UnitTest {
     }
 
     @Test
-    public void testGenericGameEvent() {
-        assertEquals("00:00 - Goal     Home    ", new GameEvent().toString());
-    }
-
-    @Test
     public void testPeriodEnd() {
         PeriodEndEvent event = new PeriodEndEvent(2, new GameRules());
         assertEquals("40:00 - Period 2 ended", event.toString());
@@ -223,7 +229,7 @@ public class UnitTest {
         model.setAwayTeam(new Team());
         model.setRules(new GameRules());
 
-        new ModelManager();
+        assertEquals(null, new ModelUpdate().getSummary());
 
         PenaltyEvent event = new PenaltyEvent();
         event.setGameTime(null);
