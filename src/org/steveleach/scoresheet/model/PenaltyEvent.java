@@ -27,10 +27,10 @@ public class PenaltyEvent extends GameEvent {
         eventType = "Penalty";
     }
 
-    public PenaltyEvent(int period, String clockTime, String team, String subType, String player, int minutes, GameRules rules) {
+    public PenaltyEvent(int period, String clockTime, String team, String subType, String player, int minutes) {
         this();
         super.period = period;
-        super.setClockTime(clockTime, rules);
+        super.setClockTime(clockTime);
         super.subType = subType;
         super.team = team;
         super.player = player;

@@ -23,10 +23,12 @@ import java.text.SimpleDateFormat;
  */
 public abstract class GameEvent {
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
+    public static final String GAME_TIME_ERROR = "99:99";
     protected int period = 0;
     protected String player = "0";
     protected String team = "Home";
-    protected String gameTime = "00:00";
+    protected String gameTime = GAME_TIME_ERROR;
+    protected String clockTime = "0000";
     protected String eventType = "Goal";
     protected String subType = "";
 
@@ -78,38 +80,43 @@ public abstract class GameEvent {
         this.subType = subType;
     }
 
-    /**
-     * IMPORTANT - make sure the period is set correctly before use.
-     * @param clockTime
-     */
-    public void setClockTime(String clockTime, GameRules rules) {
-        setGameTime(gameTimeFromClock(clockTime, rules));
+    public String getClockTime() {
+        return clockTime;
     }
 
-    public String gameTimeFromClock(String clockTime, GameRules rules) {
-        if ((clockTime == null) || (clockTime.length() < 3)) {
-            return "00:00";
-        }
-        if (clockTime.length() == 3) {
-            clockTime = "0" + clockTime;
-        }
-        try {
-            int periodMins = rules.getPeriodMinutes();
-            int mins = getIntValue(clockTime, 0, 2);
-            int secs = getIntValue(clockTime, 2, 4);
-            int remainingSecs = mins * 60 + secs;
-            int totalSecsPlayed = periodMins * 60 - remainingSecs + ((period - 1) * periodMins * 60);
-            int minsPlayed = totalSecsPlayed / 60;
-            int secsPlayed = totalSecsPlayed % 60;
-            return String.format("%02d:%02d", minsPlayed, secsPlayed);
-        } catch (NullPointerException | NumberFormatException e) {
-            return "00:00";
-        }
+    public void setClockTime(String clockTime) {
+        this.clockTime = clockTime;
     }
 
-    public int getIntValue(String text, int start, int end) {
-        return Integer.parseInt(text.substring(start,end));
-    }
+
+//    public void _setClockTime(String clockTime, GameRules rules) {
+//        setGameTime(gameTimeFromClock(clockTime, rules));
+//    }
+//
+//    public String _gameTimeFromClock(String clockTime, GameRules rules) {
+//        if ((clockTime == null) || (clockTime.length() < 3)) {
+//            return "00:00";
+//        }
+//        if (clockTime.length() == 3) {
+//            clockTime = "0" + clockTime;
+//        }
+//        try {
+//            int periodMins = rules.getPeriodMinutes();
+//            int mins = getIntValue(clockTime, 0, 2);
+//            int secs = getIntValue(clockTime, 2, 4);
+//            int remainingSecs = mins * 60 + secs;
+//            int totalSecsPlayed = periodMins * 60 - remainingSecs + ((period - 1) * periodMins * 60);
+//            int minsPlayed = totalSecsPlayed / 60;
+//            int secsPlayed = totalSecsPlayed % 60;
+//            return String.format("%02d:%02d", minsPlayed, secsPlayed);
+//        } catch (NullPointerException | NumberFormatException e) {
+//            return "00:00";
+//        }
+//    }
+//
+//    public int getIntValue(String text, int start, int end) {
+//        return Integer.parseInt(text.substring(start,end));
+//    }
 
     /**
      * The text that should be displayed on the {@link GameReport} for this event.

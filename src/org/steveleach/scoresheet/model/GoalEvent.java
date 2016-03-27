@@ -29,10 +29,10 @@ public class GoalEvent extends GameEvent {
         super.setEventType("Goal");
     }
 
-    public GoalEvent(int period, String time, String team, String goalType, int scorer, int assist1, int assist2, GameRules rules) {
+    public GoalEvent(int period, String time, String team, String goalType, int scorer, int assist1, int assist2) {
         this();
         setPeriod(period);
-        setClockTime(time, rules);
+        setClockTime(time);
         setTeam(team);
         setSubType(goalType);
         setPlayer(""+scorer);

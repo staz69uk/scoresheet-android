@@ -27,10 +27,10 @@ public class PeriodEndEvent extends GameEvent {
         setPlayer("");
     }
 
-    public PeriodEndEvent(int period, GameRules rules) {
+    public PeriodEndEvent(int period) {
         this();
         setPeriod(period);
-        super.setClockTime("0000", rules);
+        super.setClockTime("0000");
     }
 
     @Override

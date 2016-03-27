@@ -26,6 +26,7 @@ import java.util.*;
  * @author Steve Leach
  */
 public class ScoresheetModel {
+    public static final String DEFAULT_GAME_TIME = "99:99";
     private List<GameEvent> events = new LinkedList<>();
     private Team homeTeam = new Team("Home");
     private Team awayTeam = new Team("Away");
@@ -41,15 +42,48 @@ public class ScoresheetModel {
     /**
      * Adds an event to the game.
      *
-     * All registered listeners are notified of the change.
+     * Sets the gameTime for the event from the clockTime, and notifies all registered listeners of the change.
      *
      * @param event
      *          the event to add to the game
      */
     public void addEvent(GameEvent event) {
+        fixupClock(event);
         events.add(event);
         sortEvents();
         notifyListeners(new ModelUpdate("Event added"));
+    }
+
+    private void fixupClock(GameEvent event) {
+        if ((event.getGameTime().equals("99:99")) && (event.getClockTime() != null)) {
+            String gameTime = gameTimeFromClock(event.getPeriod(), event.getClockTime());
+            event.setGameTime(gameTime);
+        }
+    }
+
+    public String gameTimeFromClock(int period, String clockTime) {
+        if ((clockTime == null) || (clockTime.length() < 3)) {
+            return "99:99";
+        }
+        if (clockTime.length() == 3) {
+            clockTime = "0" + clockTime;
+        }
+        try {
+            int periodMins = rules.getPeriodMinutes();
+            int mins = getIntValue(clockTime, 0, 2);
+            int secs = getIntValue(clockTime, 2, 4);
+            int remainingSecs = mins * 60 + secs;
+            int totalSecsPlayed = periodMins * 60 - remainingSecs + ((period - 1) * periodMins * 60);
+            int minsPlayed = totalSecsPlayed / 60;
+            int secsPlayed = totalSecsPlayed % 60;
+            return String.format("%02d:%02d", minsPlayed, secsPlayed);
+        } catch (NullPointerException | NumberFormatException e) {
+            return DEFAULT_GAME_TIME;
+        }
+    }
+
+    private int getIntValue(String text, int start, int end) {
+        return Integer.parseInt(text.substring(start,end));
     }
 
     public Date getGameDateTime() {

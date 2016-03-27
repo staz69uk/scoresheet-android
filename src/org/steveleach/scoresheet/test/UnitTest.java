@@ -15,6 +15,7 @@
 package org.steveleach.scoresheet.test;
 
 import org.json.JSONException;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -43,6 +44,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RunWith(MockitoJUnitRunner.class)
 public class UnitTest {
 
+    private ScoresheetModel model = null;
+
     @Mock
     FileManager fileManager;
 
@@ -52,20 +55,24 @@ public class UnitTest {
     @Mock
     SystemContext context;
 
+    @Before
+    public void setup() {
+        model = new ScoresheetModel();
+    }
+
     public static void addTestEvents(ScoresheetModel model) {
         GameRules rules = model.getRules();
-        model.addEvent(new GoalEvent(model.getPeriod(),"1950","Home","E",41,13,2,rules));
-        model.addEvent(new GoalEvent(model.getPeriod(),"1830","Away","E",2,1,0,rules));
-        model.addEvent(new PenaltyEvent(model.getPeriod(), "1515", "Away", "Hook", "2", 2,rules));
-        model.addEvent(new GoalEvent(model.getPeriod(),"0824","Home","SH",12,93,41,rules));
-        model.addEvent(new PeriodEndEvent(model.getPeriod(),rules));
-        model.addEvent(new GoalEvent(model.getPeriod(),"1813","Home","PP",24,41,0,rules));
-        model.addEvent(new PenaltyEvent(model.getPeriod(), "1213", "Home", "Fight", "2", 5,rules));
+        model.addEvent(new GoalEvent(model.getPeriod(),"1950","Home","E",41,13,2));
+        model.addEvent(new GoalEvent(model.getPeriod(),"1830","Away","E",2,1,0));
+        model.addEvent(new PenaltyEvent(model.getPeriod(), "1515", "Away", "Hook", "2", 2));
+        model.addEvent(new GoalEvent(model.getPeriod(),"0824","Home","SH",12,93,41));
+        model.addEvent(new PeriodEndEvent(model.getPeriod()));
+        model.addEvent(new GoalEvent(model.getPeriod(),"1813","Home","PP",24,41,0));
+        model.addEvent(new PenaltyEvent(model.getPeriod(), "1213", "Home", "Fight", "2", 5));
     }
 
     @Test
     public void validateModel() {
-        ScoresheetModel model = new ScoresheetModel();
         assertEquals(0, model.getHomeGoals());
         assertEquals(0, model.getAwayGoals());
         assertEquals(1, model.getPeriod());
@@ -84,37 +91,39 @@ public class UnitTest {
 
     @Test
     public void testClockConversion() {
-        GameRules rules = new GameRules();
-        GoalEvent event = new GoalEvent();
-        event.setPeriod(1);
-        assertEquals("00:05", event.gameTimeFromClock("1955", rules));
-        assertEquals("15:00", event.gameTimeFromClock("0500", rules));
-        assertEquals("15:30", event.gameTimeFromClock("0430", rules));
-        assertEquals("07:26", event.gameTimeFromClock("1234", rules));
-        event.setPeriod(2);
-        assertEquals("27:26", event.gameTimeFromClock("1234", rules));
-        event.setPeriod(3);
-        assertEquals("47:26", event.gameTimeFromClock("1234", rules));
-        assertEquals("59:49", event.gameTimeFromClock("0011", rules));
-        assertEquals("59:49", event.gameTimeFromClock("011", rules));
+        assertEquals("00:05", model.gameTimeFromClock(1, "1955"));
+        assertEquals("15:00", model.gameTimeFromClock(1, "0500"));
+        assertEquals("15:30", model.gameTimeFromClock(1, "0430"));
+        assertEquals("07:26", model.gameTimeFromClock(1, "1234"));
+        assertEquals("27:26", model.gameTimeFromClock(2, "1234"));
+        assertEquals("47:26", model.gameTimeFromClock(3, "1234"));
+        assertEquals("59:49", model.gameTimeFromClock(3, "0011"));
+        assertEquals("59:49", model.gameTimeFromClock(3, "011"));
     }
 
     @Test
     public void testBadClockConversions() {
-        GameRules rules = new GameRules();
+        assertEquals(GameEvent.GAME_TIME_ERROR, model.gameTimeFromClock(1, null));
+        assertEquals(GameEvent.GAME_TIME_ERROR, model.gameTimeFromClock(1, ""));
+        assertEquals(GameEvent.GAME_TIME_ERROR, model.gameTimeFromClock(1, "Hello"));
+        assertEquals(GameEvent.GAME_TIME_ERROR, model.gameTimeFromClock(1, "12"));
+        assertEquals(GameEvent.GAME_TIME_ERROR, model.gameTimeFromClock(1, "12:34"));
+        model.setRules(null);
+        assertEquals(GameEvent.GAME_TIME_ERROR, model.gameTimeFromClock(1, "1234"));
+    }
+
+    @Test
+    public void testClockConversionOnAdd() {
         GoalEvent event = new GoalEvent();
         event.setPeriod(1);
-        assertEquals("00:00", event.gameTimeFromClock(null, rules));
-        assertEquals("00:00", event.gameTimeFromClock("", rules));
-        assertEquals("00:00", event.gameTimeFromClock("Hello", rules));
-        assertEquals("00:00", event.gameTimeFromClock("12", rules));
-        assertEquals("00:00", event.gameTimeFromClock("12:34", rules));
-        assertEquals("00:00", event.gameTimeFromClock("1234", null));
+        event.setClockTime("1234");
+        assertEquals(GameEvent.GAME_TIME_ERROR, event.getGameTime());
+        model.addEvent(event);
+        assertEquals("07:26", event.getGameTime());
     }
 
     @Test
     public void testFullReport() {
-        ScoresheetModel model = new ScoresheetModel();
         addTestEvents(model);
         String report = model.fullReport();
 
@@ -132,8 +141,6 @@ public class UnitTest {
 
         AndroidScoresheetStore store = new AndroidScoresheetStore(fileManager,jsonCodec,context);
 
-        ScoresheetModel model = new ScoresheetModel();
-
         String status = store.save(model);
 
         assertEquals("Saved gamedata", status);
@@ -141,7 +148,6 @@ public class UnitTest {
 
     @Test
     public void testSampleData() {
-        ScoresheetModel model = new ScoresheetModel();
         addTestEvents(model);
 
         assertEquals(2, model.getPeriod());
@@ -205,24 +211,24 @@ public class UnitTest {
 
     @Test
     public void testPeriodEnd() {
-        PeriodEndEvent event = new PeriodEndEvent(2, new GameRules());
+        PeriodEndEvent event = new PeriodEndEvent(2);
+        model.addEvent(event);
         assertEquals("40:00 - Period 2 ended", event.toString());
     }
 
     @Test
     public void testModelExtras() {
-        ScoresheetModel model = new ScoresheetModel();
         model.addOfficial(GameOfficial.Role.REFEREE, "Fred");
         assertEquals(1, model.getOfficials().size());
         assertEquals(GameOfficial.Role.REFEREE, model.getOfficials().get(0).getRole());
 
-        assertEquals(3,model.getRules().getRegulationPeriods());
-        assertEquals(20,model.getRules().getPeriodMinutes());
-        assertEquals(5,model.getRules().getOvertimeMinutes());
+        assertEquals(3, model.getRules().getRegulationPeriods());
+        assertEquals(20, model.getRules().getPeriodMinutes());
+        assertEquals(5, model.getRules().getOvertimeMinutes());
         assertFalse(model.getRules().isAllowTie());
 
-        model.getHomeTeam().getPlayers().put(25,"John Smith");
-        model.getHomeTeam().getPlayers().put(57,"John Johnson");
+        model.getHomeTeam().getPlayers().put(25, "John Smith");
+        model.getHomeTeam().getPlayers().put(57, "John Johnson");
         assertEquals(2, model.getHomeTeam().getPlayers().size());
 
         model.setHomeTeam(new Team());
@@ -240,10 +246,11 @@ public class UnitTest {
     public void validatePenalty() {
         PenaltyEvent event = new PenaltyEvent();
         event.setPeriod(2);
-        event.setClockTime("1500",new GameRules());
+        event.setClockTime("1500");
         event.setMinutes(10);
         event.setPlayer("21");
         event.setSubType("FIGHT");
+        model.addEvent(event);
         assertEquals("25:00 - Home Penalty 10m (FIGHT) for 21 (35:00)", event.toString());
     }
 
@@ -280,4 +287,19 @@ public class UnitTest {
 
         assertTrue(flag.get());
     }
+
+    @Test
+    public void testBadModelListener() {
+        model.addListener(new ModelAware() {
+            @Override
+            public void setModel(ScoresheetModel model) {}
+
+            @Override
+            public void onModelUpdated(ModelUpdate update) {
+                throw new RuntimeException("Ignore more");
+            }
+        });
+        model.notifyListeners(new ModelUpdate("Update"));
+    }
+
 }

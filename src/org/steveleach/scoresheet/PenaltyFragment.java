@@ -105,7 +105,7 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         PenaltyEvent event = new PenaltyEvent();
         event.setPeriod(model.getPeriod());
         try {
-            event.setClockTime(clockField.getText().toString(),model.getRules());
+            event.setClockTime(clockField.getText().toString());
             event.setTeam(team);
             event.setPlayer(playerField.getText().toString());
             event.setSubType(penaltyField.getText().toString());
