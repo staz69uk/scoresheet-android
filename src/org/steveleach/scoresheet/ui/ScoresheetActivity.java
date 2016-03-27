@@ -13,7 +13,7 @@
     limitations under the License.
 */
 
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,9 +31,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
+import org.steveleach.scoresheet.*;
 import org.steveleach.scoresheet.io.AndroidScoresheetStore;
 import org.steveleach.scoresheet.io.FileManager;
 import org.steveleach.scoresheet.io.JsonCodec;
+import org.steveleach.scoresheet.io.SystemContext;
 import org.steveleach.scoresheet.model.*;
 
 /**

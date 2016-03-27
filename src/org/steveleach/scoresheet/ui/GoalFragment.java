@@ -12,7 +12,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.ui;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -21,15 +21,13 @@ import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import org.steveleach.scoresheet.R;
 import org.steveleach.scoresheet.model.GoalEvent;
 import org.steveleach.scoresheet.model.ModelAware;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.model.ScoresheetModel;
-
-import static android.view.inputmethod.EditorInfo.*;
 
 /**
  * Implementation code for the new Goal UI fragment.

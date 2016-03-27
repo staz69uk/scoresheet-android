@@ -12,7 +12,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -23,8 +23,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import org.steveleach.scoresheet.R;
 import org.steveleach.scoresheet.io.AndroidScoresheetStore;
 import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.ui.ScoresheetActivity;
 
 import java.io.File;
 import java.util.Collections;

@@ -1,5 +1,5 @@
 /**
- * Top level package for the Ice Hockey scoresheet app, including the main {@link org.steveleach.scoresheet.ScoresheetActivity}.
+ * Top level package for the Ice Hockey scoresheet app.
  * <p>
  * The Activity and Fragment classes live here.
  *

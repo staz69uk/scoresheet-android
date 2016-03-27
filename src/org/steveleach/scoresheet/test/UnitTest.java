@@ -25,14 +25,13 @@ import static org.mockito.Mockito.when;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.steveleach.scoresheet.SystemContext;
+import org.steveleach.scoresheet.io.SystemContext;
 import org.steveleach.scoresheet.io.AndroidScoresheetStore;
 import org.steveleach.scoresheet.io.FileManager;
 import org.steveleach.scoresheet.io.JsonCodec;
 import org.steveleach.scoresheet.model.*;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Unit tests for the Ice Hockey Scoresheet app.
