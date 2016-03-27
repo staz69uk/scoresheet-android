@@ -33,6 +33,8 @@
     <string name="goalScoredTitle">Goal Scored</string>
     <string name="helpTitle">Ice Hockey Scoresheet Help</string>
     <string name="scoresheetFolder">Scoresheets</string>
+    <string name="gameSaves">Saved game files</string>
+    <string name="gameLoadHint">Tap and hold an entry to load it</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

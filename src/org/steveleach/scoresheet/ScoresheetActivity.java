@@ -204,9 +204,6 @@ public class ScoresheetActivity extends Activity implements ModelAware {
             case R.id.menuRefresh:
                 refreshModel();
                 return true;
-            case R.id.menuTestData:
-                addTestData();
-                return true;
             case R.id.menuAbout:
                 showAbout();
                 return true;
@@ -266,14 +263,17 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     }
 
     private void importGameJson() {
-        yesNoDialog("Load game data from file?", new Runnable() {
-            @Override
-            public void run() {
-                String result = scoresheetFolder.loadInto(model);
-                refreshModel();
-                toast(result);
-            }
-        });
+        SavesFragment fragment = new SavesFragment();
+        fragment.configure(model, scoresheetFolder);
+        showFragment(fragment);
+//        yesNoDialog("Load game data from file?", new Runnable() {
+//            @Override
+//            public void run() {
+//                String result = scoresheetFolder.loadInto(model);
+//                refreshModel();
+//                toast(result);
+//            }
+//        });
     }
 
     private void exportGameJson() {

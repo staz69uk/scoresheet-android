@@ -19,8 +19,7 @@
     <item android:id="@+id/menuClear" android:title="New Game" />
     <item android:id="@+id/menuExport" android:title="Save Game" />
     <item android:id="@+id/menuImport" android:title="Load Game" />
+    <item android:id="@+id/menuRefresh" android:title="Refresh Screen" />
     <item android:id="@+id/menuHelp" android:title="Help" />
-    <item android:id="@+id/menuRefresh" android:title="Refresh!" />
-    <item android:id="@+id/menuTestData" android:title="TestData!" />
     <item android:id="@+id/menuAbout" android:title="About" />
 </menu>

@@ -20,6 +20,8 @@ import org.steveleach.scoresheet.model.ScoresheetModel;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by steve on 11/03/16.
@@ -70,8 +72,12 @@ public class AndroidScoresheetStore {
     }
 
     public String loadInto(ScoresheetModel model) {
-        String result = "Unknown";
         File file = fileManager.getLastFile(baseFileName);
+        return loadInto(model, file);
+    }
+
+    private String loadInto(ScoresheetModel model, File file) {
+        String result = "Unknown";
         if (file.exists()) {
             String json = null;
             try {
@@ -91,5 +97,23 @@ public class AndroidScoresheetStore {
             result = "No exported data found";
         }
         return result;
+    }
+
+
+    public List<File> savedFiles() {
+        List<File> files = new LinkedList<>();
+        for (File file : system.getScoresheetFolder().listFiles()) {
+            if (file.isFile()) {
+                if (file.getName().startsWith(baseFileName)) {
+                    files.add(file);
+                }
+            }
+        }
+        return files;
+    }
+
+    public String loadInto(ScoresheetModel model, String fileName) {
+        File file = new File(system.getScoresheetFolder(), fileName);
+        return loadInto(model, file);
     }
 }
