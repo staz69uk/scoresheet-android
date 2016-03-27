@@ -87,6 +87,8 @@ public class HistoryFragment extends Fragment implements ModelAware {
     @Override
     public void setModel(ScoresheetModel model) {
         this.model = model;
+        model.addListener(this);
+        refreshList();
     }
 
     @Override

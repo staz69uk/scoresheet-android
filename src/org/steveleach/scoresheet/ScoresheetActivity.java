@@ -61,6 +61,12 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        model.addListener(this);
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         // Reserved
     }
@@ -74,8 +80,6 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         event.setPeriod(model.getPeriod());
         event.setClockTime("0000",model.getRules());
         model.addEvent(event);
-        updateScores();
-        showHistory();
     }
 
     public void goalButtonClicked(View view) {
@@ -113,7 +117,6 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         HistoryFragment h = new HistoryFragment();
         h.setModel(model);
         showFragment(h);
-        h.onModelUpdated(null);
     }
 
     public void reportButtonClicked(View view) {
@@ -144,7 +147,8 @@ public class ScoresheetActivity extends Activity implements ModelAware {
 
     @Override
     public void onModelUpdated(ModelUpdate update) {
-        refreshModel();
+        updateScores();
+        //refreshModel();
     }
 
     private void updateScores() {
@@ -274,9 +278,8 @@ public class ScoresheetActivity extends Activity implements ModelAware {
             HistoryFragment fragment = new HistoryFragment();
             fragment.setModel(model);
             showFragment(fragment);
-            visibleFragment = fragment;
         }
-        visibleFragment.onModelUpdated(null);
+        model.notifyListeners(new ModelUpdate(""));
     }
 
     public void yesNoDialog(String prompt, Runnable action) {

@@ -36,9 +36,17 @@ public class ScoresheetModel {
     private int awayTimeouts = 0;
     private WeakList<ModelAware> listeners = new WeakList<>();
 
+    /**
+     * Adds an event to the game.
+     *
+     * All registered listeners are updated.
+     *
+     * @param event
+     */
     public void addEvent(GameEvent event) {
         events.add(event);
         sortEvents();
+        notifyListeners(new ModelUpdate("Event added"));
     }
 
     public Date getGameDateTime() {

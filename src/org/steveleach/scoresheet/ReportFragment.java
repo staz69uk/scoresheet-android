@@ -43,7 +43,6 @@ public class ReportFragment extends Fragment implements ModelAware {
     private TextView report;
     private String title = "Report";
     public static final String GAME_REPORT = "Game Report";
-    public static final String GAME_EXPORT = "Game Export";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,22 +53,6 @@ public class ReportFragment extends Fragment implements ModelAware {
 
         TextView title = (TextView)view.findViewById(R.id.reportTitle);
         title.setText(this.title);
-
-//        Button copyAllButton = (Button)view.findViewById(R.id.btnCopyAll);
-//        copyAllButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                doCopyAll();
-//            }
-//        });
-//
-//        Button saveButton = (Button)view.findViewById(R.id.btnReportSave);
-//        saveButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                doSave();
-//            }
-//        });
 
         return view;
     }
@@ -110,6 +93,7 @@ public class ReportFragment extends Fragment implements ModelAware {
     @Override
     public void setModel(ScoresheetModel model) {
         this.model = model;
+        model.addListener(this);
     }
 
     @Override

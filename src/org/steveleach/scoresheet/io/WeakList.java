@@ -35,9 +35,22 @@ public class WeakList<T> implements Iterable<T> {
      *
      * Items are held via weak references, and so the  list
      * will not prevent the item being garbage collected.
+     *
+     * If the item is already in the list then no action is taken.
      */
     public void add(T item) {
-        references.add(new WeakReference<>(item,referenceQueue));
+        if (! containsItem(item)) {
+            references.add(new WeakReference<>(item, referenceQueue));
+        }
+    }
+
+    public boolean containsItem(T target) {
+        for (WeakReference<T> item : references) {
+            if ((item != null) && (item.get() != null) && (item.get() == target)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
