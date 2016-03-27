@@ -26,7 +26,7 @@ import java.util.*;
  * @author Steve Leach
  */
 public class ScoresheetModel {
-    public static final String DEFAULT_GAME_TIME = "99:99";
+    private static final int SECS_PER_MIN = 60;
     private List<GameEvent> events = new LinkedList<>();
     private Team homeTeam = new Team("Home");
     private Team awayTeam = new Team("Away");
@@ -55,15 +55,24 @@ public class ScoresheetModel {
     }
 
     private void fixupClock(GameEvent event) {
-        if ((event.getGameTime().equals("99:99")) && (event.getClockTime() != null)) {
+        if (event.getGameTime().equals(GameEvent.GAME_TIME_ERROR)) {
             String gameTime = gameTimeFromClock(event.getPeriod(), event.getClockTime());
             event.setGameTime(gameTime);
         }
     }
 
+    /**
+     * Converts clock time to game time based on the rules for this game.
+     *
+     * @param period
+     * @param clockTime
+     *          time remaining in the period in "mmss" format
+     * @return
+     *          time elapsed since the start of the game in "mm:ss" format
+     */
     public String gameTimeFromClock(int period, String clockTime) {
         if ((clockTime == null) || (clockTime.length() < 3)) {
-            return "99:99";
+            return GameEvent.GAME_TIME_ERROR;
         }
         if (clockTime.length() == 3) {
             clockTime = "0" + clockTime;
@@ -72,13 +81,13 @@ public class ScoresheetModel {
             int periodMins = rules.getPeriodMinutes();
             int mins = getIntValue(clockTime, 0, 2);
             int secs = getIntValue(clockTime, 2, 4);
-            int remainingSecs = mins * 60 + secs;
-            int totalSecsPlayed = periodMins * 60 - remainingSecs + ((period - 1) * periodMins * 60);
-            int minsPlayed = totalSecsPlayed / 60;
-            int secsPlayed = totalSecsPlayed % 60;
+            int remainingSecs = mins * SECS_PER_MIN + secs;
+            int totalSecsPlayed = periodMins * SECS_PER_MIN - remainingSecs + ((period - 1) * periodMins * SECS_PER_MIN);
+            int minsPlayed = totalSecsPlayed / SECS_PER_MIN;
+            int secsPlayed = totalSecsPlayed % SECS_PER_MIN;
             return String.format("%02d:%02d", minsPlayed, secsPlayed);
         } catch (NullPointerException | NumberFormatException e) {
-            return DEFAULT_GAME_TIME;
+            return GameEvent.GAME_TIME_ERROR;
         }
     }
 
