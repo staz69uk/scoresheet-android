@@ -33,7 +33,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by steve on 27/03/16.
+ * Implementation code for the List Saved Games UI fragment.
+ *
+ * @author Steve Leach
  */
 public class SavesFragment extends Fragment {
 

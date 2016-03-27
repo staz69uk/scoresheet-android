@@ -38,6 +38,8 @@ import org.steveleach.scoresheet.model.*;
 
 /**
  * Main Activity for the Scoresheet app.
+ *
+ * @author Steve Leach
  */
 public class ScoresheetActivity extends Activity implements ModelAware {
     public static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";

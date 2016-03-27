@@ -22,10 +22,21 @@ import org.steveleach.scoresheet.model.*;
 import java.util.Date;
 
 /**
- * Created by steve on 05/03/16.
+ * Converts a ScoresheetModel to/from a JSON representation.
+ *
+ * @author Steve Leach
  */
 public class JsonCodec {
 
+    /**
+     * Returns a JSON String representation of the specified scoresheet model.
+     *
+     * @param model
+     *          the model to convert
+     * @return
+     *          a string representing the model in JSON format
+     * @throws JSONException
+     */
     public String toJson(ScoresheetModel model) throws JSONException {
         JSONObject root = new JSONObject();
         root.put("@content", "Ice Hockey Scoresheet Data");
@@ -59,6 +70,14 @@ public class JsonCodec {
         return root.toString(4);
     }
 
+    /**
+     * Populates a model from a JSON string representation.
+     *
+     * @param model
+     *          the model to load the data into
+     * @param json
+     * @throws JSONException
+     */
     public void fromJson(ScoresheetModel model, String json) throws JSONException {
         model.getEvents().clear();
 

@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Maintains a list of weak references to other objects.
  *
- * Created by steve on 23/03/16.
+ * @author Steve Leach
  */
 public class WeakList<T> implements Iterable<T> {
     private List<WeakReference<T>> references = new LinkedList<>();

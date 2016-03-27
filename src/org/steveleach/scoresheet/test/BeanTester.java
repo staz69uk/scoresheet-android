@@ -1,3 +1,17 @@
+/*  Copyright 2016 Steve Leach
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 package org.steveleach.scoresheet.test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -6,7 +20,14 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * Created by steve on 12/03/16.
+ * Automatic testing of JavaBean classes.
+ * <p>
+ * Ensures that getters and setters are correctly matched, so that the value supplied to the setter
+ * is the same as the value returned by the getter.
+ * <p>
+ * Also useful to get quickly get code coverage up for "too simple to fail" property accessors.
+ *
+ * @author Steve Leach
  */
 public class BeanTester {
 
@@ -18,6 +39,13 @@ public class BeanTester {
 
     private Random random = new Random();
 
+    /**
+     * Tests that the bean can be instantiated and that getters and setters match.
+     *
+     * @author Steve Leach
+     * @param beanClass the class to be tested
+     * @throws BeanValidationFailure if the bean is not valid
+     */
     public void testBean(Class<?> beanClass) {
         Object bean = instantiate(beanClass);
         validateToString(bean);

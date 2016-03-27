@@ -28,7 +28,9 @@ import org.steveleach.scoresheet.model.ScoresheetModel;
 import java.util.LinkedList;
 
 /**
- * Created by steve on 01/03/16.
+ * Implementation code for the new Game History UI fragment.
+ *
+ * @author Steve Leach
  */
 public class HistoryFragment extends Fragment implements ModelAware {
     private ListView eventList = null;

@@ -17,7 +17,7 @@ package org.steveleach.scoresheet.model;
 /**
  * Describes an update to a ScoresheetModel.
  *
- * Created by steve on 02/03/16.
+ * @author Steve Leach
  */
 public class ModelUpdate {
     private String summary = null;
@@ -25,6 +25,7 @@ public class ModelUpdate {
     public ModelUpdate(String summary) {
         setSummary(summary);
     }
+    public ModelUpdate() { this(null); }
 
     public String getSummary() {
         return summary;

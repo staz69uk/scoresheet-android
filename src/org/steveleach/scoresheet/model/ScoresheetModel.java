@@ -20,8 +20,10 @@ import java.util.*;
 
 /**
  * Information about an ice hockey game, including the events that took place during the game.
+ * <p>
+ * The primary component of a ScoresheetModel is a list of {@link GameEvent} objects.
  *
- * Created by steve on 02/03/16.
+ * @author Steve Leach
  */
 public class ScoresheetModel {
     private List<GameEvent> events = new LinkedList<>();
@@ -39,9 +41,10 @@ public class ScoresheetModel {
     /**
      * Adds an event to the game.
      *
-     * All registered listeners are updated.
+     * All registered listeners are notified of the change.
      *
      * @param event
+     *          the event to add to the game
      */
     public void addEvent(GameEvent event) {
         events.add(event);
@@ -191,6 +194,7 @@ public class ScoresheetModel {
 
         for (ModelAware listener : listeners) {
             if (listener != null) {
+                // TODO - wrap in an exception handler
                 listener.onModelUpdated(update);
             }
         }

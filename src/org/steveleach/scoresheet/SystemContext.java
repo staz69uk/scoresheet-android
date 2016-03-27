@@ -20,7 +20,9 @@ import android.os.Environment;
 import java.io.File;
 
 /**
- * Created by steve on 11/03/16.
+ * Abstraction for system context, Android implementation.
+ *
+ * @author Steve Leach
  */
 public class SystemContext {
 

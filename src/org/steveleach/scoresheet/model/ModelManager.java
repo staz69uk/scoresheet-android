@@ -19,7 +19,8 @@ package org.steveleach.scoresheet.model;
  *
  * This should probably die.
  *
- * Created by steve on 11/03/16.
+ * @author Steve Leach
+ * @deprecated
  */
 public class ModelManager {
 

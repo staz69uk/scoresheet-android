@@ -18,7 +18,9 @@ import android.view.View;
 import android.widget.EditText;
 
 /**
- * Created by steve on 12/03/16.
+ * Add to a text field to show an error if the content is shorter than a specified value.
+ *
+ * @author Steve Leach
  */
 public class MinLengthFocusChangeListener implements View.OnFocusChangeListener {
 

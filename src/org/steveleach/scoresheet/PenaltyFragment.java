@@ -29,7 +29,9 @@ import org.steveleach.scoresheet.model.PenaltyEvent;
 import org.steveleach.scoresheet.model.ScoresheetModel;
 
 /**
- * Created by steve on 05/03/16.
+ * Implementation code for the new Penalty UI fragment.
+ *
+ * @author Steve Leach
  */
 public class PenaltyFragment extends Fragment implements ModelAware {
 

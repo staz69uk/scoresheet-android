@@ -32,7 +32,9 @@ import org.steveleach.scoresheet.model.ScoresheetModel;
 import static android.view.inputmethod.EditorInfo.*;
 
 /**
- * Created by steve on 01/03/16.
+ * Implementation code for the new Goal UI fragment.
+ *
+ * @author Steve Leach
  */
 public class GoalFragment extends Fragment implements ModelAware {
 

@@ -15,9 +15,9 @@
 package org.steveleach.scoresheet.model;
 
 /**
- * Interface used by components that are aware of a ScoresheetModel.
+ * Interface used by components or classes that are aware of a ScoresheetModel.
  *
- * Created by steve on 02/03/16.
+ * @author Steve Leach
  */
 public interface ModelAware {
     void setModel(ScoresheetModel model);

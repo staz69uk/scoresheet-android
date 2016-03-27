@@ -20,7 +20,7 @@ import java.util.TreeMap;
 /**
  * A team taking part in an ice hockey game.
  *
- * Created by steve on 05/03/16.
+ * @author Steve Leach
  */
 public class Team {
     private String name = null;

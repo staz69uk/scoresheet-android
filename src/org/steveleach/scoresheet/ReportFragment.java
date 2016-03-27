@@ -35,7 +35,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Created by steve on 05/03/16.
+ * Implementation code for the Game Report UI fragment.
+ *
+ * @author Steve Leach
  */
 public class ReportFragment extends Fragment implements ModelAware {
     private ScoresheetModel model = new ScoresheetModel();

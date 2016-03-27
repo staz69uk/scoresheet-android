@@ -19,9 +19,10 @@ import java.text.SimpleDateFormat;
 /**
  * An event that takes place during an Ice Hockey game.
  *
- * Created by steve on 29/02/16.
+ * @author Steve Leach
  */
 public class GameEvent {
+    // TODO - make abstract
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
     protected int period = 0;
     protected String player = "0";
@@ -116,6 +117,10 @@ public class GameEvent {
         return Integer.parseInt(text.substring(start,end));
     }
 
+    /**
+     * The text that should be displayed on the {@link GameReport} for this event.
+     * @return
+     */
     public String reportText() {
         return this.toString();
     }

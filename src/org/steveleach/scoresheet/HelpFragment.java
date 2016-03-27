@@ -24,7 +24,9 @@ import android.webkit.WebView;
 import java.util.Locale;
 
 /**
- * Created by steve on 26/03/16.
+ * Implementation code for the new Help UI fragment.
+ *
+ * @author Steve Leach
  */
 public class HelpFragment extends Fragment {
     private View view;
