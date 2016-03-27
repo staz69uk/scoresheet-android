@@ -55,7 +55,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
 
         scoresheetFolder = new AndroidScoresheetStore(fileManager,jsonCodec,new SystemContext(getApplicationContext()));
 
-        Log.i(LOG_TAG, "ScoresheetActivity.onCreate");
+        Log.d(LOG_TAG, "ScoresheetActivity.onCreate");
 
         showHistory();
     }
@@ -63,16 +63,16 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(LOG_TAG, "On resume");
+        Log.d(LOG_TAG, "On resume");
         model.addListener(this);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.i(LOG_TAG, "ScoresheetActivity.onRestoreInstanceState");
+        Log.d(LOG_TAG, "ScoresheetActivity.onRestoreInstanceState");
         String jsonText = savedInstanceState.getString(STATE_KEY);
-        Log.i(LOG_TAG, "JSON size = " + jsonText.length());
+        Log.d(LOG_TAG, "JSON size = " + jsonText.length());
         try {
             jsonCodec.fromJson(model, jsonText);
         } catch (JSONException e) {
@@ -82,13 +82,12 @@ public class ScoresheetActivity extends Activity implements ModelAware {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Log.i(LOG_TAG, "ScoresheetActivity.onSaveInstanceState");
+        Log.d(LOG_TAG, "ScoresheetActivity.onSaveInstanceState");
         try {
             String modelJson = jsonCodec.toJson(model);
-            Log.i(LOG_TAG, "JSON size = " + modelJson.length());
+            Log.d(LOG_TAG, "JSON size = " + modelJson.length());
             outState.putCharSequence(STATE_KEY, modelJson);
         } catch (JSONException e) {
-            Log.e(LOG_TAG, "Error creating json: " + e.getMessage());
             toast("Error creating json: " + e.getMessage());
         }
     }
@@ -252,28 +251,10 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         }
     }
 
-    private void addTestData() {
-        yesNoDialog("Add test events?", new Runnable() {
-            @Override
-            public void run() {
-                ModelManager.addTestEvents(model);
-                refreshModel();
-            }
-        });
-    }
-
     private void importGameJson() {
         SavesFragment fragment = new SavesFragment();
         fragment.configure(model, scoresheetFolder);
         showFragment(fragment);
-//        yesNoDialog("Load game data from file?", new Runnable() {
-//            @Override
-//            public void run() {
-//                String result = scoresheetFolder.loadInto(model);
-//                refreshModel();
-//                toast(result);
-//            }
-//        });
     }
 
     private void exportGameJson() {
@@ -287,7 +268,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     }
 
     private void toast(String message) {
-        Log.i(LOG_TAG, message);
+        Log.d(LOG_TAG, message);
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
