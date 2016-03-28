@@ -12,7 +12,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet.test;
+package org.steveleach.scoresheet;
 
 import org.json.JSONException;
 import org.junit.Before;
@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Steve Leach
  */
 @RunWith(MockitoJUnitRunner.class)
-public class UnitTest {
+public class ScoresheetUnitTest {
 
     private ScoresheetModel model = null;
 
@@ -60,7 +60,6 @@ public class UnitTest {
     }
 
     public static void addTestEvents(ScoresheetModel model) {
-        GameRules rules = model.getRules();
         model.addEvent(new GoalEvent(model.getPeriod(),"1950","Home","E",41,13,2));
         model.addEvent(new GoalEvent(model.getPeriod(),"1830","Away","E",2,1,0));
         model.addEvent(new PenaltyEvent(model.getPeriod(), "1515", "Away", "Hook", "2", 2));

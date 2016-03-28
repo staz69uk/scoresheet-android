@@ -3,4 +3,4 @@
  *
  * @author Steve Leach
  */
-package org.steveleach.scoresheet.test;
+package org.steveleach.scoresheet;
