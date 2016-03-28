@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/scoresheet.iml" filepath="$PROJECT_DIR$/scoresheet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scoresheet-android.iml" filepath="$PROJECT_DIR$/scoresheet-android.iml" />
     </modules>
   </component>
 </project>
