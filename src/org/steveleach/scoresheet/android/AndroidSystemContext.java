@@ -40,7 +40,12 @@ public class AndroidSystemContext implements SystemContext {
     }
 
     public File getScoresheetFolder() {
-        File parent = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File parent;
+        try {
+            parent = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        } catch (NoSuchFieldError e) {
+            parent = new File(Environment.getExternalStorageDirectory(), "Documents");
+        }
         return new File(parent, context.getString(R.string.scoresheetFolder));
     }
 }

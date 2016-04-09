@@ -168,6 +168,10 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         this.model = model;
     }
 
+    public ScoresheetModel getModel() {
+        return this.model;
+    }
+
     @Override
     public void onModelUpdated(ModelUpdate update) {
         updateScores();
@@ -272,7 +276,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     private void refreshModel() {
         updateScores();
         model.sortEvents();
-        ModelAware visibleFragment = (ModelAware)getFragmentManager().findFragmentByTag(MAIN_FRAGMENT);
+        ModelAware visibleFragment = (ModelAware) getVisibleFragment();
         if (visibleFragment == null) {
             // This should not happen
             HistoryFragment fragment = new HistoryFragment();
@@ -280,6 +284,10 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
             showFragment(fragment);
         }
         model.notifyListeners(new ModelUpdate());
+    }
+
+    public Fragment getVisibleFragment() {
+        return getFragmentManager().findFragmentByTag(MAIN_FRAGMENT);
     }
 
     void yesNoDialog(int promptId, Runnable action) {
