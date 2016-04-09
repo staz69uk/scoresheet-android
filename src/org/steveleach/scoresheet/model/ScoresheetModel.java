@@ -14,7 +14,7 @@
 */
 package org.steveleach.scoresheet.model;
 
-import org.steveleach.scoresheet.io.WeakList;
+import org.steveleach.scoresheet.support.WeakList;
 
 import java.util.*;
 

@@ -12,7 +12,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet.io;
+package org.steveleach.scoresheet.support;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;

@@ -12,13 +12,15 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet.io;
+package org.steveleach.scoresheet.support;
 
 import org.json.JSONException;
 import org.steveleach.scoresheet.model.ScoresheetModel;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,19 +29,22 @@ import java.util.List;
  *
  * @author Steve Leach
  */
-public class AndroidScoresheetStore {
+public class ScoresheetStore {
 
     private final FileManager fileManager;
     private final JsonCodec codec;
     private final SystemContext system;
+    private File baseDir = new File(".");
     private String baseFileName = "gamedata";
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    public AndroidScoresheetStore(FileManager fileManager, JsonCodec jsonCodec, SystemContext system) {
+
+    public ScoresheetStore(FileManager fileManager, JsonCodec jsonCodec, SystemContext system) {
         this.fileManager = fileManager;
         this.system = system;
         this.codec = jsonCodec;
 
-        fileManager.setBaseDirectory(system.getScoresheetFolder());
+        setBaseDirectory(system.getScoresheetFolder());
     }
 
     private void checkFileSystemStatus() throws IOException {
@@ -60,10 +65,10 @@ public class AndroidScoresheetStore {
         if (json != null) {
             try {
                 checkFileSystemStatus();
-                fileManager.ensureBaseDirectoryExists();
-                File file = fileManager.getMainFile(baseFileName);
+                ensureBaseDirectoryExists();
+                File file = getMainFile(baseFileName);
                 fileManager.writeTextFile(file, json);
-                fileManager.copyFile(file, fileManager.getLastFile(baseFileName));
+                fileManager.copyFile(file, getLastFile(baseFileName));
                 result = "Saved " + baseFileName;
             } catch (IOException e) {
                 result = "Error saving " + baseFileName + " : " + e.getMessage();
@@ -72,14 +77,9 @@ public class AndroidScoresheetStore {
         return result;
     }
 
-    public String loadInto(ScoresheetModel model) {
-        File file = fileManager.getLastFile(baseFileName);
-        return loadInto(model, file);
-    }
-
     private String loadInto(ScoresheetModel model, File file) {
         String result = "Unknown";
-        if (file.exists()) {
+        if (fileManager.exists(file)) {
             String json = null;
             try {
                 json = fileManager.readTextFileContent(file);
@@ -88,7 +88,7 @@ public class AndroidScoresheetStore {
             }
             if (json != null) {
                 try {
-                    new JsonCodec().fromJson(model,json);
+                    codec.fromJson(model,json);
                     result = "Loaded game data";
                 } catch (JSONException e) {
                     result = "Error parsing game data : " + e.getMessage();
@@ -103,7 +103,7 @@ public class AndroidScoresheetStore {
 
     public List<File> savedFiles() {
         List<File> files = new LinkedList<>();
-        for (File file : system.getScoresheetFolder().listFiles()) {
+        for (File file : fileManager.dirContents(baseDir)) {
             if (file.isFile()) {
                 if (file.getName().startsWith(baseFileName)) {
                     files.add(file);
@@ -117,4 +117,23 @@ public class AndroidScoresheetStore {
         File file = new File(system.getScoresheetFolder(), fileName);
         return loadInto(model, file);
     }
+
+    public void ensureBaseDirectoryExists() {
+        fileManager.ensureDirectoryExists(baseDir);
+    }
+
+    public void setBaseDirectory(File baseDir) {
+        this.baseDir = baseDir;
+    }
+
+    public File getMainFile(String baseName) {
+        String dateStr = DATE_FORMAT.format(new Date());
+        String mainFileName = String.format("%s-%s.json", baseName, dateStr);
+        return new File(baseDir,mainFileName);
+    }
+
+    public File getLastFile(String baseName) {
+        return new File(baseDir,baseName+".json");
+    }
+
 }

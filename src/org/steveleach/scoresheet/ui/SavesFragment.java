@@ -24,9 +24,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import org.steveleach.scoresheet.R;
-import org.steveleach.scoresheet.io.AndroidScoresheetStore;
+import org.steveleach.scoresheet.support.ScoresheetStore;
 import org.steveleach.scoresheet.model.ScoresheetModel;
-import org.steveleach.scoresheet.ui.ScoresheetActivity;
 
 import java.io.File;
 import java.util.Collections;
@@ -43,7 +42,7 @@ public class SavesFragment extends Fragment {
 
     private ScoresheetModel model = null;
     private ArrayAdapter<String> adapter = null;
-    private AndroidScoresheetStore store = null;
+    private ScoresheetStore store = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +72,7 @@ public class SavesFragment extends Fragment {
         return view;
     }
 
-    public void configure(ScoresheetModel model, AndroidScoresheetStore store) {
+    public void configure(ScoresheetModel model, ScoresheetStore store) {
         this.model = model;
         this.store = store;
     }

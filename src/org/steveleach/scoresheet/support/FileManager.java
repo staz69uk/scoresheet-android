@@ -12,23 +12,19 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet.io;
+package org.steveleach.scoresheet.support;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * File System helper.
+ * <p>
+ * Application code should interact with the FileManager rather than directly, as it can
+ * be mocked for unit testing.
  *
  * Created by steve on 11/03/16.
  */
 public class FileManager {
-
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-    private File baseDir = new File(".");
 
     public void writeTextFile(File file, String text) throws IOException {
         FileWriter writer = new FileWriter(file);
@@ -51,7 +47,11 @@ public class FileManager {
         } finally {
             reader.close();
         }
-        return sb.toString();
+        return sb.toString().trim();
+    }
+
+    public File tempDir() {
+        return new File(System.getProperty("java.io.tmpdir"));
     }
 
     public void copyFile(File src, File dst) throws IOException {
@@ -71,22 +71,19 @@ public class FileManager {
         }
     }
 
-    public void setBaseDirectory(File baseDir) {
-        this.baseDir = baseDir;
+    public void delete(File tempFile) {
+        tempFile.delete();
     }
 
-    public File getMainFile(String baseName) {
-        String dateStr = DATE_FORMAT.format(new Date());
-        String mainFileName = String.format("%s-%s.json", baseName, dateStr);
-        return new File(baseDir,mainFileName);
+    public void ensureDirectoryExists(File dir) {
+        dir.mkdirs();
     }
 
-    public File getLastFile(String baseName) {
-        return new File(baseDir,baseName+".json");
+    public boolean exists(File file) {
+        return file.exists();
     }
 
-    public void ensureBaseDirectoryExists() {
-        baseDir.mkdirs();
+    public File[] dirContents(File dir) {
+        return dir.listFiles();
     }
-
 }

@@ -12,11 +12,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet.io;
+package org.steveleach.scoresheet.android;
 
 import android.content.Context;
 import android.os.Environment;
 import org.steveleach.scoresheet.R;
+import org.steveleach.scoresheet.support.SystemContext;
 
 import java.io.File;
 
@@ -25,11 +26,11 @@ import java.io.File;
  *
  * @author Steve Leach
  */
-public class SystemContext {
+public class AndroidSystemContext implements SystemContext {
 
     private final Context context;
 
-    public SystemContext(Context context) {
+    public AndroidSystemContext(Context context) {
         this.context = context;
     }
 

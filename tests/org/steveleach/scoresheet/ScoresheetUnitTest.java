@@ -19,18 +19,23 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.steveleach.scoresheet.io.SystemContext;
-import org.steveleach.scoresheet.io.AndroidScoresheetStore;
-import org.steveleach.scoresheet.io.FileManager;
-import org.steveleach.scoresheet.io.JsonCodec;
+import org.steveleach.scoresheet.android.AndroidSystemContext;
+import org.steveleach.scoresheet.support.ScoresheetStore;
+import org.steveleach.scoresheet.support.FileManager;
+import org.steveleach.scoresheet.support.JsonCodec;
 import org.steveleach.scoresheet.model.*;
+import org.steveleach.scoresheet.support.WeakList;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -52,7 +57,7 @@ public class ScoresheetUnitTest {
     JsonCodec jsonCodec;
 
     @Mock
-    SystemContext context;
+    AndroidSystemContext context;
 
     @Before
     public void setup() {
@@ -135,9 +140,10 @@ public class ScoresheetUnitTest {
     @Test
     public void validateScoresheetStore() throws JSONException {
         when(context.isExternalStorageAvailable()).thenReturn(true);
+        when(context.getScoresheetFolder()).thenReturn(new File("."));
         when(jsonCodec.toJson(anyObject())).thenReturn("{a}");
 
-        AndroidScoresheetStore store = new AndroidScoresheetStore(fileManager,jsonCodec,context);
+        ScoresheetStore store = new ScoresheetStore(fileManager,jsonCodec,context);
 
         String status = store.save(model);
 
@@ -300,4 +306,57 @@ public class ScoresheetUnitTest {
         model.notifyListeners(new ModelUpdate("Update"));
     }
 
+    @Test
+    public void verifyBasicWeakListFunctionality() {
+        WeakList<String> list = new WeakList<>();
+        String bob = "Bob";
+        list.add(bob);
+        assertTrue(list.containsItem(bob));
+        assertFalse(list.containsItem("Fred"));
+    }
+
+    @Test
+    public void verifyBasicFileManagerFunctionality() throws IOException {
+        final String testText = "Testing";
+        FileManager fileManager = new FileManager();
+        File tempFile = new File(fileManager.tempDir(),"temp.txt");
+        fileManager.writeTextFile(tempFile, testText);
+        String content = fileManager.readTextFileContent(tempFile);
+        assertEquals(testText,content);
+
+        File tempFile2 = new File(fileManager.tempDir(),"temp2.txt");
+        fileManager.copyFile(tempFile,tempFile2);
+        String content2 = fileManager.readTextFileContent(tempFile2);
+        assertEquals(testText,content2);
+
+        fileManager.delete(tempFile);
+        fileManager.delete(tempFile2);
+
+        assertTrue(fileManager.exists(fileManager.tempDir()));
+        fileManager.ensureDirectoryExists(fileManager.tempDir());
+        assertNotNull(fileManager.dirContents(fileManager.tempDir()));
+    }
+
+    @Test
+    public void verifyModelSaveAndLoad() throws IOException {
+        when(fileManager.readTextFileContent(any())).thenReturn(testModelJson());
+        when(fileManager.exists(any())).thenReturn(true);
+        when(context.getScoresheetFolder()).thenReturn(new File("."));
+
+        ScoresheetStore store = new ScoresheetStore(fileManager,new JsonCodec(),context);
+
+        assertEquals(0, model.getEvents().size());
+
+        String result = store.loadInto(model, "test.json");
+
+        System.out.println("Result="+result);
+
+        assertEquals(7, model.getEvents().size());
+    }
+
+    private String testModelJson() {
+        ScoresheetModel sourceModel = new ScoresheetModel();
+        addTestEvents(sourceModel);
+        return new JsonCodec().toJson(sourceModel);
+    }
 }

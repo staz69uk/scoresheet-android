@@ -32,10 +32,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.steveleach.scoresheet.*;
-import org.steveleach.scoresheet.io.AndroidScoresheetStore;
-import org.steveleach.scoresheet.io.FileManager;
-import org.steveleach.scoresheet.io.JsonCodec;
-import org.steveleach.scoresheet.io.SystemContext;
+import org.steveleach.scoresheet.support.ScoresheetStore;
+import org.steveleach.scoresheet.support.FileManager;
+import org.steveleach.scoresheet.support.JsonCodec;
+import org.steveleach.scoresheet.android.AndroidSystemContext;
+import org.steveleach.scoresheet.support.SystemContext;
 import org.steveleach.scoresheet.model.*;
 
 /**
@@ -50,14 +51,15 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     private ScoresheetModel model = new ScoresheetModel();
     private FileManager fileManager = new FileManager();
     private JsonCodec jsonCodec = new JsonCodec();
-    private AndroidScoresheetStore scoresheetFolder;
+    private ScoresheetStore scoresheetStore;
+    private SystemContext context = new AndroidSystemContext(getApplicationContext());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        scoresheetFolder = new AndroidScoresheetStore(fileManager,jsonCodec,new SystemContext(getApplicationContext()));
+        scoresheetStore = new ScoresheetStore(fileManager,jsonCodec,context);
 
         Log.d(LOG_TAG, "ScoresheetActivity.onCreate");
 
@@ -257,7 +259,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
 
     private void importGameJson() {
         SavesFragment fragment = new SavesFragment();
-        fragment.configure(model, scoresheetFolder);
+        fragment.configure(model, scoresheetStore);
         showFragment(fragment);
     }
 
@@ -265,7 +267,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         yesNoDialog("Save game data to file?", new Runnable() {
             @Override
             public void run() {
-                String result = scoresheetFolder.save(model);
+                String result = scoresheetStore.save(model);
                 toast(result);
             }
         });
