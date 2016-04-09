@@ -38,7 +38,6 @@ public class ScoresheetStore {
     private String baseFileName = "gamedata";
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-
     public ScoresheetStore(FileManager fileManager, JsonCodec jsonCodec, SystemContext system) {
         this.fileManager = fileManager;
         this.system = system;
@@ -47,19 +46,26 @@ public class ScoresheetStore {
         setBaseDirectory(system.getScoresheetFolder());
     }
 
+    public class StoreResult {
+        public String text = "Unknown";
+        public boolean success = false;
+        public Throwable error = null;
+    }
+
     private void checkFileSystemStatus() throws IOException {
         if (!system.isExternalStorageAvailable()) {
             throw new IOException("External storage not mounted for writing");
         }
     }
 
-    public String save(ScoresheetModel model) {
-        String result = "Unknown";
+    public StoreResult save(ScoresheetModel model) {
+        StoreResult result = new StoreResult();
         String json = null;
         try {
             json = codec.toJson(model);
         } catch (JSONException e) {
-            result = "Error building JSON : " + e.getMessage();
+            result.text = "Error building JSON : " + e.getMessage();
+            result.error = e;
         }
 
         if (json != null) {
@@ -69,33 +75,38 @@ public class ScoresheetStore {
                 File file = getMainFile(baseFileName);
                 fileManager.writeTextFile(file, json);
                 fileManager.copyFile(file, getLastFile(baseFileName));
-                result = "Saved " + baseFileName;
+                result.text = "Saved " + baseFileName;
+                result.success = true;
             } catch (IOException e) {
-                result = "Error saving " + baseFileName + " : " + e.getMessage();
+                result.text = "Error saving " + baseFileName + " : " + e.getMessage();
+                result.error = e;
             }
         }
         return result;
     }
 
-    private String loadInto(ScoresheetModel model, File file) {
-        String result = "Unknown";
+    private StoreResult loadInto(ScoresheetModel model, File file) {
+        StoreResult result = new StoreResult();
         if (fileManager.exists(file)) {
             String json = null;
             try {
                 json = fileManager.readTextFileContent(file);
             } catch (IOException e) {
-                result = "Error reading game data: " + e.getMessage();
+                result.text = "Error reading game data: " + e.getMessage();
+                result.error = e;
             }
             if (json != null) {
                 try {
                     codec.fromJson(model,json);
-                    result = "Loaded game data";
+                    result.text = "Loaded game data";
+                    result.success = true;
                 } catch (JSONException e) {
-                    result = "Error parsing game data : " + e.getMessage();
+                    result.text = "Error parsing game data : " + e.getMessage();
+                    result.error = e;
                 }
             }
         } else {
-            result = "No exported data found";
+            result.text = "No exported data found";
         }
         return result;
     }
@@ -113,7 +124,7 @@ public class ScoresheetStore {
         return files;
     }
 
-    public String loadInto(ScoresheetModel model, String fileName) {
+    public StoreResult loadInto(ScoresheetModel model, String fileName) {
         File file = new File(system.getScoresheetFolder(), fileName);
         return loadInto(model, file);
     }

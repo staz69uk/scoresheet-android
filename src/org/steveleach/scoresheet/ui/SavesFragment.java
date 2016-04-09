@@ -60,8 +60,12 @@ public class SavesFragment extends Fragment {
                 ((ScoresheetActivity)getActivity()).yesNoDialog("Load '" + item + "'?", new Runnable() {
                     @Override
                     public void run() {
-                        store.loadInto(model, item);
-                        Toast.makeText(getActivity().getApplicationContext(), "Loaded " + item, Toast.LENGTH_SHORT).show();
+                        ScoresheetStore.StoreResult result = store.loadInto(model, item);
+                        if (result.success) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Loaded " + item, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "Error " + result.text, Toast.LENGTH_LONG).show();
+                        }
                         ((ScoresheetActivity)getActivity()).showHistory();
                     }
                 });

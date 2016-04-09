@@ -145,9 +145,9 @@ public class ScoresheetUnitTest {
 
         ScoresheetStore store = new ScoresheetStore(fileManager,jsonCodec,context);
 
-        String status = store.save(model);
+        ScoresheetStore.StoreResult status = store.save(model);
 
-        assertEquals("Saved gamedata", status);
+        assertEquals("Saved gamedata", status.text);
     }
 
     @Test
@@ -347,9 +347,9 @@ public class ScoresheetUnitTest {
 
         assertEquals(0, model.getEvents().size());
 
-        String result = store.loadInto(model, "test.json");
+        ScoresheetStore.StoreResult result = store.loadInto(model, "test.json");
 
-        System.out.println("Result="+result);
+        assertEquals(true, result.success);
 
         assertEquals(7, model.getEvents().size());
     }

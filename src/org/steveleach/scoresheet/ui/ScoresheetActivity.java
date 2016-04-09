@@ -52,13 +52,14 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     private FileManager fileManager = new FileManager();
     private JsonCodec jsonCodec = new JsonCodec();
     private ScoresheetStore scoresheetStore;
-    private SystemContext context = new AndroidSystemContext(getApplicationContext());
+    private SystemContext context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        context = new AndroidSystemContext(getApplicationContext());
         scoresheetStore = new ScoresheetStore(fileManager,jsonCodec,context);
 
         Log.d(LOG_TAG, "ScoresheetActivity.onCreate");
@@ -267,8 +268,8 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         yesNoDialog("Save game data to file?", new Runnable() {
             @Override
             public void run() {
-                String result = scoresheetStore.save(model);
-                toast(result);
+                ScoresheetStore.StoreResult result = scoresheetStore.save(model);
+                toast(result.text);
             }
         });
     }
