@@ -25,7 +25,6 @@ import org.steveleach.scoresheet.model.GameEvent;
 import org.steveleach.scoresheet.model.ModelAware;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.model.ScoresheetModel;
-import org.steveleach.scoresheet.ui.ScoresheetActivity;
 
 import java.util.LinkedList;
 
@@ -57,8 +56,8 @@ public class HistoryFragment extends Fragment implements ModelAware {
                 ((ScoresheetActivity)getActivity()).yesNoDialog("Delete '" + item + "'?", new Runnable() {
                     @Override
                     public void run() {
-                        model.getEvents().remove((int)id);
-                        ((ScoresheetActivity)getActivity()).refreshModel();
+                        model.removeEvent((int)id);
+                        //((ScoresheetActivity)getActivity()).refreshModel();
                         Toast.makeText(getActivity().getApplicationContext(), "Deleting '" + item + "'", Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -54,6 +54,11 @@ public class ScoresheetModel {
         notifyListeners(new ModelUpdate("Event added"));
     }
 
+    public void removeEvent(int index) {
+        events.remove(index);
+        notifyListeners(new ModelUpdate("Event removed"));
+    }
+
     private void fixupClock(GameEvent event) {
         if (event.getGameTime().equals(GameEvent.GAME_TIME_ERROR)) {
             String gameTime = gameTimeFromClock(event.getPeriod(), event.getClockTime());
