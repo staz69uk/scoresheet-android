@@ -233,11 +233,11 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         // When linking text, force to always use default color. This works
         // around a pressed color state bug.
         TextView textView = (TextView) messageView.findViewById(R.id.txtAbout);
-        int defaultColor = textView.getTextColors().getDefaultColor();
-        textView.setTextColor(defaultColor);
+//        int defaultColor = textView.getTextColors().getDefaultColor();
+//        textView.setTextColor(defaultColor);
 
         TextView version = (TextView) messageView.findViewById(R.id.txtAppVersion);
-        version.setTextColor(defaultColor);
+        //version.setTextColor(defaultColor);
         version.setText("Version " + getVersionName());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
