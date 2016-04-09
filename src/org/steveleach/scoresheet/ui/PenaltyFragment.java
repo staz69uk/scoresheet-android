@@ -56,7 +56,7 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         view = inflater.inflate(R.layout.penaltyfragment, container, false);
 
         TextView title = (TextView)view.findViewById(R.id.txtPenaltyTitle);
-        title.setText(team + " penalty");
+        title.setText(getString(R.string.penaltyTitle, team));
 
         periodField = (EditText)view.findViewById(R.id.fldPenaltyPeriod);
         clockField = (EditText)view.findViewById(R.id.fldPenaltyClock);
@@ -117,8 +117,8 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         }
 
         imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
-        ((ScoresheetActivity)getActivity()).onModelUpdated(null);
-        ((ScoresheetActivity)getActivity()).showHistory();
+
+        ((DefaultFragmentActivity)getActivity()).showDefaultFragment();
     }
 
     @Override

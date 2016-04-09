@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import org.steveleach.scoresheet.R;
+import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.support.ScoresheetStore;
 import org.steveleach.scoresheet.model.ScoresheetModel;
 
@@ -61,12 +62,13 @@ public class SavesFragment extends Fragment {
                     @Override
                     public void run() {
                         ScoresheetStore.StoreResult result = store.loadInto(model, item);
+                        model.notifyListeners(new ModelUpdate("Model loaded"));
                         if (result.success) {
                             Toast.makeText(getActivity().getApplicationContext(), "Loaded " + item, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(), "Error " + result.text, Toast.LENGTH_LONG).show();
                         }
-                        ((ScoresheetActivity)getActivity()).showHistory();
+                        ((DefaultFragmentActivity)getActivity()).showDefaultFragment();
                     }
                 });
                 return false;

@@ -77,6 +77,8 @@ public class GoalFragment extends Fragment implements ModelAware {
 
         imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        final DefaultFragmentActivity activity = (DefaultFragmentActivity) getActivity();
+
         Button clearButton = (Button)view.findViewById(R.id.btnDone);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +96,7 @@ public class GoalFragment extends Fragment implements ModelAware {
 
                 imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
 
-                ((ScoresheetActivity)getActivity()).onModelUpdated(null);
-                ((ScoresheetActivity)getActivity()).showHistory();
+                activity.showDefaultFragment();
             }
         });
 

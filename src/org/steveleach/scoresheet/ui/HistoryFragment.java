@@ -57,7 +57,6 @@ public class HistoryFragment extends Fragment implements ModelAware {
                     @Override
                     public void run() {
                         model.removeEvent((int)id);
-                        //((ScoresheetActivity)getActivity()).refreshModel();
                         Toast.makeText(getActivity().getApplicationContext(), "Deleting '" + item + "'", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -76,7 +75,7 @@ public class HistoryFragment extends Fragment implements ModelAware {
 
     private void refreshList() {
         if (nextPeriodButton != null) {
-            nextPeriodButton.setEnabled(model.getPeriod() <= 3);
+            nextPeriodButton.setEnabled(model.getPeriod() <= model.getRules().getRegulationPeriods());
         }
         if (adapter != null) {
             adapter.clear();

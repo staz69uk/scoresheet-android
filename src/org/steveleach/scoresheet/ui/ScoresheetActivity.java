@@ -44,7 +44,7 @@ import org.steveleach.scoresheet.model.*;
  *
  * @author Steve Leach
  */
-public class ScoresheetActivity extends Activity implements ModelAware {
+public class ScoresheetActivity extends Activity implements ModelAware, DefaultFragmentActivity {
     private static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
     private static final String STATE_KEY = "MODEL_JSON";
     private static final String LOG_TAG = "IHSS";
@@ -311,5 +311,10 @@ public class ScoresheetActivity extends Activity implements ModelAware {
                 .setNegativeButton(noButton,listener)
                 .show();
 
+    }
+
+    @Override
+    public void showDefaultFragment() {
+        showHistory();
     }
 }

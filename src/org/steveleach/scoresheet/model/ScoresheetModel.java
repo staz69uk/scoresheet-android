@@ -34,7 +34,7 @@ public class ScoresheetModel {
     private String gameLocation = "";
     private String competition = "";
     private List<GameOfficial> officials = new LinkedList<>();
-    private GameRules rules = new GameRules();
+    private GameRules rules = GameRules.UK_REC_RULES;
     private int homeTimeouts = 0;
     private int awayTimeouts = 0;
     private WeakList<ModelAware> listeners = new WeakList<>();
@@ -51,17 +51,17 @@ public class ScoresheetModel {
         fixupClock(event);
         events.add(event);
         sortEvents();
-        notifyListeners(new ModelUpdate("Event added"));
+        notifyListeners(ModelUpdate.EVENT_ADDED);
     }
 
     public void removeEvent(int index) {
         events.remove(index);
-        notifyListeners(new ModelUpdate("Event removed"));
+        notifyListeners(ModelUpdate.EVENT_REMOVED);
     }
 
     public void clearEvents() {
         events.clear();
-        notifyListeners(new ModelUpdate("Events cleared"));
+        notifyListeners(ModelUpdate.EVENTS_CLEARED);
     }
 
     private void fixupClock(GameEvent event) {

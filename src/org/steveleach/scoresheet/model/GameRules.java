@@ -27,6 +27,19 @@ public class GameRules {
     private int overtimeMinutes = 5;
     private boolean penalties = true;
 
+    public GameRules() {}
+
+    public GameRules(int periods, int length, int overtime, boolean allowTie, boolean penalties) {
+        this.regulationPeriods = periods;
+        this.periodMinutes = length;
+        this.overtimeMinutes = overtime;
+        this.allowTie = allowTie;
+        this.penalties = penalties;
+    }
+
+    // Define different game rules sets here
+    public static final GameRules UK_REC_RULES = new GameRules(3,20,5,false,true);
+
     public int getRegulationPeriods() {
         return regulationPeriods;
     }
