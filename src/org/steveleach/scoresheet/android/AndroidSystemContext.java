@@ -23,6 +23,8 @@ import java.io.File;
 
 /**
  * Abstraction for system context, Android implementation.
+ * <p>
+ * This stuff is hard to test in isolation, so keep it to itself.
  *
  * @author Steve Leach
  */

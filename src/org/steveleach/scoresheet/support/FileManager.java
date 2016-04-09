@@ -15,6 +15,9 @@
 package org.steveleach.scoresheet.support;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * File System helper.
@@ -83,7 +86,11 @@ public class FileManager {
         return file.exists();
     }
 
-    public File[] dirContents(File dir) {
-        return dir.listFiles();
+    public List<File> dirContents(File dir) {
+        if ((dir == null) || (dir.listFiles() == null)) {
+            return new ArrayList<>();
+        } else {
+            return Arrays.asList(dir.listFiles());
+        }
     }
 }

@@ -29,6 +29,6 @@
     <orderEntry type="library" scope="TEST" name="org.json:json:20160212" level="application" />
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="library" scope="TEST" name="com.bluecatcode.mockito:mockito-1.10.19-extended:1.0.4" level="application" />
-    <orderEntry type="library" name="org.robolectric:robolectric:3.0" level="application" />
+    <orderEntry type="library" scope="TEST" name="org.robolectric:robolectric:3.0" level="application" />
   </component>
 </module>

@@ -173,6 +173,10 @@ public class ScoresheetModelTest {
         PenaltyEvent event = new PenaltyEvent();
         event.setGameTime(null);
         assertEquals("00:00", event.finishTime());
+
+        model.clearEvents();
+        model.addEvent(new PeriodEndEvent(1));
+        model.removeEvent(0);
     }
 
     @Test
