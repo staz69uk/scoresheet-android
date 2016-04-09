@@ -47,7 +47,7 @@ public class GoalFragment extends Fragment implements ModelAware {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.goalfragment, container, false);
         TextView title = (TextView) view.findViewById(R.id.txtGoalScoredTitle);
-        title.setText(team + " Goal Scored");
+        title.setText(getString(R.string.goalScoredTitle, team));
 
         periodField = (EditText)view.findViewById(R.id.fldPeriod);
         clockField = (EditText)view.findViewById(R.id.fldClock);

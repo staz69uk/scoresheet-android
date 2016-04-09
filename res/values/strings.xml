@@ -18,7 +18,8 @@
 <resources>
     <string name="app_name">Ice Hockey Score Sheet</string>
     <string name="homeText">Home Goal</string>
-    <string name="aboutText">By Steve Leach\n\nCopyright (c) 2016\n\nFor the Guildford Smoke</string>
+    <string name="aboutText">By Steve Leach\n\nCopyright &#169; 2016\n\nFor the Guildford Smoke</string>
+    <string name="appVersionText">Version %s</string>
     <string name="defaultHomeTeamName">Home</string>
     <string name="defaultAwayTeamName">Away</string>
     <string name="period">Period</string>
@@ -35,6 +36,12 @@
     <string name="scoresheetFolder">Scoresheets</string>
     <string name="gameSaves">Saved game files</string>
     <string name="gameLoadHint">Tap and hold an entry to load it</string>
+    <string name="saveGamePrompt">Save game data to file?</string>
+    <string name="clearEventsPrompt">Clear all events?</string>
+    <string name="yesOption">Yes</string>
+    <string name="noOption">No</string>
+    <string name="overTimeAbbrev">OT</string>
+    <string name="teamGoalScored">%s Goal Scored</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

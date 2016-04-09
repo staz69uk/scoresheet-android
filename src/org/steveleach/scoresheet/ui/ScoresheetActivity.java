@@ -45,9 +45,9 @@ import org.steveleach.scoresheet.model.*;
  * @author Steve Leach
  */
 public class ScoresheetActivity extends Activity implements ModelAware {
-    public static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
-    public static final String STATE_KEY = "MODEL_JSON";
-    public static final String LOG_TAG = "IHSS";
+    private static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
+    private static final String STATE_KEY = "MODEL_JSON";
+    private static final String LOG_TAG = "IHSS";
     private ScoresheetModel model = new ScoresheetModel();
     private FileManager fileManager = new FileManager();
     private JsonCodec jsonCodec = new JsonCodec();
@@ -62,28 +62,25 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         context = new AndroidSystemContext(getApplicationContext());
         scoresheetStore = new ScoresheetStore(fileManager,jsonCodec,context);
 
-        Log.d(LOG_TAG, "ScoresheetActivity.onCreate");
-
         showHistory();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(LOG_TAG, "On resume");
         model.addListener(this);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d(LOG_TAG, "ScoresheetActivity.onRestoreInstanceState");
         String jsonText = savedInstanceState.getString(STATE_KEY);
-        Log.d(LOG_TAG, "JSON size = " + jsonText.length());
-        try {
-            jsonCodec.fromJson(model, jsonText);
-        } catch (JSONException e) {
-            toast("Error parsing json: " + e.getMessage());
+        if (jsonText != null) {
+            try {
+                jsonCodec.fromJson(model, jsonText);
+            } catch (JSONException e) {
+                toast("Error parsing json: " + e.getMessage());
+            }
         }
     }
 
@@ -92,7 +89,6 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         Log.d(LOG_TAG, "ScoresheetActivity.onSaveInstanceState");
         try {
             String modelJson = jsonCodec.toJson(model);
-            Log.d(LOG_TAG, "JSON size = " + modelJson.length());
             outState.putCharSequence(STATE_KEY, modelJson);
         } catch (JSONException e) {
             toast("Error creating json: " + e.getMessage());
@@ -141,7 +137,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         tx.commit();
     }
 
-    public void showHistory() {
+    void showHistory() {
         HistoryFragment h = new HistoryFragment();
         h.setModel(model);
         showFragment(h);
@@ -158,12 +154,11 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         showFragment(fragment);
     }
 
-    public void clearHistory() {
-        yesNoDialog("Clear all events?", new Runnable() {
+    private void clearHistory() {
+        yesNoDialog(R.string.clearEventsPrompt, new Runnable() {
                     @Override
                     public void run() {
-                        model.getEvents().clear();
-                        refreshModel();
+                        model.clearEvents();
                     }
                 });
     }
@@ -179,9 +174,10 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     }
 
     private void updateScores() {
+        CharSequence otText = getText(R.string.overTimeAbbrev);
         updateScore(R.id.txtHomeScore, model.getHomeGoals());
         updateScore(R.id.txtAwayScore, model.getAwayGoals());
-        updateScore(R.id.txtPeriod, model.getPeriod() > 3 ? "OT" : model.getPeriod());
+        updateScore(R.id.txtPeriod, model.getPeriod() > model.getRules().getRegulationPeriods() ? otText : model.getPeriod());
     }
 
     private void updateScore(int fieldId, Object score) {
@@ -230,15 +226,9 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         // Inflate the about message contents
         View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
 
-        // When linking text, force to always use default color. This works
-        // around a pressed color state bug.
-        TextView textView = (TextView) messageView.findViewById(R.id.txtAbout);
-//        int defaultColor = textView.getTextColors().getDefaultColor();
-//        textView.setTextColor(defaultColor);
-
         TextView version = (TextView) messageView.findViewById(R.id.txtAppVersion);
-        //version.setTextColor(defaultColor);
-        version.setText("Version " + getVersionName());
+        String versionText = getApplicationContext().getString(R.string.appVersionText, getVersionName());
+        version.setText(versionText);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_launcher);
@@ -265,7 +255,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
     }
 
     private void exportGameJson() {
-        yesNoDialog("Save game data to file?", new Runnable() {
+        yesNoDialog(R.string.saveGamePrompt, new Runnable() {
             @Override
             public void run() {
                 ScoresheetStore.StoreResult result = scoresheetStore.save(model);
@@ -279,7 +269,7 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    public void refreshModel() {
+    private void refreshModel() {
         updateScores();
         model.sortEvents();
         ModelAware visibleFragment = (ModelAware)getFragmentManager().findFragmentByTag(MAIN_FRAGMENT);
@@ -292,11 +282,15 @@ public class ScoresheetActivity extends Activity implements ModelAware {
         model.notifyListeners(new ModelUpdate());
     }
 
-    public void yesNoDialog(String prompt, Runnable action) {
-        questionDialog(prompt, "Yes", "No", action);
+    void yesNoDialog(int promptId, Runnable action) {
+        questionDialog(getString(promptId), getString(R.string.yesOption), getString(R.string.noOption), action);
     }
 
-    public void questionDialog(String prompt, String yesButton, String noButton, final Runnable action) {
+    void yesNoDialog(String prompt, Runnable action) {
+        questionDialog(prompt, getString(R.string.yesOption), getString(R.string.noOption), action);
+    }
+
+    private void questionDialog(String prompt, String yesButton, String noButton, final Runnable action) {
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int button) {

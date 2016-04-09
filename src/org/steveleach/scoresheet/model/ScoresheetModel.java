@@ -59,6 +59,11 @@ public class ScoresheetModel {
         notifyListeners(new ModelUpdate("Event removed"));
     }
 
+    public void clearEvents() {
+        events.clear();
+        notifyListeners(new ModelUpdate("Events cleared"));
+    }
+
     private void fixupClock(GameEvent event) {
         if (event.getGameTime().equals(GameEvent.GAME_TIME_ERROR)) {
             String gameTime = gameTimeFromClock(event.getPeriod(), event.getClockTime());
@@ -70,6 +75,7 @@ public class ScoresheetModel {
      * Converts clock time to game time based on the rules for this game.
      *
      * @param period
+     *          the current game period
      * @param clockTime
      *          time remaining in the period in "mmss" format
      * @return
@@ -225,8 +231,6 @@ public class ScoresheetModel {
      * The listener will be notified of model changes.
      * Listeners are held via weak references, and so the listener list
      * will not prevent the listener being garbage collected.
-     *
-     * @param listener
      */
     public void addListener(ModelAware listener) {
         listeners.add(listener);
@@ -234,8 +238,6 @@ public class ScoresheetModel {
 
     /**
      * Notify all listeners that the model has been updated.
-     *
-     * @param update
      */
     public void notifyListeners(ModelUpdate update) {
         listeners.removeDeadItems();
