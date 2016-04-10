@@ -35,7 +35,6 @@ import org.steveleach.scoresheet.*;
 import org.steveleach.scoresheet.support.ScoresheetStore;
 import org.steveleach.scoresheet.support.FileManager;
 import org.steveleach.scoresheet.support.JsonCodec;
-import org.steveleach.scoresheet.android.AndroidSystemContext;
 import org.steveleach.scoresheet.support.SystemContext;
 import org.steveleach.scoresheet.model.*;
 

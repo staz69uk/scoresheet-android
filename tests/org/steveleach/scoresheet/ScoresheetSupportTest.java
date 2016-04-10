@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.steveleach.scoresheet.android.AndroidSystemContext;
+import org.steveleach.scoresheet.ui.AndroidSystemContext;
 import org.steveleach.scoresheet.support.ScoresheetStore;
 import org.steveleach.scoresheet.support.FileManager;
 import org.steveleach.scoresheet.support.JsonCodec;
