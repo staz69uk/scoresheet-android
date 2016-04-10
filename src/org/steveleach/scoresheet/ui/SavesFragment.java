@@ -23,7 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import org.steveleach.scoresheet.R;
+import org.steveleach.ihscoresheet.R;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.support.ScoresheetStore;
 import org.steveleach.scoresheet.model.ScoresheetModel;

@@ -20,7 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import org.steveleach.scoresheet.R;
+import org.steveleach.ihscoresheet.*;
 import org.steveleach.scoresheet.model.GameEvent;
 import org.steveleach.scoresheet.model.ModelAware;
 import org.steveleach.scoresheet.model.ModelUpdate;

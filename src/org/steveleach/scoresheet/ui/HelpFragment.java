@@ -20,9 +20,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import org.steveleach.scoresheet.R;
 
 import java.util.Locale;
+
+import org.steveleach.ihscoresheet.*;
 
 /**
  * Implementation code for the new Help UI fragment.

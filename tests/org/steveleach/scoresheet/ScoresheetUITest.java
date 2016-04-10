@@ -37,6 +37,7 @@ import org.steveleach.scoresheet.model.PenaltyEvent;
 import org.steveleach.scoresheet.model.PeriodEndEvent;
 import org.steveleach.scoresheet.model.ScoresheetModel;
 import org.steveleach.scoresheet.ui.*;
+import org.steveleach.ihscoresheet.*;
 
 import static org.junit.Assert.*;
 

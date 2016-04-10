@@ -31,7 +31,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
-import org.steveleach.scoresheet.*;
+import org.steveleach.ihscoresheet.*;
 import org.steveleach.scoresheet.support.ScoresheetStore;
 import org.steveleach.scoresheet.support.FileManager;
 import org.steveleach.scoresheet.support.JsonCodec;

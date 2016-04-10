@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import org.steveleach.scoresheet.R;
+import org.steveleach.ihscoresheet.R;
 import org.steveleach.scoresheet.model.ModelAware;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.model.PenaltyEvent;
