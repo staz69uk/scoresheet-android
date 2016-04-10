@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.steveleach.scoresheet"
+          package="org.steveleach.ihscoresheet"
           android:versionCode="11"
           android:versionName="1.1.1">
     <uses-sdk android:minSdkVersion="15"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme">
-        <activity android:name=".ui.ScoresheetActivity"
+        <activity android:name="org.steveleach.scoresheet.ui.ScoresheetActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
