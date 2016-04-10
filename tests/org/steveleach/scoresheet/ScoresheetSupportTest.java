@@ -32,7 +32,7 @@ import org.steveleach.scoresheet.support.ScoresheetStore;
 import org.steveleach.scoresheet.support.FileManager;
 import org.steveleach.scoresheet.support.JsonCodec;
 import org.steveleach.scoresheet.model.*;
-import org.steveleach.scoresheet.support.WeakList;
+import org.steveleach.scoresheet.support.WeakSet;
 
 import java.io.File;
 import java.io.IOException;
@@ -104,7 +104,7 @@ public class ScoresheetSupportTest {
 
     @Test
     public void verifyBasicWeakListFunctionality() {
-        WeakList<String> list = new WeakList<>();
+        WeakSet<String> list = new WeakSet<>();
         String bob = "Bob";
         list.add(bob);
         assertTrue(list.containsItem(bob));

@@ -14,7 +14,7 @@
 */
 package org.steveleach.scoresheet.model;
 
-import org.steveleach.scoresheet.support.WeakList;
+import org.steveleach.scoresheet.support.WeakSet;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class ScoresheetModel {
     private GameRules rules = GameRules.UK_REC_RULES;
     private int homeTimeouts = 0;
     private int awayTimeouts = 0;
-    private WeakList<ModelAware> listeners = new WeakList<>();
+    private WeakSet<ModelAware> listeners = new WeakSet<>();
 
     /**
      * Adds an event to the game.
@@ -256,8 +256,6 @@ public class ScoresheetModel {
      * Notify all listeners that the model has been updated.
      */
     public void notifyListeners(ModelUpdate update) {
-        listeners.removeDeadItems();
-
         for (ModelAware listener : listeners) {
             if (listener != null) {
                 notifyListener(listener,update);

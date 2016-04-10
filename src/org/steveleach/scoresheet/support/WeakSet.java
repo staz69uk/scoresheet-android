@@ -22,18 +22,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Maintains a list of weak references to other objects.
+ * A set of weak references to other objects.
+ *
+ * Being in this collection will not prevent the item being garbage collected.
  *
  * @author Steve Leach
  */
-public class WeakList<T> implements Iterable<T> {
+public class WeakSet<T> implements Iterable<T> {
     private List<WeakReference<T>> references = new LinkedList<>();
     private ReferenceQueue<T> referenceQueue = new ReferenceQueue<>();
 
     /**
-     * Adds a new item to this list.
+     * Adds a new item to this collection.
      *
-     * Items are held via weak references, and so the  list
+     * Items are held via weak references, and so the collection
      * will not prevent the item being garbage collected.
      *
      * If the item is already in the list then no action is taken.
@@ -64,8 +66,17 @@ public class WeakList<T> implements Iterable<T> {
         }
     }
 
+    /**
+     * Allows the caller to iterate across the referenced items in a foreach loop.
+     *
+     * Any "dead" items should have been removed from the collection before the
+     * iterator is returned, but it is still possible for the iterator to return
+     * a null object in some situations.
+     */
     @Override
     public Iterator<T> iterator() {
+        removeDeadItems();
+
         Iterator<WeakReference<T>> iterator = references.iterator();
         return new Iterator<T>() {
             @Override
