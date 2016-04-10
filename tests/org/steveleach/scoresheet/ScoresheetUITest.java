@@ -15,25 +15,30 @@
 package org.steveleach.scoresheet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Environment;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.fakes.RoboMenuItem;
+import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowEnvironment;
 import org.steveleach.scoresheet.model.GoalEvent;
 import org.steveleach.scoresheet.model.PenaltyEvent;
+import org.steveleach.scoresheet.model.PeriodEndEvent;
 import org.steveleach.scoresheet.model.ScoresheetModel;
 import org.steveleach.scoresheet.ui.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for UI methods.
@@ -75,14 +80,74 @@ public class ScoresheetUITest {
         clickReportButton();
         selectLoadMenu();
         showDefaultFragment();
+    }
 
-//        AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
-//        ShadowAlertDialog shadow = Shadows.shadowOf(dialog);
-//        shadow.clickOnItem(DialogInterface.BUTTON_POSITIVE);
+    @Test
+    public void clearEventsTest() {
+        // Set up the model with an event
+        model.addEvent(new PeriodEndEvent(1));
+        assertEquals(1, model.getEvents().size());
+
+        clickMenuItem(R.id.menuClear);
+        verifyAlertDialogShowing("Clear all events?");
+
+        clickDialogButton(DialogInterface.BUTTON_NEGATIVE);
+
+        // The above UI activity should not change the model
+        assertEquals(1, model.getEvents().size());
+
+        clickMenuItem(R.id.menuClear);
+        verifyAlertDialogShowing("Clear all events?");
+
+        clickDialogButton(DialogInterface.BUTTON_POSITIVE);
+
+        // The above UI activity should result in all the events being removed from the model
+        assertEquals(0, model.getEvents().size());
+    }
+
+    @Test
+    public void aboutDialogTest() {
+        clickMenuItem(R.id.menuAbout);
+
+        AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
+        assertNotNull(dialog);
+        assertTrue(dialog.isShowing());
+
+        ShadowAlertDialog shadow = Shadows.shadowOf(dialog);
+        assertEquals("Ice Hockey Score Sheet", shadow.getTitle());
+        shadow.dismiss();
+    }
+
+    @Test
+    public void refreshTest() {
+        clickMenuItem(R.id.menuRefresh);
+    }
+
+    private void clickDialogButton(int buttonID) {
+        AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
+        Button button = dialog.getButton(buttonID);
+        assertNotNull(button);
+        button.performClick();
+        assertFalse(dialog.isShowing());
+    }
+
+    private void clickMenuItem(int optionId) {
+        activity.onOptionsItemSelected(new RoboMenuItem(optionId));
+    }
+
+    @NotNull
+    private AlertDialog verifyAlertDialogShowing(String expectedMessage) {
+        AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
+        assertNotNull(dialog);
+        assertTrue(dialog.isShowing());
+        ShadowAlertDialog shadow = Shadows.shadowOf(dialog);
+        assertNotNull(shadow.getMessage());
+        assertEquals(expectedMessage, shadow.getMessage());
+        return dialog;
     }
 
     private void selectLoadMenu() {
-        activity.onOptionsItemSelected(new RoboMenuItem(R.id.menuImport));
+        clickMenuItem(R.id.menuImport);
         assertTrue( "Saves fragment should be visible", activity.getVisibleFragment() instanceof SavesFragment);
     }
 
@@ -98,7 +163,7 @@ public class ScoresheetUITest {
 
     private void selectHelpMenu() {
         // Select "help" from the menu
-        activity.onOptionsItemSelected(new RoboMenuItem(R.id.menuHelp));
+        clickMenuItem(R.id.menuHelp);
         assertTrue( "Help fragment should be visible", activity.getVisibleFragment() instanceof HelpFragment);
     }
 
