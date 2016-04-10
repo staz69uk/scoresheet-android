@@ -25,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Data store for Ice Hockey scoresheet files on Android.
+ * Data store for Ice Hockey scoresheet files.
  *
  * @author Steve Leach
  */

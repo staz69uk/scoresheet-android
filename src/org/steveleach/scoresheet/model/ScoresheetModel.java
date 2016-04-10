@@ -54,11 +54,24 @@ public class ScoresheetModel {
         notifyListeners(ModelUpdate.EVENT_ADDED);
     }
 
+    /**
+     * Removes an event from the game history.
+     *
+     * Notifies all registered listeners of the change.
+     *
+     * @param index
+     *          the index of the event to remove
+     */
     public void removeEvent(int index) {
         events.remove(index);
         notifyListeners(ModelUpdate.EVENT_REMOVED);
     }
 
+    /**
+     * Removes all events from the game history.
+     *
+     * Notifies all registered listeners of the change.
+     */
     public void clearEvents() {
         events.clear();
         notifyListeners(ModelUpdate.EVENTS_CLEARED);
@@ -158,6 +171,9 @@ public class ScoresheetModel {
         return goals;
     }
 
+    /**
+     * Sorts all events in the game history by time (game clock).
+     */
     public void sortEvents() {
         Collections.sort(events, new Comparator<GameEvent>() {
             @Override
