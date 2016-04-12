@@ -238,4 +238,14 @@ public class ScoresheetModelTest {
         });
         model.notifyListeners(new ModelUpdate("Update"));
     }
+
+    @Test
+    public void testAssistCount() {
+        GoalEvent goal = new GoalEvent();
+        assertEquals(0, goal.assists());
+        goal.setAssist1(1);
+        assertEquals(1, goal.assists());
+        goal.setAssist2(2);
+        assertEquals(2, goal.assists());
+    }
 }

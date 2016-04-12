@@ -73,13 +73,13 @@
                     android:onClick="penaltyButtonClicked" style="@style/AppButton"/>
         </LinearLayout>
     </LinearLayout>
-    <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/historyList" android:choiceMode="none" android:layout_weight="1"/>
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom">
     </FrameLayout>
+    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/historyList2" android:longClickable="true"/>
 </LinearLayout>

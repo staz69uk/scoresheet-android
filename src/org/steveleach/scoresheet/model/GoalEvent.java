@@ -56,6 +56,16 @@ public class GoalEvent extends GameEvent {
         this.assist2 = assist2;
     }
 
+    public int assists() {
+        if (assist2 > 0) {
+            return 2;
+        } else if (assist1 > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     @Override
     public String toString() {
         String assists = "";

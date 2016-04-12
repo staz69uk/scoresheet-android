@@ -42,6 +42,13 @@
     <string name="overTimeAbbrev">OT</string>
     <string name="goalScoredTitle">%s Goal Scored</string>
     <string name="penaltyTitle">%s Penalty</string>
+    <string name="historyListGoal">%s goal</string>
+    <string name="historyListGoalDetail" formatted="false">Scored by %s (%s)</string>
+    <string name="historyListGoalDetail1a" formatted="false">Scored by %s from %d (%s)</string>
+    <string name="historyListGoalDetail2a" formatted="false">Scored by %s from %d and %d (%s)</string>
+    <string name="historyListPenalty">%s penalty</string>
+    <string name="historyListPenaltyDetail" formatted="false">Player %s, %sm (%s)</string>
+    <string name="historyListPeriod">Period %s end</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

@@ -14,19 +14,19 @@
 */
 package org.steveleach.scoresheet.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.steveleach.ihscoresheet.*;
-import org.steveleach.scoresheet.model.GameEvent;
-import org.steveleach.scoresheet.model.ModelAware;
-import org.steveleach.scoresheet.model.ModelUpdate;
-import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.model.*;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Implementation code for the new Game History UI fragment.
@@ -34,17 +34,16 @@ import java.util.LinkedList;
  * @author Steve Leach
  */
 public class HistoryFragment extends Fragment implements ModelAware {
-    private ListView eventList = null;
-    private ArrayAdapter<String> adapter = null;
+    private HistoryAdapter adapter = null;
     private ScoresheetModel model = new ScoresheetModel();
     private Button nextPeriodButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.historyfragment, container, false);
-        eventList = (ListView)view.findViewById(R.id.historyList);
 
-        adapter = new ArrayAdapter<String>(getActivity(), R.layout.basiclistentry, new LinkedList<String>());
+        ListView eventList = (ListView)view.findViewById(R.id.historyList2);
+        adapter = new HistoryAdapter(getActivity());
         eventList.setAdapter(adapter);
 
         nextPeriodButton = (Button)view.findViewById(R.id.btnNextPeriod);
@@ -52,7 +51,8 @@ public class HistoryFragment extends Fragment implements ModelAware {
         eventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String item = (String) adapterView.getItemAtPosition(position);
+                GameEvent event = (GameEvent) adapterView.getItemAtPosition(position);
+                String item = event.toString();
                 ((ScoresheetActivity)getActivity()).yesNoDialog("Delete '" + item + "'?", new Runnable() {
                     @Override
                     public void run() {
@@ -78,10 +78,7 @@ public class HistoryFragment extends Fragment implements ModelAware {
             nextPeriodButton.setEnabled(model.getPeriod() <= model.getRules().getRegulationPeriods());
         }
         if (adapter != null) {
-            adapter.clear();
-            for (GameEvent event : model.getEvents()) {
-                adapter.add(event.toString());
-            }
+            adapter.setEvents(model.getEvents());
             adapter.notifyDataSetChanged();
         }
     }
@@ -96,5 +93,78 @@ public class HistoryFragment extends Fragment implements ModelAware {
     @Override
     public void onModelUpdated(ModelUpdate update) {
         refreshList();
+    }
+
+    class HistoryAdapter extends BaseAdapter {
+        private final Activity activity;
+        private final LayoutInflater inflater;
+        private List<GameEvent> events = new LinkedList<>();
+
+        public HistoryAdapter(Activity activity) {
+            this.activity = activity;
+            this.inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        public void setEvents(List<GameEvent> events) {
+            this.events = events;
+        }
+
+        @Override
+        public int getCount() {
+            return events.size();
+        }
+
+        @Override
+        public GameEvent getItem(int position) {
+            return events.get((int)getItemId(position));
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return events.size()-1-position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            GameEvent event = getItem(position);
+            View rowView = inflater.inflate(R.layout.historylistentry, null);
+            ((TextView)rowView.findViewById(R.id.txtGameTime)).setText(event.getGameTime());
+            ((TextView)rowView.findViewById(R.id.txtSummary)).setText(getSummary(event));
+            ((TextView)rowView.findViewById(R.id.txtEventDetail)).setText(getDetail(event));
+            return rowView;
+        }
+
+        private String getDetail(GameEvent event) {
+            if (event instanceof GoalEvent) {
+                GoalEvent goal = (GoalEvent) event;
+                switch (goal.assists()) {
+                    case 2:
+                        return activity.getString(R.string.historyListGoalDetail2a, goal.getPlayer(), goal.getAssist1(), goal.getAssist2(), goal.getSubType());
+                    case 1:
+                        return activity.getString(R.string.historyListGoalDetail1a, goal.getPlayer(), goal.getAssist1(), goal.getSubType());
+                    default:
+                        return activity.getString(R.string.historyListGoalDetail, goal.getPlayer(), goal.getSubType());
+                }
+            } else if (event instanceof PenaltyEvent) {
+                PenaltyEvent penalty = (PenaltyEvent) event;
+                return activity.getString(R.string.historyListPenaltyDetail, penalty.getPlayer(), ""+penalty.getMinutes(), penalty.getSubType());
+            } else if (event instanceof PeriodEndEvent) {
+                return "";
+            } else {
+                return event.toString();
+            }
+        }
+
+        private String getSummary(GameEvent event) {
+            if (event instanceof GoalEvent) {
+                return activity.getString(R.string.historyListGoal, event.getTeam());
+            } else if (event instanceof PenaltyEvent) {
+                return activity.getString(R.string.historyListPenalty, event.getTeam());
+            } else if (event instanceof PeriodEndEvent) {
+                return activity.getString(R.string.historyListPeriod, ""+event.getPeriod());
+            } else {
+                return event.getEventType();
+            }
+        }
     }
 }
