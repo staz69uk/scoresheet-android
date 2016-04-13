@@ -78,7 +78,7 @@ public class ScoresheetUITest {
         clickAddPenalty();
         selectHelpMenu();
         showDefaultFragment();
-        clickReportButton();
+        //clickReportButton();
         selectLoadMenu();
         showDefaultFragment();
     }
@@ -152,15 +152,15 @@ public class ScoresheetUITest {
         assertTrue( "Saves fragment should be visible", activity.getVisibleFragment() instanceof SavesFragment);
     }
 
-    private void clickReportButton() {
-        activity.findViewById(R.id.btnReport).performClick();
-        assertTrue( "Report fragment should be visible", activity.getVisibleFragment() instanceof ReportFragment);
-
-        TextView reportView = (TextView) activity.findViewById(R.id.reportText);
-        String reportText = reportView.getText().toString();
-        assertTrue( "Report has player 41 goal", reportText.contains("41 : goals=1,") );
-        assertTrue( "Report has player 25 penalty", reportText.contains("P 25, 5m for Fight") );
-    }
+//    private void clickReportButton() {
+//        activity.findViewById(R.id.btnReport).performClick();
+//        assertTrue( "Report fragment should be visible", activity.getVisibleFragment() instanceof ReportFragment);
+//
+//        TextView reportView = (TextView) activity.findViewById(R.id.reportText);
+//        String reportText = reportView.getText().toString();
+//        assertTrue( "Report has player 41 goal", reportText.contains("41 : goals=1,") );
+//        assertTrue( "Report has player 25 penalty", reportText.contains("P 25, 5m for Fight") );
+//    }
 
     private void selectHelpMenu() {
         // Select "help" from the menu

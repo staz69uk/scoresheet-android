@@ -16,15 +16,15 @@ package org.steveleach.scoresheet.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import org.steveleach.ihscoresheet.*;
-import org.steveleach.scoresheet.model.ModelAware;
-import org.steveleach.scoresheet.model.ModelUpdate;
-import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.model.*;
 
 /**
  * Implementation code for the Game Report UI fragment.
@@ -34,16 +34,19 @@ import org.steveleach.scoresheet.model.ScoresheetModel;
 public class ReportFragment extends Fragment implements ModelAware {
     private ScoresheetModel model = new ScoresheetModel();
     private View view;
-    private TextView report;
+    private TextView report = null;
     private String title = "Report";
+    private LinearLayout panel;
     public static final String GAME_REPORT = "Game Report";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.reportfrgament, container, false);
 
-        report = (TextView)view.findViewById(R.id.reportText);
-        report.setMovementMethod(ScrollingMovementMethod.getInstance());
+        //report = (TextView)view.findViewById(R.id.reportText);
+        //report.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+        panel = (LinearLayout) view.findViewById(R.id.panelNew);
 
         TextView title = (TextView)view.findViewById(R.id.reportTitle);
         title.setText(this.title);
@@ -51,12 +54,142 @@ public class ReportFragment extends Fragment implements ModelAware {
         return view;
     }
 
+    private void addRow(TableLayout table, String[] values, int[] widths, boolean isHeader) {
+        int totalWidth = getResources().getDisplayMetrics().widthPixels;
+        TableRow row = new TableRow(getActivity());
+        int colIndex = 0;
+        for (String value : values) {
+            TextView textView = new TextView(getActivity());
+            textView.setText(value);
+            textView.setWidth(totalWidth * widths[colIndex++] / 100);
+            textView.setHeight(20);
+            if (isHeader) {
+                // what?
+            }
+            row.addView(textView);
+        }
+        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        table.addView(row,rowParams);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        if (title.equals(GAME_REPORT)) {
-            report.setText(model.fullReport());
+        refreshReport();
+    }
+
+    private void addGoals(String team, ScoresheetModel model) {
+        TextView heading = new TextView(getActivity());
+        heading.setText("SCORING - " + team.toUpperCase());
+        panel.addView(heading);
+
+        TableLayout table = new TableLayout(getActivity());
+
+        int[] widths = new int[] {15,15,10,10,10};  // Column widths in %
+        String[] headers = new String[] {"TIME","TYPE","G","A","A"};
+        addRow(table,headers,widths,true);
+
+        for (GoalEvent goal : model.goals(team)) {
+            String values[] = new String[] {
+                goal.getGameTime(),
+                goal.getSubType(),
+                goal.getPlayer(),
+                goal.getAssist1() == 0 ? "" : Integer.toString(goal.getAssist1()),
+                goal.getAssist2() == 0 ? "" : Integer.toString(goal.getAssist2())
+            };
+            addRow(table,values,widths,false);
         }
+        panel.addView(table);
+    }
+
+    private void addPenalties(String team, ScoresheetModel model) {
+        TextView heading = new TextView(getActivity());
+        heading.setText("PENALTIES - " + team.toUpperCase());
+        panel.addView(heading);
+
+        TableLayout table = new TableLayout(getActivity());
+
+        int[] widths = new int[] {10,10,20,15,15,15};  // Column widths in %
+        String[] headers = new String[] {"NO","PIM","OFFENCE","GIVEN","START","END"};
+        addRow(table,headers,widths,true);
+
+        for (PenaltyEvent penalty : model.penalties(team)) {
+            String values[] = new String[] {
+                    penalty.getPlayer(),
+                    Integer.toString(penalty.getMinutes()),
+                    penalty.getSubType(),
+                    penalty.getGameTime(),
+                    penalty.getGameTime(),
+                    penalty.finishTime()
+            };
+            addRow(table,values,widths,false);
+        }
+        panel.addView(table);
+    }
+
+    private void addPlayerStats(String team, ScoresheetModel model) {
+        TextView heading = new TextView(getActivity());
+        heading.setText(team.toUpperCase() + " - TEAM");
+        panel.addView(heading);
+
+        TableLayout table = new TableLayout(getActivity());
+
+        int[] widths = new int[] {10,30,10,10,10};  // Column widths in %
+        String[] headers = new String[] {"No","Name","G","A","PIM"};
+        addRow(table,headers,widths,true);
+
+        for (ScoresheetModel.PlayerStats player : model.getPlayerStats(team).values()) {
+            String[] values = new String[] {
+                    Integer.toString(player.playerNum),
+                    "--",
+                    Integer.toString(player.goals),
+                    Integer.toString(player.assists),
+                    Integer.toString(player.penaltyMins)
+            };
+            addRow(table,values,widths,false);
+        }
+        panel.addView(table);
+    }
+
+    private void addGoalTotals(ScoresheetModel model) {
+        TableLayout table = new TableLayout(getActivity());
+
+        int[] widths = new int[] {30,10,10,10,10,10};  // Column widths in %
+        String[] headers = new String[] {"PERIOD SCORES","1","2","3","OT","TOT"};
+        addRow(table,headers,widths,true);
+
+        int[] homeGoals = model.goalTotals(model.getHomeTeam().getName());
+        showTotals(table, model.getHomeTeam().getName(), homeGoals, widths);
+
+        int[] awayGoals = model.goalTotals(model.getAwayTeam().getName());
+        showTotals(table, model.getAwayTeam().getName(), awayGoals, widths);
+
+        panel.addView(table);
+    }
+
+    private void showTotals(TableLayout table, String name, int[] values, int[] widths) {
+        String[] strings = new String[values.length+1];
+        strings[0] = name;
+        for (int n = 0; n < values.length; n++) {
+            strings[n+1] = Integer.toString(values[n]);
+        }
+        addRow(table,strings,widths,false);
+    }
+
+    private void addPenaltyTotals(ScoresheetModel model) {
+        TableLayout table = new TableLayout(getActivity());
+
+        int[] widths = new int[] {30,10,10,10,10,10};  // Column widths in %
+        String[] headers = new String[] {"PENALTY MINUTES","1","2","3","OT","TOT"};
+        addRow(table,headers,widths,true);
+
+        int[] home = model.penaltyTotals(model.getHomeTeam().getName());
+        showTotals(table, model.getHomeTeam().getName(), home, widths);
+
+        int[] away = model.penaltyTotals(model.getAwayTeam().getName());
+        showTotals(table, model.getAwayTeam().getName(), away, widths);
+
+        panel.addView(table);
     }
 
     @Override
@@ -67,7 +200,23 @@ public class ReportFragment extends Fragment implements ModelAware {
 
     @Override
     public void onModelUpdated(ModelUpdate update) {
-        report.setText(model.fullReport());
+        refreshReport();
+    }
+
+    private void refreshReport() {
+        if (report != null) {
+            report.setText(model.fullReport());
+        }
+        if (panel != null) {
+            addPlayerStats(model.getHomeTeam().getName(),model);
+            addGoals(model.getHomeTeam().getName(), model);
+            addPenalties(model.getHomeTeam().getName(), model);
+            addPlayerStats(model.getAwayTeam().getName(),model);
+            addGoals(model.getAwayTeam().getName(), model);
+            addPenalties(model.getAwayTeam().getName(), model);
+            addGoalTotals(model);
+            addPenaltyTotals(model);
+        }
     }
 
     public void setTitle(String title) {

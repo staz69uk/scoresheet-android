@@ -49,6 +49,7 @@
     <string name="historyListPenalty">%s penalty</string>
     <string name="historyListPenaltyDetail" formatted="false">Player %s, %sm (%s)</string>
     <string name="historyListPeriod">Period %s end</string>
+    <string name="txtReportHomeTeamTitle">HOME -TEAM</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

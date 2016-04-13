@@ -24,15 +24,15 @@
               android:text="Report"
               android:id="@+id/reportTitle" android:editable="false"
               style="@style/AppHeader"/>
-    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
-    <TextView
-            android:layout_width="fill_parent"
+    <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Game report"
-            android:textColor="#222222"
-            android:textColorHighlight="@color/appdark"
-            android:id="@+id/reportText" android:layout_gravity="center_horizontal" android:textAlignment="viewStart"
-            android:padding="4dp" android:textSize="16sp"
-            android:textIsSelectable="false" android:typeface="monospace"/>
+            android:id="@+id/scrollView3">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:id="@+id/panelNew"
+                android:dividerPadding="6dp">
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

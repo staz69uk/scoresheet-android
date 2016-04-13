@@ -272,4 +272,97 @@ public class ScoresheetModel {
         }
     }
 
+    public List<GoalEvent> goals(String team) {
+        LinkedList<GoalEvent> goals = new LinkedList<>();
+        for (GameEvent event : events) {
+            if (event instanceof GoalEvent) {
+                if (event.getTeam().equals(team)) {
+                    goals.add((GoalEvent) event);
+                }
+            }
+        }
+        return goals;
+    }
+
+    public List<PenaltyEvent> penalties(String team) {
+        LinkedList<PenaltyEvent> penalties = new LinkedList<>();
+        for (GameEvent event : events) {
+            if (event instanceof PenaltyEvent) {
+                if (event.getTeam().equals(team)) {
+                    penalties.add((PenaltyEvent) event);
+                }
+            }
+        }
+        return penalties;
+    }
+
+    public class PlayerStats {
+        public int playerNum = 0;
+        public int goals = 0;
+        public int assists = 0;
+        public int penaltyMins = 0;
+    }
+
+    private class PlayerStatsMap extends TreeMap<Integer, PlayerStats> {
+        PlayerStats getStats(Integer player) {
+            if (containsKey(player)) {
+                return get(player);
+            } else {
+                PlayerStats stats = new PlayerStats();
+                stats.playerNum = player;
+                put(player,stats);
+                return stats;
+            }
+        }
+    }
+
+    public Map<Integer,PlayerStats> getPlayerStats(String team) {
+        PlayerStatsMap stats = new PlayerStatsMap();
+        for (GameEvent event : getEvents()) {
+            if (event.getTeam().equals(team)) {
+                int playerId = Integer.parseInt(event.getPlayer());
+                if (event instanceof GoalEvent) {
+                    GoalEvent goal = (GoalEvent)event;
+                    stats.getStats(playerId).goals += 1;
+                    if (goal.getAssist1() > 0) {
+                        stats.getStats(goal.getAssist1()).assists++;
+                    }
+                    if (goal.getAssist2() > 0) {
+                        stats.getStats(goal.getAssist2()).assists++;
+                    }
+                } else if (event instanceof PenaltyEvent) {
+                    PenaltyEvent penaltyEvent = (PenaltyEvent)event;
+                    stats.getStats(playerId).penaltyMins += penaltyEvent.getMinutes();
+                }
+            }
+        }
+        return stats;
+    }
+
+    public int[] penaltyTotals(String team) {
+        int[] totals = {0,0,0,0,0};
+        for (PenaltyEvent penalty: penalties(team)) {
+            int periodIndex = penalty.getPeriod()-1;
+            totals[periodIndex] += penalty.getMinutes();
+        }
+        totals[4] = sum(totals);
+        return totals;
+    }
+
+    public int[] goalTotals(String team) {
+        int[] totals = {0,0,0,0,0};
+        for (GoalEvent event : goals(team)) {
+            int periodIndex = event.getPeriod()-1;
+            totals[periodIndex]++;
+        }
+        totals[4] = sum(totals);
+        return totals;
+    }
+    private int sum(int[] values) {
+        int sum = 0;
+        for (int value : values) {
+            sum += value;
+        }
+        return sum;
+    }
 }

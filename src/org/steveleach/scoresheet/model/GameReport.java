@@ -14,6 +14,7 @@
 */
 package org.steveleach.scoresheet.model;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -114,48 +115,9 @@ public class GameReport {
         sb.append(String.format("%s : %d %d %d %d = %d\n",model.getAwayTeam().getName(), awayScores[0], awayScores[1], awayScores[2], awayScores[2],model.getAwayGoals()));
     }
 
-    class PlayerStats {
-        int goals = 0;
-        int assists = 0;
-        int penaltyMins = 0;
-    }
-
-    class PlayerStatsMap extends TreeMap<Integer, PlayerStats> {
-        PlayerStats getStats(Integer player) {
-            if (containsKey(player)) {
-                return get(player);
-            } else {
-                PlayerStats stats = new PlayerStats();
-                put(player,stats);
-                return stats;
-            }
-        }
-    }
-
     private void reportPlayers(String team, StringBuilder sb) {
-        PlayerStatsMap stats = new PlayerStatsMap();
-        for (GameEvent event : model.getEvents()) {
-            if (event.getTeam().equals(team)) {
-                int playerId = Integer.parseInt(event.getPlayer());
-                if (event instanceof GoalEvent) {
-                    GoalEvent goal = (GoalEvent)event;
-                    stats.getStats(playerId).goals += 1;
-                    if (goal.getAssist1() > 0) {
-                        stats.getStats(goal.getAssist1()).assists++;
-                    }
-                    if (goal.getAssist2() > 0) {
-                        stats.getStats(goal.getAssist2()).assists++;
-                    }
-                } else if (event instanceof PenaltyEvent) {
-                    PenaltyEvent penaltyEvent = (PenaltyEvent)event;
-                    stats.getStats(playerId).penaltyMins += penaltyEvent.getMinutes();
-                }
-            }
-        }
-
-        for (int playerId : stats.keySet()) {
-            PlayerStats playerStats = stats.get(playerId);
-            sb.append(String.format("%d : goals=%d, assists=%d, pen.mins=%d\n", playerId, playerStats.goals, playerStats.assists, playerStats.penaltyMins));
+        for (ScoresheetModel.PlayerStats playerStats : model.getPlayerStats(team).values()) {
+            sb.append(String.format("%d : goals=%d, assists=%d, pen.mins=%d\n", playerStats.playerNum, playerStats.goals, playerStats.assists, playerStats.penaltyMins));
         }
     }
 
