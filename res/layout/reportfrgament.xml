@@ -32,7 +32,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:id="@+id/panelNew"
-                android:dividerPadding="6dp">
+                android:padding="4dp">
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

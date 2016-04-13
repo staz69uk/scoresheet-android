@@ -15,14 +15,12 @@
 package org.steveleach.scoresheet.ui;
 
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.*;
 import org.steveleach.ihscoresheet.*;
 import org.steveleach.scoresheet.model.*;
 
@@ -54,6 +52,12 @@ public class ReportFragment extends Fragment implements ModelAware {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshReport();
+    }
+
     private void addRow(TableLayout table, String[] values, int[] widths, boolean isHeader) {
         int totalWidth = getResources().getDisplayMetrics().widthPixels;
         TableRow row = new TableRow(getActivity());
@@ -64,7 +68,7 @@ public class ReportFragment extends Fragment implements ModelAware {
             textView.setWidth(totalWidth * widths[colIndex++] / 100);
             textView.setHeight(20);
             if (isHeader) {
-                // what?
+                textView.setTypeface(null, Typeface.BOLD);
             }
             row.addView(textView);
         }
@@ -72,16 +76,9 @@ public class ReportFragment extends Fragment implements ModelAware {
         table.addView(row,rowParams);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        refreshReport();
-    }
-
     private void addGoals(String team, ScoresheetModel model) {
-        TextView heading = new TextView(getActivity());
-        heading.setText("SCORING - " + team.toUpperCase());
-        panel.addView(heading);
+        String headerText = "SCORING - " + team.toUpperCase();
+        addSectionHeader(headerText);
 
         TableLayout table = new TableLayout(getActivity());
 
@@ -100,12 +97,24 @@ public class ReportFragment extends Fragment implements ModelAware {
             addRow(table,values,widths,false);
         }
         panel.addView(table);
+        addSpace();
+    }
+
+    private void addSectionHeader(String headerText) {
+        TextView heading = new TextView(getActivity());
+        heading.setText(headerText);
+        heading.setTypeface(null,Typeface.BOLD);
+        panel.addView(heading);
+    }
+
+    private void addSpace() {
+        Space space = new Space(getActivity());
+        space.setMinimumHeight(12);
+        panel.addView(space);
     }
 
     private void addPenalties(String team, ScoresheetModel model) {
-        TextView heading = new TextView(getActivity());
-        heading.setText("PENALTIES - " + team.toUpperCase());
-        panel.addView(heading);
+        addSectionHeader("PENALTIES - " + team.toUpperCase());
 
         TableLayout table = new TableLayout(getActivity());
 
@@ -125,12 +134,11 @@ public class ReportFragment extends Fragment implements ModelAware {
             addRow(table,values,widths,false);
         }
         panel.addView(table);
+        addSpace();
     }
 
     private void addPlayerStats(String team, ScoresheetModel model) {
-        TextView heading = new TextView(getActivity());
-        heading.setText(team.toUpperCase() + " - TEAM");
-        panel.addView(heading);
+        addSectionHeader(team.toUpperCase() + " - TEAM");
 
         TableLayout table = new TableLayout(getActivity());
 
@@ -149,6 +157,7 @@ public class ReportFragment extends Fragment implements ModelAware {
             addRow(table,values,widths,false);
         }
         panel.addView(table);
+        addSpace();
     }
 
     private void addGoalTotals(ScoresheetModel model) {
@@ -165,6 +174,7 @@ public class ReportFragment extends Fragment implements ModelAware {
         showTotals(table, model.getAwayTeam().getName(), awayGoals, widths);
 
         panel.addView(table);
+        addSpace();
     }
 
     private void showTotals(TableLayout table, String name, int[] values, int[] widths) {
@@ -190,6 +200,7 @@ public class ReportFragment extends Fragment implements ModelAware {
         showTotals(table, model.getAwayTeam().getName(), away, widths);
 
         panel.addView(table);
+        addSpace();
     }
 
     @Override
