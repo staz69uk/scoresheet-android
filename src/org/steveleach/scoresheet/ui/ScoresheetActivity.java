@@ -67,16 +67,20 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(LOG_TAG, "ScoresheetActivity.onResume");
         model.addListener(this);
+        model.notifyListeners(ModelUpdate.ALL_CHANGED);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        Log.d(LOG_TAG, "ScoresheetActivity.onRestoreInstanceState");
         String jsonText = savedInstanceState.getString(STATE_KEY);
         if (jsonText != null) {
             try {
                 jsonCodec.fromJson(model, jsonText);
+                model.notifyListeners(ModelUpdate.ALL_CHANGED);
             } catch (JSONException e) {
                 toast("Error parsing json: " + e.getMessage());
             }
