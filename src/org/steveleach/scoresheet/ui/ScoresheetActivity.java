@@ -103,10 +103,8 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     }
 
     public void periodButtonClicked(View view) {
-        GameEvent event = new PeriodEndEvent();
-        event.setPeriod(model.getPeriod());
-        event.setClockTime("0000");
-        model.addEvent(event);
+        model.setChanged(true);
+        model.addEvent(new PeriodEndEvent(model.getPeriod()));
     }
 
     public void goalButtonClicked(View view) {
@@ -161,6 +159,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         yesNoDialog(R.string.clearEventsPrompt, new Runnable() {
                     @Override
                     public void run() {
+                        model.setChanged(false);
                         model.clearEvents();
                     }
                 });
@@ -266,6 +265,10 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
             @Override
             public void run() {
                 ScoresheetStore.StoreResult result = scoresheetStore.save(model);
+                if (result.success) {
+                    model.setChanged(false);
+                    model.notifyListeners(ModelUpdate.ALL_CHANGED);
+                }
                 toast(result.text);
             }
         });

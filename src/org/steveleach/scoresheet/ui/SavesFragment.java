@@ -62,6 +62,7 @@ public class SavesFragment extends Fragment {
                     @Override
                     public void run() {
                         ScoresheetStore.StoreResult result = store.loadInto(model, item);
+                        model.setChanged(false);
                         model.notifyListeners(new ModelUpdate("Model loaded"));
                         if (result.success) {
                             Toast.makeText(getActivity().getApplicationContext(), "Loaded " + item, Toast.LENGTH_SHORT).show();

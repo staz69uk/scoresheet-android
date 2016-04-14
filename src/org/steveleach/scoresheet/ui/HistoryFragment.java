@@ -37,6 +37,7 @@ public class HistoryFragment extends Fragment implements ModelAware {
     private HistoryAdapter adapter = null;
     private ScoresheetModel model = new ScoresheetModel();
     private Button nextPeriodButton;
+    private TextView title = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class HistoryFragment extends Fragment implements ModelAware {
         eventList.setAdapter(adapter);
 
         nextPeriodButton = (Button)view.findViewById(R.id.btnNextPeriod);
+        title = (TextView)view.findViewById(R.id.txtHistoryTitle);
 
         eventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -74,6 +76,13 @@ public class HistoryFragment extends Fragment implements ModelAware {
     }
 
     private void refreshList() {
+        if (title != null) {
+            String titleText = getActivity().getString(R.string.gameHistoryTitle);
+            if (model.isChanged()) {
+                titleText += " *";
+            }
+            title.setText(titleText);
+        }
         if (nextPeriodButton != null) {
             nextPeriodButton.setEnabled(model.getPeriod() <= model.getRules().getRegulationPeriods());
         }

@@ -92,6 +92,7 @@ public class GoalFragment extends Fragment implements ModelAware {
                 event.setAssist2(Integer.parseInt("0"+assist2Field.getText().toString()));
                 event.setSubType(goalTypeField.getText().toString());
 
+                model.setChanged(true);
                 model.addEvent(event);
 
                 imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);

@@ -24,7 +24,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/gameHistoryTitle"
-            android:id="@+id/textView5"
+            android:id="@+id/txtHistoryTitle"
             style="@style/AppHeader" android:textIsSelectable="false"/>
     <LinearLayout
             android:orientation="horizontal"

@@ -38,6 +38,7 @@ public class ScoresheetModel {
     private int homeTimeouts = 0;
     private int awayTimeouts = 0;
     private WeakSet<ModelAware> listeners = new WeakSet<>();
+    private boolean isChanged = false;
 
     /**
      * Adds an event to the game.
@@ -364,5 +365,13 @@ public class ScoresheetModel {
             sum += value;
         }
         return sum;
+    }
+
+    public boolean isChanged() {
+        return isChanged;
+    }
+
+    public void setChanged(boolean changed) {
+        isChanged = changed;
     }
 }
