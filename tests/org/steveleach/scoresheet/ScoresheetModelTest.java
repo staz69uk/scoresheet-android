@@ -248,4 +248,25 @@ public class ScoresheetModelTest {
         goal.setAssist2(2);
         assertEquals(2, goal.assists());
     }
+
+    @Test
+    public void testGoalTotals() {
+        model.clearEvents();
+        assertEquals(5, model.goalTotals(model.getHomeTeam().getName()).length);
+        assertEquals(0, model.goalTotals(model.getHomeTeam().getName())[4]);
+        model.addEvent(new GoalEvent(1,"1234",model.getHomeTeam().getName(),"E",41,2,3));
+        assertEquals(5, model.goalTotals(model.getHomeTeam().getName()).length);
+        assertEquals(1, model.goalTotals(model.getHomeTeam().getName())[4]);
+    }
+
+    @Test
+    public void testPenaltyTotals() {
+        model.clearEvents();
+        assertEquals(5, model.penaltyTotals(model.getHomeTeam().getName()).length);
+        assertEquals(0, model.penaltyTotals(model.getHomeTeam().getName())[4]);
+        model.addEvent(new PenaltyEvent(1,"1234",model.getHomeTeam().getName(),"HOOK","41",2));
+        assertEquals(5, model.penaltyTotals(model.getHomeTeam().getName()).length);
+        assertEquals(2, model.penaltyTotals(model.getHomeTeam().getName())[4]);
+
+    }
 }

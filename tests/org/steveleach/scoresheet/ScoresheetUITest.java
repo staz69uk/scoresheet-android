@@ -18,8 +18,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Environment;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,7 +78,7 @@ public class ScoresheetUITest {
         clickAddPenalty();
         selectHelpMenu();
         showDefaultFragment();
-        //clickReportButton();
+        clickReportButton();
         selectLoadMenu();
         showDefaultFragment();
     }
@@ -151,15 +152,19 @@ public class ScoresheetUITest {
         assertTrue( "Saves fragment should be visible", activity.getVisibleFragment() instanceof SavesFragment);
     }
 
-//    private void clickReportButton() {
-//        activity.findViewById(R.id.btnReport).performClick();
-//        assertTrue( "Report fragment should be visible", activity.getVisibleFragment() instanceof ReportFragment);
-//
-//        TextView reportView = (TextView) activity.findViewById(R.id.reportText);
-//        String reportText = reportView.getText().toString();
-//        assertTrue( "Report has player 41 goal", reportText.contains("41 : goals=1,") );
-//        assertTrue( "Report has player 25 penalty", reportText.contains("P 25, 5m for Fight") );
-//    }
+    private void clickReportButton() {
+        activity.findViewById(R.id.btnReport).performClick();
+        assertTrue( "Report fragment should be visible", activity.getVisibleFragment() instanceof ReportFragment);
+
+        ReportFragment fragment = (ReportFragment) activity.getVisibleFragment();
+        ViewGroup root = (ViewGroup) fragment.getView();
+        assertNotNull(root);
+        ViewGroup panel = (ViewGroup) root.findViewById(R.id.panelNew);
+        assertEquals(22, panel.getChildCount());
+        assertTrue( panel.getChildAt(0) instanceof TextView);
+        assertTrue( panel.getChildAt(1) instanceof TableLayout);
+        assertTrue( panel.getChildAt(2) instanceof Space);
+    }
 
     private void selectHelpMenu() {
         // Select "help" from the menu

@@ -32,7 +32,6 @@ import org.steveleach.scoresheet.model.*;
 public class ReportFragment extends Fragment implements ModelAware {
     private ScoresheetModel model = new ScoresheetModel();
     private View view;
-    private TextView report = null;
     private String title = "Report";
     private LinearLayout panel;
     public static final String GAME_REPORT = "Game Report";
@@ -40,9 +39,6 @@ public class ReportFragment extends Fragment implements ModelAware {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.reportfrgament, container, false);
-
-        //report = (TextView)view.findViewById(R.id.reportText);
-        //report.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         panel = (LinearLayout) view.findViewById(R.id.panelNew);
 
@@ -220,9 +216,6 @@ public class ReportFragment extends Fragment implements ModelAware {
     }
 
     private void refreshReport() {
-        if (report != null) {
-            report.setText(model.fullReport());
-        }
         if (panel != null) {
             addPlayerStats(model.getHomeTeam().getName(),model);
             addGoals(model.getHomeTeam().getName(), model);
