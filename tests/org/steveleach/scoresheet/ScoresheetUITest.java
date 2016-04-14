@@ -14,11 +14,9 @@
 */
 package org.steveleach.scoresheet;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Environment;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +38,7 @@ import org.steveleach.scoresheet.ui.*;
 import org.steveleach.ihscoresheet.*;
 
 import static org.junit.Assert.*;
+import static org.steveleach.ihscoresheet.R.id.*;
 
 /**
  * Unit tests for UI methods.
@@ -89,7 +88,7 @@ public class ScoresheetUITest {
         model.addEvent(new PeriodEndEvent(1));
         assertEquals(1, model.getEvents().size());
 
-        clickMenuItem(R.id.menuNewGame);
+        clickMenuItem(menuNewGame);
         verifyAlertDialogShowing("Clear all events?");
 
         clickDialogButton(DialogInterface.BUTTON_NEGATIVE);
@@ -97,7 +96,7 @@ public class ScoresheetUITest {
         // The above UI activity should not change the model
         assertEquals(1, model.getEvents().size());
 
-        clickMenuItem(R.id.menuNewGame);
+        clickMenuItem(menuNewGame);
         verifyAlertDialogShowing("Clear all events?");
 
         clickDialogButton(DialogInterface.BUTTON_POSITIVE);
@@ -108,7 +107,7 @@ public class ScoresheetUITest {
 
     @Test
     public void aboutDialogTest() {
-        clickMenuItem(R.id.menuAbout);
+        clickMenuItem(menuAbout);
 
         AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
         assertNotNull(dialog);
@@ -121,7 +120,7 @@ public class ScoresheetUITest {
 
     @Test
     public void refreshTest() {
-        clickMenuItem(R.id.menuRefresh);
+        clickMenuItem(menuRefresh);
     }
 
     private void clickDialogButton(int buttonID) {
@@ -148,18 +147,18 @@ public class ScoresheetUITest {
     }
 
     private void selectLoadMenu() {
-        clickMenuItem(R.id.menuLoad);
+        clickMenuItem(menuLoad);
         assertTrue( "Saves fragment should be visible", activity.getVisibleFragment() instanceof SavesFragment);
     }
 
     private void clickReportButton() {
-        activity.findViewById(R.id.btnReport).performClick();
+        click(btnReport);
         assertTrue( "Report fragment should be visible", activity.getVisibleFragment() instanceof ReportFragment);
 
         ReportFragment fragment = (ReportFragment) activity.getVisibleFragment();
         ViewGroup root = (ViewGroup) fragment.getView();
         assertNotNull(root);
-        ViewGroup panel = (ViewGroup) root.findViewById(R.id.panelNew);
+        ViewGroup panel = (ViewGroup) root.findViewById(panelNew);
         assertEquals(22, panel.getChildCount());
         assertTrue( panel.getChildAt(0) instanceof TextView);
         assertTrue( panel.getChildAt(1) instanceof TableLayout);
@@ -168,23 +167,23 @@ public class ScoresheetUITest {
 
     private void selectHelpMenu() {
         // Select "help" from the menu
-        clickMenuItem(R.id.menuHelp);
+        clickMenuItem(menuHelp);
         assertTrue( "Help fragment should be visible", activity.getVisibleFragment() instanceof HelpFragment);
     }
 
     private void clickAddPenalty() {
         // Click the "away penalty" button and add penalty details
-        activity.findViewById(R.id.btnAwayPen).performClick();
-        assertTrue( "Penalty fragment should be visible", activity.getVisibleFragment() instanceof PenaltyFragment);
+        click(btnAwayPen);
+        assertEquals(PenaltyFragment.class, visibleFragmentClass());
 
-        setField(activity,R.id.fldPenaltyClock,"430");
-        setField(activity,R.id.fldPenaltyPlayer,"25");
-        setField(activity,R.id.fldPenaltyMins,"5");
-        setField(activity,R.id.fldPenaltyCode,"Fight");
-        activity.findViewById(R.id.btnPenaltyDone).performClick();
+        setField(fldPenaltyClock,"430");
+        setField(fldPenaltyPlayer,"25");
+        setField(fldPenaltyMins,"5");
+        setField(fldPenaltyCode,"Fight");
+        click(btnPenaltyDone);
 
         // After adding the penalty, validate the UI and model state
-        assertTrue( "History fragment should be visible", activity.getVisibleFragment() instanceof HistoryFragment);
+        assertEquals(HistoryFragment.class, visibleFragmentClass());
         assertEquals(3, model.getEvents().size());
 
         PenaltyEvent penalty = (PenaltyEvent) model.getEvents().get(2);
@@ -194,17 +193,29 @@ public class ScoresheetUITest {
         assertEquals(model.getAwayTeam().getName(), penalty.getTeam());
     }
 
+    private void click(int id) {
+        activity.findViewById(id).performClick();
+    }
+
+    private Class<?> visibleFragmentClass() {
+        return activity.getVisibleFragment().getClass();
+    }
+
+    private void setField(int fieldId, String fieldValue) {
+        ((EditText)activity.findViewById(fieldId)).setText(fieldValue);
+    }
+
     private void clickAddGoal() {
         // Click the "home goal" button and add goal details
-        activity.findViewById(R.id.btnHomeGoal).performClick();
-        assertTrue( "Goal fragment should be visible", activity.getVisibleFragment() instanceof GoalFragment);
+        click(btnHomeGoal);
+        assertEquals(GoalFragment.class, visibleFragmentClass());
 
-        setField(activity,R.id.fldClock,"1234");
-        setField(activity,R.id.fldScoredBy,"41");
-        activity.findViewById(R.id.btnDone).performClick();
+        setField(fldClock,"1234");
+        setField(fldScoredBy,"41");
+        click(btnDone);
 
         // After adding the goal, validate the UI and model state
-        assertTrue( "History fragment should be visible", activity.getVisibleFragment() instanceof HistoryFragment);
+        assertEquals(HistoryFragment.class, visibleFragmentClass());
         assertEquals(2, model.getEvents().size());
 
         GoalEvent event = (GoalEvent) model.getEvents().get(1);
@@ -229,9 +240,5 @@ public class ScoresheetUITest {
         // Make sure the history fragment is shown by default
         activity.showDefaultFragment();
         assertTrue( "History fragment should be visible", activity.getVisibleFragment() instanceof HistoryFragment);
-    }
-
-    private void setField(Activity activity, int fieldId, String fieldValue) {
-        ((EditText)activity.findViewById(fieldId)).setText(fieldValue);
     }
 }
