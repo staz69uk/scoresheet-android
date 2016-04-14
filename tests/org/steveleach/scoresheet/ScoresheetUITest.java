@@ -20,7 +20,6 @@ import android.content.DialogInterface;
 import android.os.Environment;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
@@ -89,7 +88,7 @@ public class ScoresheetUITest {
         model.addEvent(new PeriodEndEvent(1));
         assertEquals(1, model.getEvents().size());
 
-        clickMenuItem(R.id.menuClear);
+        clickMenuItem(R.id.menuNewGame);
         verifyAlertDialogShowing("Clear all events?");
 
         clickDialogButton(DialogInterface.BUTTON_NEGATIVE);
@@ -97,7 +96,7 @@ public class ScoresheetUITest {
         // The above UI activity should not change the model
         assertEquals(1, model.getEvents().size());
 
-        clickMenuItem(R.id.menuClear);
+        clickMenuItem(R.id.menuNewGame);
         verifyAlertDialogShowing("Clear all events?");
 
         clickDialogButton(DialogInterface.BUTTON_POSITIVE);
@@ -148,7 +147,7 @@ public class ScoresheetUITest {
     }
 
     private void selectLoadMenu() {
-        clickMenuItem(R.id.menuImport);
+        clickMenuItem(R.id.menuLoad);
         assertTrue( "Saves fragment should be visible", activity.getVisibleFragment() instanceof SavesFragment);
     }
 

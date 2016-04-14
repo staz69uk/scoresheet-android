@@ -155,7 +155,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         showFragment(fragment);
     }
 
-    private void clearHistory() {
+    private void newGame() {
         yesNoDialog(R.string.clearEventsPrompt, new Runnable() {
                     @Override
                     public void run() {
@@ -200,14 +200,14 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuClear:
-                clearHistory();
+            case R.id.menuNewGame:
+                newGame();
                 return true;
-            case R.id.menuExport:
-                exportGameJson();
+            case R.id.menuSave:
+                saveGame();
                 return true;
-            case R.id.menuImport:
-                importGameJson();
+            case R.id.menuLoad:
+                loadGame();
                 return true;
             case R.id.menuRefresh:
                 refreshModel();
@@ -254,13 +254,13 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         }
     }
 
-    private void importGameJson() {
+    private void loadGame() {
         SavesFragment fragment = new SavesFragment();
         fragment.configure(model, scoresheetStore);
         showFragment(fragment);
     }
 
-    private void exportGameJson() {
+    private void saveGame() {
         yesNoDialog(R.string.saveGamePrompt, new Runnable() {
             @Override
             public void run() {
