@@ -30,7 +30,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:weightSum="1">
+            android:weightSum="1" android:background="@color/appgrey">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
@@ -73,13 +73,13 @@
                     android:onClick="penaltyButtonClicked" style="@style/AppButton"/>
         </LinearLayout>
     </LinearLayout>
-    <FrameLayout
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
-    </FrameLayout>
-    <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/historyList2" android:longClickable="true"/>
+            android:layout_height="match_parent" android:background="@color/appgrey" android:padding="4dp">
+        <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/historyList2" android:longClickable="true" android:background="#ffffff"/>
+    </LinearLayout>
 </LinearLayout>
