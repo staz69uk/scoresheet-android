@@ -34,7 +34,7 @@
     <string name="helpTitle">Ice Hockey Scoresheet Help</string>
     <string name="scoresheetFolder">Scoresheets</string>
     <string name="gameSaves">Saved game files</string>
-    <string name="gameLoadHint">Tap and hold an entry to load it</string>
+    <string name="gameLoadHint">Tap to load, long tap for options</string>
     <string name="saveGamePrompt">Save game data to file?</string>
     <string name="clearEventsPrompt">Clear all events?</string>
     <string name="yesOption">Yes</string>
@@ -49,7 +49,10 @@
     <string name="historyListPenalty">%s penalty</string>
     <string name="historyListPenaltyDetail" formatted="false">Player %s, %sm (%s)</string>
     <string name="historyListPeriod">Period %s end</string>
-    <string name="txtReportHomeTeamTitle">HOME -TEAM</string>
+    <string name="txtReportHomeTeamTitle">HOME - TEAM</string>
+    <string name="fileMenuOpenText">Open</string>
+    <string name="fileMenuDeleteText">Delete</string>
+    <string name="fileMenuRenameText">Rename</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

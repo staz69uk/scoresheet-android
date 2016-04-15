@@ -74,7 +74,7 @@ public class JsonCodec {
      * Populates a model from a JSON string representation.
      *
      * @param model
-     *          the model to load the data into
+     *          the model to askToLoad the data into
      * @param json
      * @throws JSONException
      */

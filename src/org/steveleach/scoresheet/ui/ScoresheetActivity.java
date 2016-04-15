@@ -274,7 +274,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         });
     }
 
-    private void toast(String message) {
+    public void toast(String message) {
         Log.d(LOG_TAG, message);
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }

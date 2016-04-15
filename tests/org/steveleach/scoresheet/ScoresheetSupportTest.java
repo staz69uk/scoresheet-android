@@ -155,4 +155,16 @@ public class ScoresheetSupportTest {
         addTestEvents(sourceModel);
         return new JsonCodec().toJson(sourceModel);
     }
+
+    @Test
+    public void testStoreDelete() {
+        when(fileManager.delete(any())).thenReturn(true);
+        when(context.getScoresheetFolder()).thenReturn(new File("."));
+
+        ScoresheetStore store = new ScoresheetStore(fileManager,null,context);
+
+        ScoresheetStore.StoreResult result = store.delete("somefile.json");
+        assertTrue(result.success);
+        assertEquals("Deleted somefile.json", result.text);
+    }
 }

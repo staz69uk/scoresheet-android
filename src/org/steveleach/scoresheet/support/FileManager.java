@@ -74,8 +74,8 @@ public class FileManager {
         }
     }
 
-    public void delete(File tempFile) {
-        tempFile.delete();
+    public boolean delete(File file) {
+        return file.delete();
     }
 
     public void ensureDirectoryExists(File dir) {

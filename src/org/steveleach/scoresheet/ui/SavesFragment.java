@@ -16,9 +16,7 @@ package org.steveleach.scoresheet.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -44,39 +42,86 @@ public class SavesFragment extends Fragment {
     private ScoresheetModel model = null;
     private ArrayAdapter<String> adapter = null;
     private ScoresheetStore store = null;
+    private ListView savesList = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.savesfragment, container, false);
 
-        ListView savesList = (ListView) view.findViewById(R.id.gameSavesList);
+        savesList = (ListView) view.findViewById(R.id.gameSavesList);
 
-        adapter = new ArrayAdapter<String>(getActivity(), R.layout.basiclistentry, new LinkedList<String>());
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.basiclistentry, new LinkedList<>());
         savesList.setAdapter(adapter);
 
-        savesList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        savesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String item = (String) adapterView.getItemAtPosition(position);
-                ((ScoresheetActivity)getActivity()).yesNoDialog("Load '" + item + "'?", new Runnable() {
-                    @Override
-                    public void run() {
-                        ScoresheetStore.StoreResult result = store.loadInto(model, item);
-                        model.setChanged(false);
-                        model.notifyListeners(new ModelUpdate("Model loaded"));
-                        if (result.success) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Loaded " + item, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getActivity().getApplicationContext(), "Error " + result.text, Toast.LENGTH_LONG).show();
-                        }
-                        ((DefaultFragmentActivity)getActivity()).showDefaultFragment();
-                    }
-                });
-                return false;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                askToLoad((String) parent.getItemAtPosition(position));
             }
         });
 
+        registerForContextMenu(savesList);
+
         return view;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.filescontextmenu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        boolean result = super.onContextItemSelected(item);
+        int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
+        String selectedItem = (String) savesList.getItemAtPosition(position);
+        if (item.getItemId() == R.id.fileMenuOpen) {
+            loadSavedData(selectedItem);
+        } else if (item.getItemId() == R.id.fileMenuDelete) {
+            askToDelete(selectedItem);
+        } else {
+            ((ScoresheetActivity) getActivity()).toast("Not yet implemented: " + item.getTitle() + " " + selectedItem);
+        }
+
+        return result;
+    }
+
+    private void askToDelete(String item) {
+        ScoresheetActivity activity = (ScoresheetActivity) getActivity();
+        activity.yesNoDialog("Delete " + item + "?", new Runnable() {
+            @Override
+            public void run() {
+                ScoresheetStore.StoreResult result = store.delete(item);
+                activity.toast(result.text);
+                if (result.success) {
+                    refreshList();
+                }
+            }
+        });
+    }
+
+    public boolean askToLoad(String item) {
+        ((ScoresheetActivity)getActivity()).yesNoDialog("Load '" + item + "'?", new Runnable() {
+            @Override
+            public void run() {
+                loadSavedData(item);
+            }
+        });
+        return false;
+    }
+
+    private void loadSavedData(String item) {
+        ScoresheetStore.StoreResult result = store.loadInto(model, item);
+        model.setChanged(false);
+        model.notifyListeners(new ModelUpdate("Model loaded"));
+        if (result.success) {
+            Toast.makeText(getActivity().getApplicationContext(), "Loaded " + item, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Error " + result.text, Toast.LENGTH_LONG).show();
+        }
+        ((DefaultFragmentActivity)getActivity()).showDefaultFragment();
     }
 
     public void configure(ScoresheetModel model, ScoresheetStore store) {
