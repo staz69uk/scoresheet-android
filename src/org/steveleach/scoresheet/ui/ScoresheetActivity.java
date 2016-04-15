@@ -25,6 +25,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -318,8 +319,10 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
             }
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(ScoresheetActivity.this);
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(this, R.style.AppDialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(wrapper);
         builder
+                .setTitle(getString(R.string.confirmAlertTitle))
                 .setMessage(prompt)
                 .setPositiveButton(yesButton,listener)
                 .setNegativeButton(noButton,listener)

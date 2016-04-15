@@ -90,7 +90,8 @@ public class SavesFragment extends Fragment {
 
     private void askToDelete(String item) {
         ScoresheetActivity activity = (ScoresheetActivity) getActivity();
-        activity.yesNoDialog("Delete " + item + "?", new Runnable() {
+        String text = getString(R.string.deleteGamePrompt,item);
+        activity.yesNoDialog(text, new Runnable() {
             @Override
             public void run() {
                 ScoresheetStore.StoreResult result = store.delete(item);
@@ -103,7 +104,8 @@ public class SavesFragment extends Fragment {
     }
 
     public boolean askToLoad(String item) {
-        ((ScoresheetActivity)getActivity()).yesNoDialog("Load '" + item + "'?", new Runnable() {
+        String text = getString(R.string.loadGamePrompt,item);
+        ((ScoresheetActivity)getActivity()).yesNoDialog(text, new Runnable() {
             @Override
             public void run() {
                 loadSavedData(item);

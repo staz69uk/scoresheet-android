@@ -35,4 +35,5 @@
         <item name="android:padding">6dip</item>
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
     </style>
+    <style name="AppDialog" parent="@android:style/Theme.Holo.Dialog.MinWidth"></style>
 </resources>

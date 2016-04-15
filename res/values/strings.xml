@@ -35,8 +35,12 @@
     <string name="scoresheetFolder">Scoresheets</string>
     <string name="gameSaves">Saved game files</string>
     <string name="gameLoadHint">Tap to load, long tap for options</string>
-    <string name="saveGamePrompt">Save game data to file?</string>
-    <string name="clearEventsPrompt">Clear all events?</string>
+    <string name="confirmAlertTitle">Are you sure?</string>
+    <string name="saveGamePrompt">Do you want to save the game data to a new file? This will not affect any existing saved game files.</string>
+    <string name="loadGamePrompt">Do you want to load game details from this file (%s)?</string>
+    <string name="deleteGamePrompt">Do you want to delete this saved game file (%s)?</string>
+    <string name="clearEventsPrompt">Do you want to clear all events and start recording a new game?</string>
+    <string name="deleteEventPrompt">Do you want to delete this game event (%s)?</string>
     <string name="yesOption">Yes</string>
     <string name="noOption">No</string>
     <string name="overTimeAbbrev">OT</string>

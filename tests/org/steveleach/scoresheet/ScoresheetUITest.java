@@ -89,7 +89,7 @@ public class ScoresheetUITest {
         assertEquals(1, model.getEvents().size());
 
         clickMenuItem(menuNewGame);
-        verifyAlertDialogShowing("Clear all events?");
+        verifyAlertDialogShowing("clear all events");
 
         clickDialogButton(DialogInterface.BUTTON_NEGATIVE);
 
@@ -97,7 +97,7 @@ public class ScoresheetUITest {
         assertEquals(1, model.getEvents().size());
 
         clickMenuItem(menuNewGame);
-        verifyAlertDialogShowing("Clear all events?");
+        verifyAlertDialogShowing("clear all events");
 
         clickDialogButton(DialogInterface.BUTTON_POSITIVE);
 
@@ -142,7 +142,7 @@ public class ScoresheetUITest {
         assertTrue(dialog.isShowing());
         ShadowAlertDialog shadow = Shadows.shadowOf(dialog);
         assertNotNull(shadow.getMessage());
-        assertEquals(expectedMessage, shadow.getMessage());
+        assertTrue("Dialog text: " + expectedMessage, shadow.getMessage().toString().contains(expectedMessage));
         return dialog;
     }
 
