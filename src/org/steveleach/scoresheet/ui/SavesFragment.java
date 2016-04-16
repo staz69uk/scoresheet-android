@@ -17,10 +17,7 @@ package org.steveleach.scoresheet.ui;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import org.steveleach.ihscoresheet.R;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.support.ScoresheetStore;
@@ -43,6 +40,7 @@ public class SavesFragment extends Fragment {
     private ArrayAdapter<String> adapter = null;
     private ScoresheetStore store = null;
     private ListView savesList = null;
+    private Switch allFilesSwitch = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +60,20 @@ public class SavesFragment extends Fragment {
 
         registerForContextMenu(savesList);
 
+        allFilesSwitch = (Switch) view.findViewById(R.id.savesAllFilesSwitch);
+
+        allFilesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                toggleAllFiles();
+            }
+        });
+
         return view;
+    }
+
+    private void toggleAllFiles() {
+        refreshList();
     }
 
     @Override
@@ -144,8 +155,12 @@ public class SavesFragment extends Fragment {
             List<File> files = store.savedFiles();
             sortFilesByNameDescending(files);
 
+            boolean allFiles = allFilesSwitch.isChecked();
+
             for (File file : files) {
-                adapter.add(file.getName());
+                if (allFiles || (file.getName().length() != store.defaultFileNameLength())) {
+                    adapter.add(file.getName());
+                }
             }
 
             adapter.notifyDataSetChanged();

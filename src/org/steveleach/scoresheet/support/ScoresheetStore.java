@@ -54,6 +54,10 @@ public class ScoresheetStore {
         return new StoreResult(success ? "Deleted " + fileName : "Could not delete " + fileName, success);
     }
 
+    public int defaultFileNameLength() {
+        return String.format("%s-%s.json", baseFileName, DATE_FORMAT.format(new Date())).length();
+    }
+
     public class StoreResult {
         public String text = "Unknown";
         public boolean success = false;
