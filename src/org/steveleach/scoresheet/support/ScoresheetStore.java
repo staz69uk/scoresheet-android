@@ -58,6 +58,18 @@ public class ScoresheetStore {
         return String.format("%s-%s.json", baseFileName, DATE_FORMAT.format(new Date())).length();
     }
 
+    public StoreResult renameFile(String oldName, String newName) {
+        return renameFile(new File(baseDir,oldName), new File(baseDir,newName));
+    }
+
+    private StoreResult renameFile(File oldFile, File newFile) {
+        if (oldFile.renameTo(newFile)) {
+            return new StoreResult("Renamed",true);
+        } else {
+            return new StoreResult("Unable to rename file " + oldFile.getName(),false);
+        }
+    }
+
     public class StoreResult {
         public String text = "Unknown";
         public boolean success = false;

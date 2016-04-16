@@ -57,6 +57,11 @@
     <string name="fileMenuOpenText">Open</string>
     <string name="fileMenuDeleteText">Delete</string>
     <string name="fileMenuRenameText">Rename</string>
+    <string name="newName">New name:</string>
+    <string name="currentName">Current name:</string>
+    <string name="rename">Rename</string>
+    <string name="cancel">Cancel</string>
+    <string name="renameTitle">Rename %s</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

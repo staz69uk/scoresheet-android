@@ -14,7 +14,9 @@
 */
 package org.steveleach.scoresheet.ui;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -65,15 +67,11 @@ public class SavesFragment extends Fragment {
         allFilesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                toggleAllFiles();
+                refreshList();
             }
         });
 
         return view;
-    }
-
-    private void toggleAllFiles() {
-        refreshList();
     }
 
     @Override
@@ -92,11 +90,34 @@ public class SavesFragment extends Fragment {
             loadSavedData(selectedItem);
         } else if (item.getItemId() == R.id.fileMenuDelete) {
             askToDelete(selectedItem);
+        } else if (item.getItemId() == R.id.fileMenuRename) {
+            askToRename(selectedItem);
         } else {
             ((ScoresheetActivity) getActivity()).toast("Not yet implemented: " + item.getTitle() + " " + selectedItem);
         }
 
         return result;
+    }
+
+    private void askToRename(String selectedItem) {
+        String baseName = selectedItem.replace(".json","");
+        //ContextThemeWrapper wrapper = new ContextThemeWrapper(getActivity(), R.style.AppDialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.renamedialog, null);
+        EditText field = (EditText)view.findViewById(R.id.fldNewName);
+        field.setText(baseName);
+        builder.setView(view)
+                .setPositiveButton(R.string.rename, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        store.renameFile(selectedItem, field.getText().toString()+".json");
+                        refreshList();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .setTitle(getString(R.string.renameTitle,baseName))
+                .show();
     }
 
     private void askToDelete(String item) {
@@ -155,16 +176,20 @@ public class SavesFragment extends Fragment {
             List<File> files = store.savedFiles();
             sortFilesByNameDescending(files);
 
-            boolean allFiles = allFilesSwitch.isChecked();
+            boolean includeAllFiles = allFilesSwitch.isChecked();
 
             for (File file : files) {
-                if (allFiles || (file.getName().length() != store.defaultFileNameLength())) {
+                if (includeAllFiles || isIncluded(file)) {
                     adapter.add(file.getName());
                 }
             }
 
             adapter.notifyDataSetChanged();
         }
+    }
+
+    private boolean isIncluded(File file) {
+        return file.getName().length() != store.defaultFileNameLength();
     }
 
     private void sortFilesByNameDescending(List<File> files) {
