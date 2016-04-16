@@ -93,4 +93,8 @@ public class FileManager {
             return Arrays.asList(dir.listFiles());
         }
     }
+
+    public boolean rename(File oldFile, File newFile) {
+        return oldFile.renameTo(newFile);
+    }
 }

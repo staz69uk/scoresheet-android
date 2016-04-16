@@ -101,6 +101,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
 
     public void setFileManager(FileManager fileManager) {
         this.fileManager = fileManager;
+        scoresheetStore.setFileManager(fileManager);
     }
 
     public void periodButtonClicked(View view) {

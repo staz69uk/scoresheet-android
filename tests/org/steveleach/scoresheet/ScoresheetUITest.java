@@ -37,6 +37,9 @@ import org.steveleach.scoresheet.model.ScoresheetModel;
 import org.steveleach.scoresheet.ui.*;
 import org.steveleach.ihscoresheet.*;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 import static org.steveleach.ihscoresheet.R.id.*;
 
@@ -240,5 +243,24 @@ public class ScoresheetUITest {
         // Make sure the history fragment is shown by default
         activity.showDefaultFragment();
         assertTrue( "History fragment should be visible", activity.getVisibleFragment() instanceof HistoryFragment);
+    }
+
+    @Test
+    public void testGameSave() throws IOException {
+        FakeFileManager fakeFileManager =  new FakeFileManager();
+        activity.setFileManager(fakeFileManager);
+
+        assertEquals(0, fakeFileManager.fileCount());
+
+        clickMenuItem(R.id.menuSave);
+        verifyAlertDialogShowing("save the game data");
+
+        clickDialogButton(DialogInterface.BUTTON_POSITIVE);
+
+        assertEquals(2, fakeFileManager.fileCount());
+
+        String content = fakeFileManager.getContentOf("gamedata.json");
+        assertNotNull(content);
+        assertTrue(content.contains("Ice Hockey Scoresheet Data"));
     }
 }

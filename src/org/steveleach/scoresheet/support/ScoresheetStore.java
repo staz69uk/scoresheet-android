@@ -31,9 +31,9 @@ import java.util.List;
  */
 public class ScoresheetStore {
 
-    private final FileManager fileManager;
-    private final JsonCodec codec;
-    private final SystemContext system;
+    private FileManager fileManager;
+    private JsonCodec codec;
+    private SystemContext system;
     private File baseDir = new File(".");
     private String baseFileName = "gamedata";
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
@@ -63,11 +63,15 @@ public class ScoresheetStore {
     }
 
     private StoreResult renameFile(File oldFile, File newFile) {
-        if (oldFile.renameTo(newFile)) {
+        if (fileManager.rename(oldFile,newFile)) {
             return new StoreResult("Renamed",true);
         } else {
             return new StoreResult("Unable to rename file " + oldFile.getName(),false);
         }
+    }
+
+    public void setFileManager(FileManager fileManager) {
+        this.fileManager = fileManager;
     }
 
     public class StoreResult {
