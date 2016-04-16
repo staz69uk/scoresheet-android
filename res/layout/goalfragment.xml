@@ -40,7 +40,7 @@
                     android:padding="4dp" android:weightSum="1">
                 <TextView android:layout_width="160dp" android:layout_height="wrap_content"
                           android:textAppearance="?android:attr/textAppearanceLarge" android:text="Period:           "
-                          android:id="@+id/txtPeriod" android:textColor="#a7a7a7"
+                          android:id="@+id/txtPeriod" android:textColor="@color/appdark"
                 />
                 <EditText android:layout_width="80dp" android:layout_height="wrap_content"
                           android:inputType="number"
