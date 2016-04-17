@@ -210,12 +210,8 @@ public class ScoresheetUITest {
 
     private void clickAddGoal() {
         // Click the "home goal" button and add goal details
+        addGoal("1234","E","41","","");
         click(btnHomeGoal);
-        assertEquals(GoalFragment.class, visibleFragmentClass());
-
-        setField(fldClock,"1234");
-        setField(fldScoredBy,"41");
-        click(btnDone);
 
         // After adding the goal, validate the UI and model state
         assertEquals(HistoryFragment.class, visibleFragmentClass());
@@ -228,6 +224,19 @@ public class ScoresheetUITest {
         assertEquals(model.getHomeTeam().getName(), event.getTeam());
         assertEquals(1, model.getHomeGoals());
         assertEquals(0, model.getAwayGoals());
+    }
+
+    private void addGoal(String clock, String subtype, String player, String assist1, String assist2) {
+        click(btnHomeGoal);
+        assertEquals(GoalFragment.class, visibleFragmentClass());
+
+        setField(fldClock,clock);
+        setField(fldGoalType,subtype);
+        setField(fldScoredBy,player);
+        setField(fldAssist1,assist1);
+        setField(fldAssist2,assist2);
+
+        click(btnDone);
     }
 
     private void clickNextPeriod() {
