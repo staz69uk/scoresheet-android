@@ -47,7 +47,7 @@ import static org.junit.Assert.*;
 import static org.steveleach.ihscoresheet.R.id.*;
 
 /**
- * Unit tests for UI methods.
+ * End-to-end tests for user interface.
  *
  * @author Steve Leach
  */
@@ -290,6 +290,9 @@ public class ScoresheetUITest {
         assertTrue(content.contains("Ice Hockey Scoresheet Data"));
     }
 
+    /**
+     * Test using the events of an actual English recreational ice hockey game.
+     */
     @Test
     public void testActualGame() throws FileNotFoundException {
         // Start a new game
