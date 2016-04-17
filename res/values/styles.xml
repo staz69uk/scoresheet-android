@@ -36,4 +36,5 @@
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
     </style>
     <style name="AppDialog" parent="@android:style/Theme.Holo.Dialog.MinWidth"></style>
+    <style name="gameReportTextStyle" parent="@android:style/TextAppearance.DeviceDefault.Medium"></style>
 </resources>

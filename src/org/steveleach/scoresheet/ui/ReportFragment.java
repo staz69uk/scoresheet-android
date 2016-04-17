@@ -61,12 +61,13 @@ public class ReportFragment extends Fragment implements ModelAware {
         for (String value : values) {
             TextView textView = new TextView(getActivity());
             textView.setText(value);
+            textView.setTextAppearance(getActivity(),R.style.gameReportTextStyle);
             textView.setWidth(totalWidth * widths[colIndex++] / 100);
-            textView.setHeight(20);
+            textView.setHeight(28);
             if (rowIndex == 0) {
                 textView.setTypeface(null, Typeface.BOLD);
             } else if (rowIndex % 2 == 1) {
-                row.setBackgroundColor(getResources().getColor(R.color.appgrey));
+                row.setBackgroundColor(getResources().getColor(R.color.gameReportEvenRow));
             }
             row.addView(textView);
         }
@@ -102,6 +103,7 @@ public class ReportFragment extends Fragment implements ModelAware {
     private void addSectionHeader(String headerText) {
         TextView heading = new TextView(getActivity());
         heading.setText(headerText);
+        heading.setTextAppearance(getActivity(),R.style.gameReportTextStyle);
         heading.setTypeface(null,Typeface.BOLD);
         panel.addView(heading);
     }

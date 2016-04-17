@@ -3,4 +3,5 @@
     <color name="appblue">#607d8b</color>
     <color name="appgrey">#cfd8dc</color>
     <color name="appdark">#263238</color>
+    <color name="gameReportEvenRow">#cfd8dc</color>
 </resources>
