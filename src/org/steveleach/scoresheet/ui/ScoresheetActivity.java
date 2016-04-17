@@ -47,7 +47,7 @@ import org.steveleach.scoresheet.model.*;
 public class ScoresheetActivity extends Activity implements ModelAware, DefaultFragmentActivity {
     private static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
     private static final String STATE_KEY = "MODEL_JSON";
-    private static final String LOG_TAG = "IHSS";
+    public static final String LOG_TAG = "IHSS";
     private ScoresheetModel model = new ScoresheetModel();
     private FileManager fileManager = new FileManager();
     private JsonCodec jsonCodec = new JsonCodec();

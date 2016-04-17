@@ -17,7 +17,10 @@ package org.steveleach.scoresheet.ui;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,6 +143,30 @@ public class HistoryFragment extends Fragment implements ModelAware {
             ((TextView)rowView.findViewById(R.id.txtGameTime)).setText(event.getGameTime());
             ((TextView)rowView.findViewById(R.id.txtSummary)).setText(getSummary(event));
             ((TextView)rowView.findViewById(R.id.txtEventDetail)).setText(getDetail(event));
+
+            int imageId;
+            int color;
+            int teamColor = event.getTeam().equals(model.getHomeTeam().getName()) ?
+                    Color.parseColor("#cfd8ff") : Color.parseColor("#ffd8dc");
+            if (event instanceof GoalEvent) {
+                imageId = R.drawable.goal48a;
+                color = teamColor;
+            } else if (event instanceof PenaltyEvent) {
+                imageId = R.drawable.penalty48a;
+                color = teamColor;
+            } else {
+                imageId = R.drawable.period48;
+                color = Color.parseColor("#cfd8dc");
+            }
+
+            ImageView image = (ImageView) rowView.findViewById(R.id.idImage);
+            try {
+                image.setImageResource(imageId);
+            } catch (Resources.NotFoundException e) {
+                Log.e(ScoresheetActivity.LOG_TAG,"Error loading drawable" + imageId, e);
+            }
+            image.setColorFilter(color);
+
             return rowView;
         }
 

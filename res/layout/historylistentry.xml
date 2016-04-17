@@ -7,7 +7,8 @@
     <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:id="@+id/idImage" android:background="@color/appgrey" android:layout_marginRight="4dp"/>
+            android:id="@+id/idImage" android:layout_marginRight="4dp"
+            android:scaleType="fitXY"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="60dp"
