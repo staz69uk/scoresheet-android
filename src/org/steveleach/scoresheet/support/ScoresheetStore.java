@@ -37,6 +37,8 @@ public class ScoresheetStore {
     private File baseDir = new File(".");
     private String baseFileName = "gamedata";
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    private static final String NAME_FORMAT_1 = "%s-%s.json";
+    private static final String NAME_FORMAT_2 = "%s-%s--%d-%02d-%02d.json";
 
     public ScoresheetStore(FileManager fileManager, JsonCodec jsonCodec, SystemContext system) {
         this.fileManager = fileManager;
@@ -54,8 +56,19 @@ public class ScoresheetStore {
         return new StoreResult(success ? "Deleted " + fileName : "Could not delete " + fileName, success);
     }
 
-    public int defaultFileNameLength() {
-        return String.format("%s-%s.json", baseFileName, DATE_FORMAT.format(new Date())).length();
+    /**
+     * Returns true if the specified file has an auto-generated timestamped name.
+     */
+    public boolean isAutoFile(File file) {
+        String format1 = String.format(NAME_FORMAT_1, baseFileName, DATE_FORMAT.format(new Date()));
+        String format2 = String.format(NAME_FORMAT_2, baseFileName, DATE_FORMAT.format(new Date()),1,0,0);
+        if (file.getName().length() == format1.length()) {
+            return true;
+        } else if (file.getName().length() == format2.length()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public StoreResult renameFile(String oldName, String newName) {
@@ -110,7 +123,7 @@ public class ScoresheetStore {
             try {
                 checkFileSystemStatus();
                 ensureBaseDirectoryExists();
-                File file = getMainFile(baseFileName);
+                File file = getMainFile(model);
                 fileManager.writeTextFile(file, json);
                 fileManager.copyFile(file, getLastFile(baseFileName));
                 result = new StoreResult("Saved " + baseFileName, true);
@@ -170,9 +183,10 @@ public class ScoresheetStore {
         this.baseDir = baseDir;
     }
 
-    public File getMainFile(String baseName) {
+    public File getMainFile(ScoresheetModel model) {
         String dateStr = DATE_FORMAT.format(new Date());
-        String mainFileName = String.format("%s-%s.json", baseName, dateStr);
+        String mainFileName = String.format(NAME_FORMAT_2, baseFileName, dateStr,
+                model.getPeriod(), model.getHomeGoals(), model.getAwayGoals());
         return new File(baseDir,mainFileName);
     }
 

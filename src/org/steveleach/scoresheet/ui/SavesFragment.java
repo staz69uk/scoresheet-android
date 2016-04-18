@@ -179,17 +179,13 @@ public class SavesFragment extends Fragment {
             boolean includeAllFiles = allFilesSwitch.isChecked();
 
             for (File file : files) {
-                if (includeAllFiles || isIncluded(file)) {
+                if (includeAllFiles || (!store.isAutoFile(file))) {
                     adapter.add(file.getName());
                 }
             }
 
             adapter.notifyDataSetChanged();
         }
-    }
-
-    private boolean isIncluded(File file) {
-        return file.getName().length() != store.defaultFileNameLength();
     }
 
     private void sortFilesByNameDescending(List<File> files) {
