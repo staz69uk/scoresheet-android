@@ -65,7 +65,7 @@ public class GoalFragment extends Fragment implements ModelAware {
         assist2Field.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
         goalTypeField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
 
-        clockField.setOnFocusChangeListener(new MinLengthFocusChangeListener(3));
+        clockField.setOnFocusChangeListener(new ClockFieldFocusListener(periodField,model));
         scorerField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
         periodField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
         goalTypeField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));

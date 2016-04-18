@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 public abstract class GameEvent {
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
     public static final String GAME_TIME_ERROR = "99:99";
+    public static final String GAME_TIME_ZERO = "00:00";
     protected int period = 0;
     protected String player = "0";
     protected String team = "Home";

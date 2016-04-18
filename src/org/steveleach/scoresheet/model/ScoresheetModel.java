@@ -297,6 +297,17 @@ public class ScoresheetModel {
         return penalties;
     }
 
+    /**
+     * Returns the game time of the latest event in the game.
+     */
+    public String maxGameTime() {
+        if (events.size() == 0) {
+            return GameEvent.GAME_TIME_ZERO;
+        } else {
+            return events.get(events.size()-1).getGameTime();
+        }
+    }
+
     public class PlayerStats {
         public int playerNum = 0;
         public int goals = 0;

@@ -70,7 +70,7 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         minutesField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(2) });
         playerField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
 
-        clockField.setOnFocusChangeListener(new MinLengthFocusChangeListener(3));
+        clockField.setOnFocusChangeListener(new ClockFieldFocusListener(periodField,model));
         playerField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
         periodField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
         minutesField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));

@@ -267,6 +267,18 @@ public class ScoresheetModelTest {
         model.addEvent(new PenaltyEvent(1,"1234",model.getHomeTeam().getName(),"HOOK","41",2));
         assertEquals(5, model.penaltyTotals(model.getHomeTeam().getName()).length);
         assertEquals(2, model.penaltyTotals(model.getHomeTeam().getName())[4]);
+    }
 
+    @Test
+    public void testMaxGameTime() {
+        assertEquals(GameEvent.GAME_TIME_ZERO, model.maxGameTime());
+
+        model.addEvent(new GoalEvent(1, "1500", "Home", "E", 41, 0, 0));
+
+        assertEquals("05:00", model.maxGameTime());
+
+        model.addEvent(new GoalEvent(2, "1500", "Home", "E", 41, 0, 0));
+
+        assertEquals("25:00", model.maxGameTime());
     }
 }
