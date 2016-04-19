@@ -278,7 +278,7 @@ public class ScoresheetUITest {
     public void testGameSave() throws IOException {
         assertEquals(0, fakeFileManager.fileCount());
 
-        clickMenuItem(R.id.menuSave);
+        clickMenuItem(menuSave);
         verifyAlertDialogShowing("save the game data");
 
         clickDialogButton(DialogInterface.BUTTON_POSITIVE);
@@ -288,6 +288,34 @@ public class ScoresheetUITest {
         String content = fakeFileManager.getContentOf("gamedata.json");
         assertNotNull(content);
         assertTrue(content.contains("Ice Hockey Scoresheet Data"));
+    }
+
+    @Test
+    public void testGameLoad() {
+        model.addEvent(new PeriodEndEvent());
+        assertEquals(1, model.getEvents().size());
+
+        assertEquals(0, fakeFileManager.fileCount());
+        activity.getStore().save(model);
+        assertEquals(2, fakeFileManager.fileCount());
+
+        model.clearEvents();
+        assertEquals(0, model.getEvents().size());
+
+        clickMenuItem(menuLoad);
+        assertEquals(SavesFragment.class, visibleFragmentClass());
+
+        ListView savesList = (ListView) activity.findViewById(gameSavesList);
+        assertNotNull(savesList);
+        assertEquals(2,savesList.getAdapter().getCount());
+        Shadows.shadowOf(savesList).performItemClick(0);
+
+        verifyAlertDialogShowing("load game details");
+        clickDialogButton(DialogInterface.BUTTON_POSITIVE);
+
+        assertEquals(HistoryFragment.class, visibleFragmentClass());
+
+        assertEquals(1, model.getEvents().size());
     }
 
     /**

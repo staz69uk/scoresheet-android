@@ -161,10 +161,8 @@ public class ScoresheetStore {
     public List<File> savedFiles() {
         List<File> files = new LinkedList<>();
         for (File file : fileManager.dirContents(baseDir)) {
-            if (file.isFile()) {
-                if (file.getName().startsWith(baseFileName)) {
-                    files.add(file);
-                }
+            if (file.getName().startsWith(baseFileName)) {
+                files.add(file);
             }
         }
         return files;

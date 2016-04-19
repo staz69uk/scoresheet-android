@@ -72,4 +72,9 @@ public class FakeFileManager extends FileManager {
         }
         return results;
     }
+
+    @Override
+    public boolean exists(File file) {
+        return files.containsKey(file.getAbsolutePath());
+    }
 }

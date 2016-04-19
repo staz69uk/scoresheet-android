@@ -335,4 +335,8 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     public void showDefaultFragment() {
         showHistory();
     }
+
+    public ScoresheetStore getStore() {
+        return scoresheetStore;
+    }
 }
