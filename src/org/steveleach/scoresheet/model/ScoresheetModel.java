@@ -370,6 +370,7 @@ public class ScoresheetModel {
         totals[4] = sum(totals);
         return totals;
     }
+
     private int sum(int[] values) {
         int sum = 0;
         for (int value : values) {
@@ -384,5 +385,26 @@ public class ScoresheetModel {
 
     public void setChanged(boolean changed) {
         isChanged = changed;
+    }
+
+    /**
+     * Returns the score at a specified point in the game.
+     */
+    public HomeAway<Integer> scoreAt(final String gameTime) {
+        int home = 0;
+        int away = 0;
+        for (GameEvent event : events) {
+            if (event.getGameTime().compareTo(gameTime) > 0) {
+                break;
+            }
+            if (event instanceof GoalEvent) {
+                if (event.getTeam().equals(getHomeTeam().getName())) {
+                    home++;
+                } else if (event.getTeam().equals(getAwayTeam().getName())) {
+                    away++;
+                }
+            }
+        }
+        return new HomeAway<>(home,away);
     }
 }

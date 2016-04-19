@@ -19,6 +19,12 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="00:00"
                 android:id="@+id/txtGameTime"/>
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="1"
+                android:id="@+id/txtEventPeriod"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"
@@ -37,4 +43,14 @@
                 android:text="Event detail"
                 android:id="@+id/txtEventDetail"/>
     </LinearLayout>
+    <Space
+            android:layout_width="20px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="0 : 0"
+            android:id="@+id/txtScore" android:paddingRight="12dp"/>
 </LinearLayout>

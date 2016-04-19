@@ -139,10 +139,13 @@ public class HistoryFragment extends Fragment implements ModelAware {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             GameEvent event = getItem(position);
+
             View rowView = inflater.inflate(R.layout.historylistentry, null);
+            ((TextView)rowView.findViewById(R.id.txtEventPeriod)).setText(periodText(event));
             ((TextView)rowView.findViewById(R.id.txtGameTime)).setText(event.getGameTime());
             ((TextView)rowView.findViewById(R.id.txtSummary)).setText(getSummary(event));
             ((TextView)rowView.findViewById(R.id.txtEventDetail)).setText(getDetail(event));
+            ((TextView)rowView.findViewById(R.id.txtScore)).setText(scoreLine(event));
 
             int imageId;
             int color;
@@ -168,6 +171,33 @@ public class HistoryFragment extends Fragment implements ModelAware {
             image.setColorFilter(color);
 
             return rowView;
+        }
+
+        private String scoreLine(GameEvent event) {
+            if (event instanceof GoalEvent) {
+                HomeAway<Integer> score = model.scoreAt(event.getGameTime());
+                return String.format("%d : %d", score.getHome(), score.getAway());
+            } else {
+                return "";
+            }
+        }
+
+        private String periodText(GameEvent event) {
+            if (event instanceof PeriodEndEvent) {
+                return "";
+            }
+            switch (event.getPeriod()) {
+                case 1:
+                    return "1st";
+                case 2:
+                    return "2nd";
+                case 3:
+                    return "3rd";
+                case 4:
+                    return "OT";
+                default:
+                    return "?";
+            }
         }
 
         private String getDetail(GameEvent event) {
