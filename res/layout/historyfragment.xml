@@ -38,13 +38,14 @@
             <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/homeGoalButtonText"
                     android:id="@+id/btnHomeGoal" android:gravity="center"
                     android:onClick="goalButtonClicked" android:nestedScrollingEnabled="false" android:layout_row="4"
-                    android:layout_column="18" style="@style/AppButton"/>
+                    android:layout_column="18" style="@style/AppButton" android:background="@drawable/buttonshape"/>
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/homePenButtonText"
                     android:id="@+id/btnHomePen"
-                    android:onClick="penaltyButtonClicked" style="@style/AppButton"/>
+                    android:onClick="penaltyButtonClicked" style="@style/AppButton"
+                    android:background="@drawable/buttonshape"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"
@@ -52,11 +53,12 @@
                 android:layout_height="wrap_content" android:layout_weight="0.34">
             <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/nextPeriodButtonText"
                     android:id="@+id/btnNextPeriod"
-                    android:onClick="periodButtonClicked" style="@style/AppButton"/>
+                    android:onClick="periodButtonClicked" style="@style/AppButton"
+                    android:background="@drawable/buttonshape"/>
             <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/gameReportButton"
                     android:id="@+id/btnReport" android:nestedScrollingEnabled="false"
                     android:layout_weight="0.03" android:onClick="reportButtonClicked"
-                    style="@style/AppButton"/>
+                    style="@style/AppButton" android:background="@drawable/buttonshape"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"
@@ -64,13 +66,15 @@
                 android:layout_height="wrap_content" android:layout_weight="0.33">
             <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/awayGoalButtonText"
                     android:id="@+id/btnAwayGoal"
-                    android:onClick="goalButtonClicked" style="@style/AppButton"/>
+                    android:onClick="goalButtonClicked" style="@style/AppButton"
+                    android:background="@drawable/buttonshape"/>
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/awayPenButtonText"
                     android:id="@+id/btnAwayPen"
-                    android:onClick="penaltyButtonClicked" style="@style/AppButton"/>
+                    android:onClick="penaltyButtonClicked" style="@style/AppButton"
+                    android:background="@drawable/buttonshape"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
