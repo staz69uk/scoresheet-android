@@ -86,6 +86,10 @@ public class ReportFragment extends Fragment implements ModelAware {
         String[] headers = new String[] {"TIME","TYPE","G","A","A"};
         addRow(table,headers,widths,index++);
 
+        int goalTotal = 0;
+        int assistTotal1 = 0;
+        int assistTotal2 = 0;
+
         for (GoalEvent goal : model.goals(team)) {
             String values[] = new String[] {
                 goal.getGameTime(),
@@ -95,7 +99,15 @@ public class ReportFragment extends Fragment implements ModelAware {
                 goal.getAssist2() == 0 ? "" : Integer.toString(goal.getAssist2())
             };
             addRow(table,values,widths,index++);
+
+            goalTotal++;
+            assistTotal1 += goal.getAssist1() > 0 ? 1 : 0;
+            assistTotal2 += goal.getAssist2() > 0 ? 1 : 0;
         }
+
+//        String values[] = new String[] {"", "", ""+goalTotal, ""+assistTotal1, ""+assistTotal2};
+//        addRow(table,values,widths,index++);
+
         panel.addView(table);
         addSpace();
     }
@@ -148,7 +160,7 @@ public class ReportFragment extends Fragment implements ModelAware {
         int[] widths = new int[] {10,15,10,10,10};  // Column widths in %
         String[] headers = new String[] {"No","Name","G","A","PIM"};
         addRow(table,headers,widths,index++);
-
+        
         for (ScoresheetModel.PlayerStats player : model.getPlayerStats(team).values()) {
             String[] values = new String[] {
                     Integer.toString(player.playerNum),
@@ -193,7 +205,7 @@ public class ReportFragment extends Fragment implements ModelAware {
         TableLayout table = new TableLayout(getActivity());
 
         int[] widths = new int[] {30,10,10,10,10,10};  // Column widths in %
-        String[] headers = new String[] {"PENALTY MINUTES","1","2","3","OT","TOT"};
+        String[] headers = new String[] {"PENALTY MINS","1","2","3","OT","TOT"};
         addRow(table,headers,widths,0);
 
         int[] home = model.penaltyTotals(model.getHomeTeam().getName());
@@ -205,6 +217,24 @@ public class ReportFragment extends Fragment implements ModelAware {
         panel.addView(table);
         addSpace();
     }
+
+    private void addAssistTotals(ScoresheetModel model) {
+        TableLayout table = new TableLayout(getActivity());
+
+        int[] widths = new int[] {30,10,10,10,10,10};  // Column widths in %
+        String[] headers = new String[] {"ASSISTS","1","2","3","OT","TOT"};
+        addRow(table,headers,widths,0);
+
+        int[] home = model.assistTotals(model.getHomeTeam().getName());
+        showTotals(table, model.getHomeTeam().getName(), home, widths);
+
+        int[] away = model.assistTotals(model.getAwayTeam().getName());
+        showTotals(table, model.getAwayTeam().getName(), away, widths);
+
+        panel.addView(table);
+        addSpace();
+    }
+
 
     @Override
     public void setModel(ScoresheetModel model) {
@@ -227,6 +257,7 @@ public class ReportFragment extends Fragment implements ModelAware {
             addPenalties(model.getAwayTeam().getName(), model);
             addGoalTotals(model);
             addPenaltyTotals(model);
+            addAssistTotals(model);
         }
     }
 

@@ -169,7 +169,7 @@ public class ScoresheetUITest {
         ViewGroup root = (ViewGroup) fragment.getView();
         assertNotNull(root);
         ViewGroup panel = (ViewGroup) root.findViewById(panelNew);
-        assertEquals(22, panel.getChildCount());
+        assertEquals(24, panel.getChildCount());
         assertTrue( panel.getChildAt(0) instanceof TextView);
         assertTrue( panel.getChildAt(1) instanceof TableLayout);
         assertTrue( panel.getChildAt(2) instanceof Space);

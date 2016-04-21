@@ -407,4 +407,19 @@ public class ScoresheetModel {
         }
         return new HomeAway<>(home,away);
     }
+
+    public int[] assistTotals(String team) {
+        int[] totals = {0,0,0,0,0};
+        for (GoalEvent event : goals(team)) {
+            int periodIndex = event.getPeriod()-1;
+            GoalEvent goal = (GoalEvent) event;
+            int assists = 0;
+            assists += goal.getAssist1() > 0 ? 1 : 0;
+            assists += goal.getAssist2() > 0 ? 1 : 0;
+            totals[periodIndex] += assists;
+        }
+        totals[4] = sum(totals);
+        return totals;
+    }
+
 }
