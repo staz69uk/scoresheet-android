@@ -202,6 +202,8 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menuGameDetails:
+                return showGameDetails();
             case R.id.menuNewGame:
                 newGame();
                 return true;
@@ -223,6 +225,13 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean showGameDetails() {
+        GameFragment fragment = new GameFragment();
+        fragment.setModel(model);
+        showFragment(fragment);
+        return true;
     }
 
     private void showHelp() {

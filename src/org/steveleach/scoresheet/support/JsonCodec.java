@@ -19,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.steveleach.scoresheet.model.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -27,6 +29,8 @@ import java.util.Date;
  * @author Steve Leach
  */
 public class JsonCodec {
+
+    private static final SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Returns a JSON String representation of the specified scoresheet model.
@@ -40,10 +44,12 @@ public class JsonCodec {
     public String toJson(ScoresheetModel model) throws JSONException {
         JSONObject root = new JSONObject();
         root.put("@content", "Ice Hockey Scoresheet Data");
-        root.put("@version", "1.00");
+        root.put("@version", "1.0.1");
         root.put("@exported", new Date());
         root.put("homeTeamName", model.getHomeTeam().getName());
         root.put("awayTeamName", model.getAwayTeam().getName());
+        root.put("location", model.getGameLocation());
+        root.put("gameDate", dateOnlyFormat.format(model.getGameDateTime()));
 
         JSONArray jsonEvents = new JSONArray();
         for (GameEvent event : model.getEvents()) {
@@ -85,6 +91,16 @@ public class JsonCodec {
 
         model.getHomeTeam().setName(root.optString("homeTeamName","Home"));
         model.getAwayTeam().setName(root.optString("awayTeamName","Home"));
+        model.setGameLocation(root.optString("location",""));
+
+        String dateStr = root.optString("gameDate","");
+        if (dateStr.length() == 10) {
+            try {
+                model.setGameDateTime(dateOnlyFormat.parse(dateStr));
+            } catch (ParseException e) {
+                e.printStackTrace(); // TODO
+            }
+        }
 
         JSONArray jsonEvents = root.getJSONArray("events");
         for (int n = 0; n < jsonEvents.length(); n++) {

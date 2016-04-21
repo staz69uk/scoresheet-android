@@ -62,6 +62,10 @@
     <string name="rename">Rename</string>
     <string name="cancel">Cancel</string>
     <string name="renameTitle">Rename %s</string>
+    <string name="gameDetailsTitle">Game details</string>
+    <string name="homeTeamLabel">Home team:</string>
+    <string name="awayTeamLabel">Away team:</string>
+    <string name="venueLabel">Venue:</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>
