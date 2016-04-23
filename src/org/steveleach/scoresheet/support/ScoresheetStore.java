@@ -45,7 +45,9 @@ public class ScoresheetStore {
         this.system = system;
         this.codec = jsonCodec;
 
-        setBaseDirectory(system.getScoresheetFolder());
+        if (system != null) {
+            setBaseDirectory(system.getScoresheetFolder());
+        }
     }
 
     public StoreResult delete(String fileName) {
@@ -64,7 +66,9 @@ public class ScoresheetStore {
         String format2 = String.format(NAME_FORMAT_2, baseFileName, DATE_FORMAT.format(new Date()),1,0,0);
         if (file.getName().length() == format1.length()) {
             return true;
-        } else return file.getName().length() == format2.length();
+        } else {
+            return file.getName().length() == format2.length();
+        }
     }
 
     public StoreResult renameFile(String oldName, String newName) {
@@ -175,6 +179,10 @@ public class ScoresheetStore {
 
     public void setBaseDirectory(File baseDir) {
         this.baseDir = baseDir;
+    }
+
+    public File getBaseDirectory() {
+        return baseDir;
     }
 
     public File getMainFile(ScoresheetModel model) {

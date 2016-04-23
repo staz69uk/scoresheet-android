@@ -167,4 +167,49 @@ public class ScoresheetSupportTest {
         assertTrue(result.success);
         assertEquals("Deleted somefile.json", result.text);
     }
+
+    @Test
+    public void testIsAutoFile() {
+        ScoresheetStore store = new ScoresheetStore(null,null,null);
+
+        assertTrue( store.isAutoFile(new File("gamedata-2016-04-23-03-04-05--2-00-00.json")) );
+        assertTrue( store.isAutoFile(new File("gamedata-2016-04-23-03-04-05.json")) );
+        assertFalse( store.isAutoFile(new File("gamedata.json")) );
+        assertFalse( store.isAutoFile(new File("fred.json")) );
+        assertFalse( store.isAutoFile(new File("gamedata.txt")) );
+    }
+
+    @Test
+    public void testLoadMissingFile() throws IOException {
+        when(fileManager.exists(any())).thenReturn(true);
+        when(fileManager.readTextFileContent(any())).thenThrow(new IOException("Broken"));
+        when(context.getScoresheetFolder()).thenReturn(new File("."));
+
+        ScoresheetStore store = new ScoresheetStore(fileManager,null,context);
+
+        ScoresheetModel model = new ScoresheetModel();
+
+        ScoresheetStore.StoreResult result = store.loadInto(model, "gamedata.json");
+
+        assertFalse(result.success);
+        assertNotNull(result.error);
+        assertEquals(IOException.class, result.error.getClass());
+    }
+
+    @Test
+    public void testStoreRename() throws IOException {
+        when(context.getScoresheetFolder()).thenReturn(new File("."));
+        FakeFileManager ffm = new FakeFileManager();
+
+        ScoresheetStore store = new ScoresheetStore(ffm,new JsonCodec(),context);
+
+        File oldFile = new File(store.getBaseDirectory(), "gamedata-1.json");
+        File newFile = new File(store.getBaseDirectory(), "gamedata-2.json");
+
+        ffm.writeTextFile(oldFile, "Content");
+
+        store.renameFile(oldFile.getName(), newFile.getName());
+
+        assertEquals("Content", ffm.getContentOf("gamedata-2.json"));
+    }
 }
