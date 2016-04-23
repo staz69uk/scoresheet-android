@@ -281,4 +281,25 @@ public class ScoresheetModelTest {
 
         assertEquals("25:00", model.maxGameTime());
     }
+
+    @Test
+    public void testChangeTeamName() {
+        // Given
+        model.addEvent(new GoalEvent(1, "1500", "Home", "E", 41, 0, 0));
+        model.addEvent(new GoalEvent(1, "1000", "Away", "E", 14, 0, 0));
+
+        // When
+        model.setHomeTeamName("Reds");
+        model.setAwayTeamName("Blues");
+
+        // Then
+        assertEquals("Reds", model.getEvents().get(0).getTeam());
+        assertEquals("Blues", model.getEvents().get(1).getTeam());
+    }
+
+    @Test
+    public void verifyHomeAway() {
+        HomeAway<String> values = new HomeAway<>("A","B");
+        assertEquals("(A,B)", values.toString());
+    }
 }

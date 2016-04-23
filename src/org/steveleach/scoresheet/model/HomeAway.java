@@ -38,6 +38,6 @@ public class HomeAway<T> {
 
     @Override
     public String toString() {
-        return String.format("(%s,%s)",home.toString(),away.toString());
+        return String.format("(%s,%s)",getHome().toString(),getAway().toString());
     }
 }

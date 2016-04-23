@@ -422,4 +422,25 @@ public class ScoresheetModel {
         return totals;
     }
 
+    public void setHomeTeamName(final String newName) {
+        setTeamName(homeTeam, newName);
+    }
+
+    private void setTeamName(Team team, String newName) {
+        String oldName = team.getName();
+        changeTeamNamesInEvents(oldName,newName);
+        team.setName(newName);
+    }
+
+    public void setAwayTeamName(final String newName) {
+        setTeamName(awayTeam, newName);
+    }
+
+    private void changeTeamNamesInEvents(String oldName, String newName) {
+        for (GameEvent event : events) {
+            if (event.getTeam().equals(oldName)) {
+                event.setTeam(newName);
+            }
+        }
+    }
 }
