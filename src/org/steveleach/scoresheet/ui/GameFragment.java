@@ -86,8 +86,8 @@ public class GameFragment extends Fragment implements ModelAware {
 
     private void refreshFields() {
         if (homeNameField!= null) {
-            homeNameField.setText(model.getHomeTeam().getName());
-            awayNameField.setText(model.getAwayTeam().getName());
+            homeNameField.setText(model.homeTeamName());
+            awayNameField.setText(model.awayTeamName());
             locationField.setText(model.getGameLocation());
         }
     }

@@ -27,18 +27,37 @@ import java.util.*;
  */
 public class ScoresheetModel {
     private static final int SECS_PER_MIN = 60;
-    private List<GameEvent> events = new LinkedList<>();
-    private Team homeTeam = new Team("Home");
-    private Team awayTeam = new Team("Away");
-    private Date gameDateTime = new Date();
-    private String gameLocation = "";
-    private String competition = "";
-    private List<GameOfficial> officials = new LinkedList<>();
-    private GameRules rules = GameRules.UK_REC_RULES;
-    private int homeTimeouts = 0;
-    private int awayTimeouts = 0;
-    private WeakSet<ModelAware> listeners = new WeakSet<>();
+    private List<GameEvent> events;
+    private Team homeTeam;
+    private Team awayTeam;
+    private Date gameDateTime;
+    private String gameLocation;
+    private String competition;
+    private List<GameOfficial> officials;
+    private GameRules rules;
+    private int homeTimeouts;
+    private int awayTimeouts;
     private boolean isChanged = false;
+    private WeakSet<ModelAware> listeners = new WeakSet<>();
+
+    public ScoresheetModel() {
+        reset();
+    }
+
+    public void reset() {
+        events = new LinkedList<>();
+        homeTeam = new Team("Home");
+        awayTeam = new Team("Away");
+        gameDateTime = new Date();
+        gameLocation = "";
+        competition = "";
+        officials = new LinkedList<>();
+        rules = GameRules.UK_REC_RULES;
+        homeTimeouts = 0;
+        awayTimeouts = 0;
+
+        setChanged(false);
+    }
 
     /**
      * Adds an event to the game.
@@ -433,6 +452,14 @@ public class ScoresheetModel {
 
     public void setAwayTeamName(final String newName) {
         setTeamName(awayTeam, newName);
+    }
+
+    public String homeTeamName() {
+        return homeTeam.getName();
+    }
+
+    public String awayTeamName() {
+        return awayTeam.getName();
     }
 
     /**

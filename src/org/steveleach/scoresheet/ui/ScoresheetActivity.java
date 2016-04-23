@@ -46,7 +46,7 @@ import org.steveleach.scoresheet.model.*;
  */
 public class ScoresheetActivity extends Activity implements ModelAware, DefaultFragmentActivity {
     private static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
-    private static final String STATE_KEY = "MODEL_JSON";
+    public static final String STATE_KEY = "MODEL_JSON";
     public static final String LOG_TAG = "IHSS";
     private ScoresheetModel model = new ScoresheetModel();
     private FileManager fileManager = new FileManager();
@@ -74,7 +74,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.d(LOG_TAG, "ScoresheetActivity.onRestoreInstanceState");
         String jsonText = savedInstanceState.getString(STATE_KEY);
@@ -89,7 +89,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         Log.d(LOG_TAG, "ScoresheetActivity.onSaveInstanceState");
         try {
             String modelJson = jsonCodec.toJson(model);
@@ -161,8 +161,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         yesNoDialog(R.string.clearEventsPrompt, new Runnable() {
                     @Override
                     public void run() {
-                        model.setChanged(false);
-                        model.clearEvents();
+                        model.reset();
                     }
                 });
     }

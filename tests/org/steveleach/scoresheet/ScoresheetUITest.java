@@ -16,32 +16,24 @@ package org.steveleach.scoresheet;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Environment;
-import android.view.View;
+import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.*;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
-import org.robolectric.fakes.RoboMenuItem;
 import org.robolectric.shadows.ShadowAlertDialog;
-import org.robolectric.shadows.ShadowEnvironment;
 import org.steveleach.scoresheet.model.GoalEvent;
 import org.steveleach.scoresheet.model.PenaltyEvent;
 import org.steveleach.scoresheet.model.PeriodEndEvent;
 import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.support.JsonCodec;
 import org.steveleach.scoresheet.ui.*;
-import org.steveleach.ihscoresheet.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.steveleach.ihscoresheet.R.id.*;
@@ -56,8 +48,8 @@ import static org.steveleach.ihscoresheet.R.id.*;
 public class ScoresheetUITest extends AbstractUITest {
 
     @Before
-    public void setup() {
-        super.setup();
+    public void setupTestEnvironment() {
+        super.setupTestEnvironment();
 
         assertEquals(0, model.getEvents().size());
         assertEquals(1, model.getPeriod());
@@ -268,4 +260,53 @@ public class ScoresheetUITest extends AbstractUITest {
         assertEquals(1, model.getEvents().size());
     }
 
+    @Test
+    public void testGameDetailsUpdate() {
+        assertEquals("Home", model.homeTeamName());
+        assertEquals("Away", model.awayTeamName());
+        assertEquals("", model.getGameLocation());
+
+        clickMenuItem(menuGameDetails);
+        assertEquals(GameFragment.class, visibleFragmentClass());
+
+        setField(fldHomeTeamName, "Winners");
+        setField(fldAwayTeamName, "Losers");
+        setField(fldGameVenue, "The moon");
+
+        click(btnGameOK);
+
+        assertEquals(HistoryFragment.class, visibleFragmentClass());
+
+        assertEquals("Winners", model.homeTeamName());
+        assertEquals("Losers", model.awayTeamName());
+        assertEquals("The moon", model.getGameLocation());
+    }
+
+    @Test
+    public void testSaveLoadState() {
+        model.setHomeTeamName("Reds");
+        model.addEvent(new PeriodEndEvent(1));
+        Bundle bundle = new Bundle();
+
+        activity.onSaveInstanceState(bundle);
+
+        String json = bundle.getString(activity.STATE_KEY);
+        assertNotNull(json);
+
+        ScoresheetModel model1 = new ScoresheetModel();
+        new JsonCodec().fromJson(model1, json);
+
+        assertEquals(1, model1.getEvents().size());
+        assertEquals("Reds", model1.homeTeamName());
+
+        model.reset();
+
+        assertEquals(0, model.getEvents().size());
+        assertEquals("Home", model.homeTeamName());
+
+        activity.onRestoreInstanceState(bundle);
+
+        assertEquals(1, model.getEvents().size());
+        assertEquals("Reds", model.homeTeamName());
+    }
 }

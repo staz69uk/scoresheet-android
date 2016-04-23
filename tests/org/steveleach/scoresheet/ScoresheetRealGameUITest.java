@@ -14,31 +14,19 @@
 */
 package org.steveleach.scoresheet;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Environment;
-import android.view.ViewGroup;
 import android.widget.*;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
-import org.robolectric.fakes.RoboMenuItem;
-import org.robolectric.shadows.ShadowAlertDialog;
-import org.robolectric.shadows.ShadowEnvironment;
 import org.steveleach.ihscoresheet.R;
 import org.steveleach.scoresheet.model.GoalEvent;
-import org.steveleach.scoresheet.model.PenaltyEvent;
-import org.steveleach.scoresheet.model.PeriodEndEvent;
 import org.steveleach.scoresheet.model.ScoresheetModel;
 import org.steveleach.scoresheet.ui.*;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -55,7 +43,7 @@ public class ScoresheetRealGameUITest extends AbstractUITest {
 
     @Before
     public void setup() {
-        super.setup();
+        super.setupTestEnvironment();
 
         assertEquals(0, model.getEvents().size());
         assertEquals(1, model.getPeriod());

@@ -42,8 +42,7 @@ public abstract class AbstractUITest {
     protected ScoresheetModel model;
     protected FakeFileManager fakeFileManager;
 
-
-    protected void setup() {
+    protected void setupTestEnvironment() {
         ShadowEnvironment.setExternalStorageState(Environment.MEDIA_MOUNTED);
 
         // Create the UI
