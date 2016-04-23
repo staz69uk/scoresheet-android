@@ -84,22 +84,25 @@ public class SavesFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         boolean result = super.onContextItemSelected(item);
+
         int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
-        String selectedItem = (String) savesList.getItemAtPosition(position);
-        if (item.getItemId() == R.id.fileMenuOpen) {
-            loadSavedData(selectedItem);
-        } else if (item.getItemId() == R.id.fileMenuDelete) {
-            askToDelete(selectedItem);
-        } else if (item.getItemId() == R.id.fileMenuRename) {
-            askToRename(selectedItem);
-        } else {
-            ((ScoresheetActivity) getActivity()).toast("Not yet implemented: " + item.getTitle() + " " + selectedItem);
-        }
+        handleContextMenu(item.getItemId(), position);
 
         return result;
     }
 
-    private void askToRename(String selectedItem) {
+    public void handleContextMenu(int selection, int position) {
+        String selectedItem = (String) savesList.getItemAtPosition(position);
+        if (selection == R.id.fileMenuOpen) {
+            loadSavedData(selectedItem);
+        } else if (selection == R.id.fileMenuDelete) {
+            askToDelete(selectedItem);
+        } else if (selection == R.id.fileMenuRename) {
+            askToRename(selectedItem);
+        }
+    }
+
+    public void askToRename(String selectedItem) {
         String baseName = selectedItem.replace(".json","");
         //ContextThemeWrapper wrapper = new ContextThemeWrapper(getActivity(), R.style.AppDialog);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

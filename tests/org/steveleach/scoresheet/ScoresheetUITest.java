@@ -358,11 +358,71 @@ public class ScoresheetUITest extends AbstractUITest {
         assertTrue( item1.startsWith("gamedata"));
         assertTrue( item1.endsWith("--2-00-00.json"));
 
-        fragment.askToDelete(item1);
+        fragment.handleContextMenu(fileMenuDelete, 1);
 
         verifyAlertDialogShowing("delete this saved game");
         clickDialogButton(DialogInterface.BUTTON_POSITIVE);
 
         assertEquals(1, fakeFileManager.fileCount());
+    }
+
+    @Test
+    public void testRenameFile() {
+        activity.getStore().save(model);
+
+        assertEquals(2, fakeFileManager.fileCount());
+
+        clickMenuItem(menuLoad);
+        assertEquals(SavesFragment.class, visibleFragmentClass());
+
+        SavesFragment fragment = (SavesFragment) activity.getVisibleFragment();
+
+        ListView savesList = (ListView) activity.findViewById(gameSavesList);
+
+        assertNotNull(savesList);
+        assertEquals(2,savesList.getAdapter().getCount());
+
+        String item1 = (String) savesList.getAdapter().getItem(1);
+        assertTrue( item1.startsWith("gamedata"));
+        assertTrue( item1.endsWith("--1-00-00.json"));
+
+        fragment.handleContextMenu(fileMenuRename, 1);
+
+        AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
+        assertNotNull(dialog);
+        assertTrue(dialog.isShowing());
+
+        EditText renameField = (EditText) dialog.findViewById(fldNewName);
+        assertNotNull(renameField);
+
+        renameField.setText("gamedata-testing");
+        clickDialogButton(DialogInterface.BUTTON_POSITIVE);
+
+        String item2 = (String) savesList.getAdapter().getItem(1);
+        assertEquals("gamedata-testing.json", item2);
+    }
+
+    @Test
+    public void testDeleteHistoryItem() {
+        model.addEvent(new PeriodEndEvent(1));
+        model.addEvent(new PeriodEndEvent(2));
+
+        HistoryFragment fragment = (HistoryFragment) activity.getVisibleFragment();
+
+        ListView list = (ListView)activity.findViewById(historyList2);
+        assertNotNull(list);
+
+        assertEquals(2, list.getAdapter().getCount());
+
+        fragment.handleListItemLongClick(list, 1, 0);
+
+        verifyAlertDialogShowing("delete this game event");
+        clickDialogButton(DialogInterface.BUTTON_POSITIVE);
+
+        assertEquals(1, list.getAdapter().getCount());
+
+        assertEquals(1, model.getEvents().size());
+
+        assertEquals(2, model.getEvents().get(0).getPeriod());
     }
 }

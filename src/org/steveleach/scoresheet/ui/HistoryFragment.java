@@ -56,20 +56,24 @@ public class HistoryFragment extends Fragment implements ModelAware {
         eventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                GameEvent event = (GameEvent) adapterView.getItemAtPosition(position);
-                String text = getString(R.string.deleteEventPrompt, event.toString());
-                ((ScoresheetActivity)getActivity()).yesNoDialog(text, new Runnable() {
-                    @Override
-                    public void run() {
-                        model.removeEvent((int)id);
-                        Toast.makeText(getActivity().getApplicationContext(), "Deleting '" + event.toString() + "'", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                return false;
+                return handleListItemLongClick(adapterView, position, (int) id);
             }
         });
 
         return view;
+    }
+
+    public boolean handleListItemLongClick(AdapterView<?> adapterView, int position, final int id) {
+        GameEvent event = (GameEvent) adapterView.getItemAtPosition(position);
+        String text = getString(R.string.deleteEventPrompt, event.toString());
+        ((ScoresheetActivity)getActivity()).yesNoDialog(text, new Runnable() {
+            @Override
+            public void run() {
+                model.removeEvent(id);
+                Toast.makeText(getActivity().getApplicationContext(), "Deleting '" + event.toString() + "'", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return false;
     }
 
     @Override
