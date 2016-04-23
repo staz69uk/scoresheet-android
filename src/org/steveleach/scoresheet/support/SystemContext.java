@@ -23,7 +23,7 @@ import java.io.File;
  */
 public interface SystemContext {
 
-    public boolean isExternalStorageAvailable();
+    boolean isExternalStorageAvailable();
 
-    public File getScoresheetFolder();
+    File getScoresheetFolder();
 }

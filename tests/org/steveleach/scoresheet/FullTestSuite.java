@@ -27,7 +27,8 @@ import org.steveleach.scoresheet.model.ScoresheetModel;
  * @author Steve Leach
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ScoresheetModelTest.class,ScoresheetSupportTest.class,ScoresheetUITest.class})
+@Suite.SuiteClasses({ScoresheetModelTest.class,ScoresheetSupportTest.class,
+        ScoresheetUITest.class, ScoresheetRealGameUITest.class})
 public class FullTestSuite extends FastTestSuite {
 
 }

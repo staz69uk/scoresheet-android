@@ -302,4 +302,26 @@ public class ScoresheetModelTest {
         HomeAway<String> values = new HomeAway<>("A","B");
         assertEquals("(A,B)", values.toString());
     }
+
+    @Test
+    public void testScoreAt() {
+        model.addEvent(new GoalEvent(1, "1500", "Home", "E", 1, 0, 0));
+        model.addEvent(new GoalEvent(1, "1000", "Away", "E", 1, 0, 0));
+        model.addEvent(new GoalEvent(1, "0500", "Home", "E", 1, 0, 0));
+        model.addEvent(new GoalEvent(2, "1500", "Home", "E", 1, 0, 0));
+        model.addEvent(new GoalEvent(2, "0500", "Away", "E", 1, 0, 0));
+        model.addEvent(new GoalEvent(3, "1000", "Home", "E", 1, 0, 0));
+
+        assertEquals(0, model.scoreAt("00:01").getHome().intValue());
+        assertEquals(0, model.scoreAt("00:01").getAway().intValue());
+
+        assertEquals(2, model.scoreAt("20:00").getHome().intValue());
+        assertEquals(1, model.scoreAt("20:00").getAway().intValue());
+
+        assertEquals(3, model.scoreAt("40:00").getHome().intValue());
+        assertEquals(2, model.scoreAt("40:00").getAway().intValue());
+
+        assertEquals(4, model.scoreAt("60:00").getHome().intValue());
+        assertEquals(2, model.scoreAt("60:00").getAway().intValue());
+    }
 }

@@ -53,26 +53,11 @@ import static org.steveleach.ihscoresheet.R.id.*;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 18)
-public class ScoresheetUITest {
-
-    ScoresheetActivity activity;
-    ScoresheetModel model;
-    FakeFileManager fakeFileManager;
+public class ScoresheetUITest extends AbstractUITest {
 
     @Before
     public void setup() {
-        ShadowEnvironment.setExternalStorageState(Environment.MEDIA_MOUNTED);
-
-        // Create the UI
-        activity = Robolectric.setupActivity(ScoresheetActivity.class);
-
-        assertNotNull(activity);
-
-        fakeFileManager =  new FakeFileManager();
-        activity.setFileManager(fakeFileManager);
-
-        // Get access to the underlying data model and validate its initial state
-        model = activity.getModel();
+        super.setup();
 
         assertEquals(0, model.getEvents().size());
         assertEquals(1, model.getPeriod());
@@ -133,29 +118,6 @@ public class ScoresheetUITest {
         clickMenuItem(menuRefresh);
     }
 
-    private void clickDialogButton(int buttonID) {
-        AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
-        Button button = dialog.getButton(buttonID);
-        assertNotNull(button);
-        button.performClick();
-        assertFalse(dialog.isShowing());
-    }
-
-    private void clickMenuItem(int optionId) {
-        activity.onOptionsItemSelected(new RoboMenuItem(optionId));
-    }
-
-    @NotNull
-    private AlertDialog verifyAlertDialogShowing(String expectedMessage) {
-        AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
-        assertNotNull(dialog);
-        assertTrue(dialog.isShowing());
-        ShadowAlertDialog shadow = Shadows.shadowOf(dialog);
-        assertNotNull(shadow.getMessage());
-        assertTrue("Dialog text: " + expectedMessage, shadow.getMessage().toString().contains(expectedMessage));
-        return dialog;
-    }
-
     private void selectLoadMenu() {
         clickMenuItem(menuLoad);
         assertTrue( "Saves fragment should be visible", activity.getVisibleFragment() instanceof SavesFragment);
@@ -211,18 +173,6 @@ public class ScoresheetUITest {
         setField(fldPenaltyCode,subtype);
 
         click(btnPenaltyDone);
-    }
-
-    private void click(int id) {
-        activity.findViewById(id).performClick();
-    }
-
-    private Class<?> visibleFragmentClass() {
-        return activity.getVisibleFragment().getClass();
-    }
-
-    private void setField(int fieldId, String fieldValue) {
-        ((EditText)activity.findViewById(fieldId)).setText(fieldValue);
     }
 
     private void clickAddGoal() {
@@ -318,134 +268,4 @@ public class ScoresheetUITest {
         assertEquals(1, model.getEvents().size());
     }
 
-    /**
-     * Test using the events of an actual English recreational ice hockey game.
-     */
-    @Test
-    public void testActualGame() throws FileNotFoundException {
-        // Start a new game
-        clickMenuItem(menuNewGame);
-        verifyAlertDialogShowing("clear all events");
-
-        clickDialogButton(DialogInterface.BUTTON_POSITIVE);
-
-        assertEquals(0, model.getHomeGoals());
-        assertEquals(0, model.getHomeGoals());
-
-        // 1st Period
-
-        addPenalty("1747", "TRIP", "2", "Away", "69");
-        addPenalty("1620", "SLASH", "2", "Away", "79");
-        addPenalty("1353", "TOO-M", "2", "Home", "24");
-        addGoal("1307", "SH", "Home", "13", "", "");
-        addGoal("1222", "PP", "Away", "89", "82", "86");
-        addPenalty("1104", "HOOK", "2", "Home", "27");
-        addGoal("0706", "E", "Home", "90", "93", "28");
-        addGoal("554", "E", "Away", "92", "86", "");
-        addGoal("138", "E", "Away", "66", "19", "");
-
-        assertEquals(2, model.getHomeGoals());
-        assertEquals(3, model.getAwayGoals());
-
-        clickNextPeriod();
-
-        // 2nd Period
-
-        addGoal("1915", "E", "Home", "93", "", "");
-        addPenalty("1711", "ROUGH", "2", "Home", "13");
-        addPenalty("1711", "ROUGH", "2", "Away", "33");
-        addGoal("1621", "SH", "Home", "93", "28", "");
-        addGoal("1425", "E", "Away", "79", "69", "");
-        addGoal("1210", "E", "Away", "79", "33", "");
-        addGoal("808", "E", "Away", "33", "", "");
-        addGoal("0758", "E", "Away", "33", "79", "");
-        addGoal("0703", "E", "Home", "24", "73", "23");
-        addGoal("0259", "E", "Away", "13", "16", "");
-        addGoal("0230", "E", "Home", "27", "21", "29");
-        addGoal("0058", "E", "Home", "73", "21", "28");
-        addGoal("0001", "E", "Home", "24", "93", "");
-
-        assertEquals(8, model.getHomeGoals());
-        assertEquals(8, model.getAwayGoals());
-
-        clickNextPeriod();
-
-        // 3rd Period
-
-        addGoal("1948", "E", "Away", "89", "82", "");
-        addGoal("1806", "E", "Away", "79", "33", "");
-        addPenalty("1504", "SLASH", "2", "Home", "28");
-        addGoal("1454", "PP", "Away", "56", "33", "");
-        addGoal("1056", "E", "Home", "23", "93", "24");
-        addPenalty("0892", "TRIP", "2", "Home", "27");
-        addPenalty("0341", "CROSS", "2", "Away", "82");
-        addPenalty("0135", "TRIP", "2", "Away", "66");
-
-        clickNextPeriod();
-
-        assertEquals(9, model.getHomeGoals());
-        assertEquals(11, model.getAwayGoals());
-
-        ListView history = (ListView) activity.findViewById(R.id.historyList2);
-        assertEquals(33, history.getAdapter().getCount());  // 20 goals, 10 penalties, 3 period-ends
-
-        // Save the game
-
-        clickMenuItem(R.id.menuSave);
-        verifyAlertDialogShowing("save the game data");
-
-        clickDialogButton(DialogInterface.BUTTON_POSITIVE);
-        String content = fakeFileManager.getContentOf("gamedata.json");
-        assertNotNull(content);
-        assertTrue(content.contains("TOO-M"));
-        assertTrue(content.contains("07:38"));
-        assertTrue(content.contains("45:06"));
-
-        // Validate game details
-
-        click(btnReport);
-        assertEquals(ReportFragment.class, visibleFragmentClass());
-
-        int[] homeGoals = model.goalTotals("Home");
-        assertEquals(2, homeGoals[0]);
-        assertEquals(6, homeGoals[1]);
-        assertEquals(1, homeGoals[2]);
-        assertEquals(0, homeGoals[3]);
-        assertEquals(9, homeGoals[4]);
-
-        int[] awayGoals = model.goalTotals("Away");
-        assertEquals(3, awayGoals[0]);
-        assertEquals(5, awayGoals[1]);
-        assertEquals(3, awayGoals[2]);
-        assertEquals(0, awayGoals[3]);
-        assertEquals(11, awayGoals[4]);
-
-        int[] homePens = model.penaltyTotals("Home");
-        assertEquals(4, homePens[0]);
-        assertEquals(2, homePens[1]);
-        assertEquals(4, homePens[2]);
-        assertEquals(0, homePens[3]);
-        assertEquals(10, homePens[4]);
-
-        int[] awayPens = model.penaltyTotals("Away");
-        assertEquals(4, awayPens[0]);
-        assertEquals(2, awayPens[1]);
-        assertEquals(4, awayPens[2]);
-        assertEquals(0, awayPens[3]);
-        assertEquals(10, awayPens[4]);
-
-        Map<Integer, ScoresheetModel.PlayerStats> homeStats = model.getPlayerStats("Home");
-        ScoresheetModel.PlayerStats home93stats = homeStats.get(93);
-        assertEquals(2, home93stats.goals);
-        assertEquals(3, home93stats.assists);
-        assertEquals(0, home93stats.penaltyMins);
-
-        GoalEvent goal2339 = model.goals("Home").get(3);
-        assertEquals("23:39", goal2339.getGameTime());
-        assertEquals("SH", goal2339.getSubType());
-        assertEquals("93", goal2339.getPlayer());
-        assertEquals(28, goal2339.getAssist1());
-        assertEquals(0, goal2339.getAssist2());
-
-    }
 }

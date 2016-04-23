@@ -83,7 +83,7 @@ public class PenaltyFragment extends Fragment implements ModelAware {
 
         imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        ((Button)view.findViewById(R.id.btnPenaltyDone)).setOnClickListener(
+        view.findViewById(R.id.btnPenaltyDone).setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -100,7 +100,7 @@ public class BeanTester {
     private Method findGetter(Class<?> beanClass, Method setter, Class<?> propertyType) {
         String getterName = findGetterName(setter, propertyType);
         try {
-            return beanClass.getMethod(getterName,new Class[] {});
+            return beanClass.getMethod(getterName);
         } catch (NoSuchMethodException e) {
             return null;
         }

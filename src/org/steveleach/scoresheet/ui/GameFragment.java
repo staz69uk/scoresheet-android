@@ -52,7 +52,7 @@ public class GameFragment extends Fragment implements ModelAware {
 
         imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        ((Button)view.findViewById(R.id.btnGameOK)).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btnGameOK).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveAndClose(v);
