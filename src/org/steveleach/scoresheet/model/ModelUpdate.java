@@ -31,6 +31,7 @@ public class ModelUpdate {
     public static final ModelUpdate EVENT_ADDED = new ModelUpdate("Event added");
     public static final ModelUpdate EVENT_REMOVED = new ModelUpdate("Event removed");
     public static final ModelUpdate EVENTS_CLEARED = new ModelUpdate("Events cleared");
+    public static final ModelUpdate GAME_CHANGED = new ModelUpdate("Game summary changed");
     public static final ModelUpdate ALL_CHANGED = new ModelUpdate("All changed");
 
     public String getSummary() {

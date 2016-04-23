@@ -63,12 +63,12 @@ public class GameFragment extends Fragment implements ModelAware {
     }
 
     private void saveAndClose(View view) {
-        model.getHomeTeam().setName(homeNameField.getText().toString());
-        model.getAwayTeam().setName(awayNameField.getText().toString());
+        model.setHomeTeamName(homeNameField.getText().toString());
+        model.setAwayTeamName(awayNameField.getText().toString());
         model.setGameLocation(locationField.getText().toString());
 
         model.setChanged(true);
-        model.notifyListeners(new ModelUpdate("Game data changed"));
+        model.notifyListeners(ModelUpdate.GAME_CHANGED);
 
         imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
 
