@@ -412,10 +412,9 @@ public class ScoresheetModel {
         int[] totals = {0,0,0,0,0};
         for (GoalEvent event : goals(team)) {
             int periodIndex = event.getPeriod()-1;
-            GoalEvent goal = (GoalEvent) event;
             int assists = 0;
-            assists += goal.getAssist1() > 0 ? 1 : 0;
-            assists += goal.getAssist2() > 0 ? 1 : 0;
+            assists += event.getAssist1() > 0 ? 1 : 0;
+            assists += event.getAssist2() > 0 ? 1 : 0;
             totals[periodIndex] += assists;
         }
         totals[4] = sum(totals);
@@ -436,6 +435,9 @@ public class ScoresheetModel {
         setTeamName(awayTeam, newName);
     }
 
+    /**
+     * Changes the team name for all events that currently match oldName.
+     */
     private void changeTeamNamesInEvents(String oldName, String newName) {
         for (GameEvent event : events) {
             if (event.getTeam().equals(oldName)) {
