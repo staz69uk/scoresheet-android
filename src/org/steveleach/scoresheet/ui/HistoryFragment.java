@@ -214,23 +214,21 @@ public class HistoryFragment extends Fragment implements ModelAware {
             } else if (event instanceof PenaltyEvent) {
                 PenaltyEvent penalty = (PenaltyEvent) event;
                 return activity.getString(R.string.historyListPenaltyDetail, penalty.getPlayer(), ""+penalty.getMinutes(), penalty.getSubType());
-            } else if (event instanceof PeriodEndEvent) {
-                return "";
             } else {
-                return event.toString();
+                return "";
             }
         }
 
         private String getSummary(GameEvent event) {
+            String summary = "?";
             if (event instanceof GoalEvent) {
-                return activity.getString(R.string.historyListGoal, event.getTeam());
+                summary = activity.getString(R.string.historyListGoal, event.getTeam());
             } else if (event instanceof PenaltyEvent) {
-                return activity.getString(R.string.historyListPenalty, event.getTeam());
+                summary = activity.getString(R.string.historyListPenalty, event.getTeam());
             } else if (event instanceof PeriodEndEvent) {
-                return activity.getString(R.string.historyListPeriod, ""+event.getPeriod());
-            } else {
-                return event.getEventType();
+                summary = activity.getString(R.string.historyListPeriod, ""+event.getPeriod());
             }
+            return summary;
         }
     }
 }

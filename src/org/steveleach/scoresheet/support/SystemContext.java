@@ -26,4 +26,6 @@ public interface SystemContext {
     boolean isExternalStorageAvailable();
 
     File getScoresheetFolder();
+
+    String applicationVersion();
 }

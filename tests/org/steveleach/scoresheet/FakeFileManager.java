@@ -77,4 +77,18 @@ public class FakeFileManager extends FileManager {
     public boolean exists(File file) {
         return files.containsKey(file.getAbsolutePath());
     }
+
+    @Override
+    public boolean delete(File file) {
+        files.remove(file.getAbsolutePath());
+        return true;
+    }
+
+    @Override
+    public boolean rename(File oldFile, File newFile) {
+        String content = files.get(oldFile.getAbsolutePath());
+        delete(oldFile);
+        files.put(newFile.getAbsolutePath(), content);
+        return true;
+    }
 }

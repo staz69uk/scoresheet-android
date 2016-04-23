@@ -17,14 +17,18 @@ package org.steveleach.scoresheet;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
+import org.robolectric.internal.Shadow;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.steveleach.scoresheet.model.GoalEvent;
 import org.steveleach.scoresheet.model.PenaltyEvent;
@@ -283,6 +287,16 @@ public class ScoresheetUITest extends AbstractUITest {
     }
 
     @Test
+    public void testChangeModel() {
+        ScoresheetModel model2 = new ScoresheetModel();
+        model2.setAwayTeamName("Blues");
+
+        activity.setModel(model2);
+
+        assertEquals("Blues", activity.getModel().awayTeamName());
+    }
+
+    @Test
     public void testSaveLoadState() {
         model.setHomeTeamName("Reds");
         model.addEvent(new PeriodEndEvent(1));
@@ -308,5 +322,47 @@ public class ScoresheetUITest extends AbstractUITest {
 
         assertEquals(1, model.getEvents().size());
         assertEquals("Reds", model.homeTeamName());
+    }
+
+    public View getItemViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
+    }
+
+    @Test
+    public void testDeleteFile() {
+        model.addEvent(new PeriodEndEvent(1));
+
+        activity.getStore().save(model);
+
+        assertEquals(2, fakeFileManager.fileCount());
+
+        clickMenuItem(menuLoad);
+        assertEquals(SavesFragment.class, visibleFragmentClass());
+
+        SavesFragment fragment = (SavesFragment) activity.getVisibleFragment();
+
+        ListView savesList = (ListView) activity.findViewById(gameSavesList);
+
+        assertNotNull(savesList);
+        assertEquals(2,savesList.getAdapter().getCount());
+
+        String item1 = (String) savesList.getAdapter().getItem(1);
+        assertTrue( item1.startsWith("gamedata"));
+        assertTrue( item1.endsWith("--2-00-00.json"));
+
+        fragment.askToDelete(item1);
+
+        verifyAlertDialogShowing("delete this saved game");
+        clickDialogButton(DialogInterface.BUTTON_POSITIVE);
+
+        assertEquals(1, fakeFileManager.fileCount());
     }
 }

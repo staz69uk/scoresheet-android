@@ -15,6 +15,8 @@
 package org.steveleach.scoresheet.ui;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 import org.steveleach.scoresheet.support.SystemContext;
 import org.steveleach.ihscoresheet.R;
@@ -49,5 +51,14 @@ public class AndroidSystemContext implements SystemContext {
             parent = new File(Environment.getExternalStorageDirectory(), "Documents");
         }
         return new File(parent, context.getString(R.string.scoresheetFolder));
+    }
+
+    @Override
+    public String applicationVersion() {
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "Unknown!";
+        }
     }
 }

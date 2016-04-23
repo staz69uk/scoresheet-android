@@ -243,7 +243,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
 
         TextView version = (TextView) messageView.findViewById(R.id.txtAppVersion);
-        String versionText = getApplicationContext().getString(R.string.appVersionText, getVersionName());
+        String versionText = getApplicationContext().getString(R.string.appVersionText, context.applicationVersion());
         version.setText(versionText);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -252,16 +252,6 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         builder.setView(messageView);
         builder.create();
         builder.show();
-    }
-
-    private String getVersionName() {
-        try {
-            Context context = getApplicationContext();
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            return pInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            return "Unknown!";
-        }
     }
 
     private void loadGame() {
@@ -293,11 +283,8 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         updateScores();
         model.sortEvents();
         ModelAware visibleFragment = (ModelAware) getVisibleFragment();
-        if (visibleFragment == null) {
-            // This should not happen
-            HistoryFragment fragment = new HistoryFragment();
-            fragment.setModel(model);
-            showFragment(fragment);
+        if (visibleFragment == null) { // This should not happen
+            showHistory();
         }
         model.notifyListeners(new ModelUpdate());
     }

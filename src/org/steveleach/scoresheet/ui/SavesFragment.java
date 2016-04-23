@@ -120,7 +120,7 @@ public class SavesFragment extends Fragment {
                 .show();
     }
 
-    private void askToDelete(String item) {
+    public void askToDelete(String item) {
         ScoresheetActivity activity = (ScoresheetActivity) getActivity();
         String text = getString(R.string.deleteGamePrompt,item);
         activity.yesNoDialog(text, new Runnable() {
