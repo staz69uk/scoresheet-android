@@ -1,0 +1,306 @@
+{
+    "@content": "Ice Hockey Scoresheet Data",
+    "@version": "1.00",
+    "@exported": "Sun Apr 17 01:02:10 BST 2016",
+    "homeTeamName": "Home",
+    "awayTeamName": "Away",
+    "events": [
+        {
+            "eventType": "Penalty",
+            "subType": "TRIP",
+            "period": 1,
+            "gameTime": "02:13",
+            "team": "Away",
+            "player": "69",
+            "minutes": 2
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "SLASH",
+            "period": 1,
+            "gameTime": "03:40",
+            "team": "Away",
+            "player": "79",
+            "minutes": 2
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "TOO-M",
+            "period": 1,
+            "gameTime": "06:07",
+            "team": "Home",
+            "player": "24",
+            "minutes": 2
+        },
+        {
+            "eventType": "Goal",
+            "subType": "SH",
+            "period": 1,
+            "gameTime": "06:53",
+            "team": "Home",
+            "player": "13",
+            "assist1": 0,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "PP",
+            "period": 1,
+            "gameTime": "07:38",
+            "team": "Away",
+            "player": "89",
+            "assist1": 82,
+            "assist2": 86
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "HOOK",
+            "period": 1,
+            "gameTime": "08:56",
+            "team": "Home",
+            "player": "27",
+            "minutes": 2
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 1,
+            "gameTime": "12:54",
+            "team": "Home",
+            "player": "90",
+            "assist1": 93,
+            "assist2": 28
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 1,
+            "gameTime": "14:06",
+            "team": "Away",
+            "player": "92",
+            "assist1": 86,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 1,
+            "gameTime": "18:32",
+            "team": "Away",
+            "player": "66",
+            "assist1": 19,
+            "assist2": 0
+        },
+        {
+            "eventType": "Period end",
+            "subType": "",
+            "period": 1,
+            "gameTime": "20:00",
+            "team": "",
+            "player": ""
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "20:45",
+            "team": "Home",
+            "player": "93",
+            "assist1": 0,
+            "assist2": 0
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "ROUGH",
+            "period": 2,
+            "gameTime": "22:49",
+            "team": "Home",
+            "player": "13",
+            "minutes": 2
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "ROUGH",
+            "period": 2,
+            "gameTime": "22:49",
+            "team": "Away",
+            "player": "33",
+            "minutes": 2
+        },
+        {
+            "eventType": "Goal",
+            "subType": "SH",
+            "period": 2,
+            "gameTime": "23:39",
+            "team": "Home",
+            "player": "93",
+            "assist1": 28,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "25:35",
+            "team": "Away",
+            "player": "79",
+            "assist1": 69,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "27:50",
+            "team": "Away",
+            "player": "79",
+            "assist1": 33,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "31:52",
+            "team": "Away",
+            "player": "33",
+            "assist1": 0,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "32:02",
+            "team": "Away",
+            "player": "33",
+            "assist1": 79,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "32:57",
+            "team": "Home",
+            "player": "24",
+            "assist1": 73,
+            "assist2": 23
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "37:01",
+            "team": "Away",
+            "player": "13",
+            "assist1": 16,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "37:30",
+            "team": "Home",
+            "player": "27",
+            "assist1": 21,
+            "assist2": 29
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "39:02",
+            "team": "Home",
+            "player": "73",
+            "assist1": 21,
+            "assist2": 28
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "39:59",
+            "team": "Home",
+            "player": "24",
+            "assist1": 93,
+            "assist2": 0
+        },
+        {
+            "eventType": "Period end",
+            "subType": "",
+            "period": 2,
+            "gameTime": "40:00",
+            "team": "",
+            "player": ""
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 3,
+            "gameTime": "40:12",
+            "team": "Away",
+            "player": "89",
+            "assist1": 82,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 3,
+            "gameTime": "41:54",
+            "team": "Away",
+            "player": "79",
+            "assist1": 33,
+            "assist2": 0
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "SLASH",
+            "period": 3,
+            "gameTime": "44:56",
+            "team": "Home",
+            "player": "28",
+            "minutes": 2
+        },
+        {
+            "eventType": "Goal",
+            "subType": "PP",
+            "period": 3,
+            "gameTime": "45:06",
+            "team": "Away",
+            "player": "56",
+            "assist1": 33,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 3,
+            "gameTime": "49:04",
+            "team": "Home",
+            "player": "23",
+            "assist1": 93,
+            "assist2": 24
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "TRIP",
+            "period": 3,
+            "gameTime": "50:28",
+            "team": "Home",
+            "player": "27",
+            "minutes": 2
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "CROSS",
+            "period": 3,
+            "gameTime": "56:19",
+            "team": "Away",
+            "player": "82",
+            "minutes": 2
+        }
+    ]
+}

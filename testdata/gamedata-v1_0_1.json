@@ -1,0 +1,248 @@
+{
+    "@content": "Ice Hockey Scoresheet Data",
+    "@version": "1.0.1",
+    "@exported": "Sun Apr 24 02:07:41 BST 2016",
+    "homeTeamName": "Smoke",
+    "awayTeamName": "Sabre",
+    "location": "Guildford Spectrum",
+    "gameDate": "2016-04-23",
+    "events": [
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 1,
+            "gameTime": "09:02",
+            "team": "Smoke",
+            "player": "93",
+            "assist1": 28,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 1,
+            "gameTime": "10:27",
+            "team": "Smoke",
+            "player": "21",
+            "assist1": 0,
+            "assist2": 0
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "BOARD",
+            "period": 1,
+            "gameTime": "12:10",
+            "team": "Sabre",
+            "player": "5",
+            "minutes": 2
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "TOO-M",
+            "period": 1,
+            "gameTime": "14:35",
+            "team": "Sabre",
+            "player": "0",
+            "minutes": 2
+        },
+        {
+            "eventType": "Goal",
+            "subType": "PP",
+            "period": 1,
+            "gameTime": "14:40",
+            "team": "Smoke",
+            "player": "74",
+            "assist1": 0,
+            "assist2": 0
+        },
+        {
+            "eventType": "Period end",
+            "subType": "",
+            "period": 1,
+            "gameTime": "20:00",
+            "team": "",
+            "player": ""
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "20:08",
+            "team": "Smoke",
+            "player": "90",
+            "assist1": 0,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "27:42",
+            "team": "Smoke",
+            "player": "7",
+            "assist1": 41,
+            "assist2": 74
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "28:34",
+            "team": "Sabre",
+            "player": "7",
+            "assist1": 93,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "29:24",
+            "team": "Smoke",
+            "player": "28",
+            "assist1": 27,
+            "assist2": 0
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "UN-SP",
+            "period": 2,
+            "gameTime": "36:49",
+            "team": "Smoke",
+            "player": "93",
+            "minutes": 2
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 2,
+            "gameTime": "36:49",
+            "team": "Sabre",
+            "player": "5",
+            "assist1": 21,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "SH",
+            "period": 2,
+            "gameTime": "38:35",
+            "team": "Smoke",
+            "player": "74",
+            "assist1": 13,
+            "assist2": 0
+        },
+        {
+            "eventType": "Period end",
+            "subType": "",
+            "period": 2,
+            "gameTime": "40:00",
+            "team": "",
+            "player": ""
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 3,
+            "gameTime": "42:21",
+            "team": "Smoke",
+            "player": "74",
+            "assist1": 0,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 3,
+            "gameTime": "44:31",
+            "team": "Sabre",
+            "player": "17",
+            "assist1": 9,
+            "assist2": 0
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "BDYCH",
+            "period": 3,
+            "gameTime": "45:54",
+            "team": "Sabre",
+            "player": "7",
+            "minutes": 2
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "UN-SP",
+            "period": 3,
+            "gameTime": "45:54",
+            "team": "Smoke",
+            "player": "27",
+            "minutes": 2
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 3,
+            "gameTime": "48:19",
+            "team": "Sabre",
+            "player": "77",
+            "assist1": 0,
+            "assist2": 0
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 3,
+            "gameTime": "48:56",
+            "team": "Sabre",
+            "player": "93",
+            "assist1": 0,
+            "assist2": 0
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "HOLD",
+            "period": 3,
+            "gameTime": "51:32",
+            "team": "Smoke",
+            "player": "13",
+            "minutes": 2
+        },
+        {
+            "eventType": "Goal",
+            "subType": "E",
+            "period": 3,
+            "gameTime": "56:01",
+            "team": "Sabre",
+            "player": "77",
+            "assist1": 63,
+            "assist2": 0
+        },
+        {
+            "eventType": "Penalty",
+            "subType": "HOOK",
+            "period": 3,
+            "gameTime": "59:28",
+            "team": "Smoke",
+            "player": "27",
+            "minutes": 2
+        },
+        {
+            "eventType": "Goal",
+            "subType": "PP",
+            "period": 3,
+            "gameTime": "59:47",
+            "team": "Sabre",
+            "player": "9",
+            "assist1": 93,
+            "assist2": 5
+        },
+        {
+            "eventType": "Period end",
+            "subType": "",
+            "period": 3,
+            "gameTime": "60:00",
+            "team": "",
+            "player": ""
+        }
+    ]
+}
