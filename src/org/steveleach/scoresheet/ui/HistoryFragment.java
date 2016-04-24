@@ -21,9 +21,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import org.steveleach.ihscoresheet.*;
 import org.steveleach.scoresheet.model.*;
@@ -37,43 +35,85 @@ import java.util.List;
  * @author Steve Leach
  */
 public class HistoryFragment extends Fragment implements ModelAware {
+    private ScoresheetActivity activity = null;
     private HistoryAdapter adapter = null;
     private ScoresheetModel model = new ScoresheetModel();
     private Button nextPeriodButton;
     private TextView title = null;
+    private ListView eventList = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.historyfragment, container, false);
 
-        ListView eventList = (ListView)view.findViewById(R.id.historyList2);
+        activity = (ScoresheetActivity) getActivity();
+        eventList = (ListView)view.findViewById(R.id.historyList2);
         adapter = new HistoryAdapter(getActivity());
         eventList.setAdapter(adapter);
 
         nextPeriodButton = (Button)view.findViewById(R.id.btnNextPeriod);
         title = (TextView)view.findViewById(R.id.txtHistoryTitle);
 
-        eventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                return handleListItemLongClick(adapterView, position, (int) id);
-            }
-        });
+        registerForContextMenu(eventList);
+
+//        eventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                return handleListItemLongClick(adapterView, position, (int) id);
+//            }
+//        });
 
         return view;
     }
 
-    public boolean handleListItemLongClick(AdapterView<?> adapterView, int position, final int id) {
-        GameEvent event = (GameEvent) adapterView.getItemAtPosition(position);
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.historycontextenu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        boolean result = super.onContextItemSelected(item);
+
+        int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
+        handleContextMenu(item.getItemId(), position);
+
+        return result;
+    }
+
+    public void handleContextMenu(int selection, int position) {
+        GameEvent selectedItem = (GameEvent) eventList.getItemAtPosition(position);
+        switch (selection) {
+            case R.id.historyMenuEdit:
+                editEvent(selectedItem);
+                break;
+            case R.id.historyMenuDelete:
+                askToDelete(selectedItem);
+                break;
+        }
+    }
+
+    private void editEvent(GameEvent event) {
+        if (event instanceof GoalEvent) {
+            GoalFragment fragment = new GoalFragment();
+            fragment.setModel(model);
+            fragment.setEventToEdit((GoalEvent)event);
+            fragment.setTeam(event.getTeam());
+            activity.showFragment(fragment);
+        }
+    }
+
+    public void askToDelete(GameEvent event) {
         String text = getString(R.string.deleteEventPrompt, event.toString());
         ((ScoresheetActivity)getActivity()).yesNoDialog(text, new Runnable() {
             @Override
             public void run() {
-                model.removeEvent(id);
+                model.removeEvent(event);
                 Toast.makeText(getActivity().getApplicationContext(), "Deleting '" + event.toString() + "'", Toast.LENGTH_SHORT).show();
             }
         });
-        return false;
     }
 
     @Override
@@ -190,18 +230,8 @@ public class HistoryFragment extends Fragment implements ModelAware {
             if (event instanceof PeriodEndEvent) {
                 return "";
             }
-            switch (event.getPeriod()) {
-                case 1:
-                    return "1st";
-                case 2:
-                    return "2nd";
-                case 3:
-                    return "3rd";
-                case 4:
-                    return "OT";
-                default:
-                    return "?";
-            }
+            String[] periods = getString(R.string.periodAbbrevs).split(",");
+            return periods[event.getPeriod()-1];
         }
 
         private String getDetail(GameEvent event) {

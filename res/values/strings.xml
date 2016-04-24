@@ -78,6 +78,9 @@
     <string name="reportScoresTableHeaders">PERIOD SCORES,1,2,3,OT,TOT</string>
     <string name="reportAllPensTableHeaders">PENALTY MINS,1,2,3,OT,TOT</string>
     <string name="reportAssistsTableHeaders">ASSISTS,1,2,3,OT,TOT</string>
+    <string name="periodAbbrevs">1st,2nd,3rd,OT</string>
+    <string name="historyMenuEditText">Edit event</string>
+    <string name="historyMenuDeleteText">Delete event</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

@@ -133,7 +133,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         showFragment(fragment);
     }
 
-    private void showFragment(Fragment fragment) {
+    public void showFragment(Fragment fragment) {
         FragmentTransaction tx = getFragmentManager().beginTransaction();
         tx.replace(R.id.fragmentContainer, fragment, MAIN_FRAGMENT);
         tx.addToBackStack(null);
