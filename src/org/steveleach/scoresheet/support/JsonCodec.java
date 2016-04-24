@@ -87,6 +87,10 @@ public class JsonCodec {
     public void fromJson(ScoresheetModel model, String json) throws JSONException {
         model.getEvents().clear();
 
+        if  ((json == null) || (json.length() == 0)) {
+            throw new JSONException("No content provided for JSON decoder");
+        }
+
         JSONObject root = new JSONObject(json);
 
         model.getHomeTeam().setName(root.optString("homeTeamName","Home"));
