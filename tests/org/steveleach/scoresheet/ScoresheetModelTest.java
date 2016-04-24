@@ -82,6 +82,16 @@ public class ScoresheetModelTest {
     }
 
     @Test
+    public void testReverseClockConversions() {
+        assertEquals("1500", model.clockTimeFromGameTime("05:00"));
+        assertEquals("1500", model.clockTimeFromGameTime("25:00"));
+        assertEquals("1500", model.clockTimeFromGameTime("45:00"));
+        assertEquals("0500", model.clockTimeFromGameTime("15:00"));
+        assertEquals("0336", model.clockTimeFromGameTime("16:24"));
+        assertEquals("0001", model.clockTimeFromGameTime("59:59"));
+    }
+
+    @Test
     public void testClockConversionOnAdd() {
         GoalEvent event = new GoalEvent();
         event.setPeriod(1);
@@ -89,6 +99,15 @@ public class ScoresheetModelTest {
         assertEquals(GameEvent.GAME_TIME_ERROR, event.getGameTime());
         model.addEvent(event);
         assertEquals("07:26", event.getGameTime());
+    }
+
+    @Test
+    public void testReverseClockConversionOnAdd() {
+        GoalEvent event = new GoalEvent();
+        event.setGameTime("16:24");
+        assertEquals("0000", event.getClockTime());
+        model.addEvent(event);
+        assertEquals("0336", event.getClockTime());
     }
 
     @Test
@@ -323,5 +342,43 @@ public class ScoresheetModelTest {
 
         assertEquals(4, model.scoreAt("60:00").getHome().intValue());
         assertEquals(2, model.scoreAt("60:00").getAway().intValue());
+    }
+
+    @Test
+    public void testHashCodeAndEquals() {
+        GoalEvent goal1 = new GoalEvent(1, "1526", "Home", "E", 41, 20, 30);
+        GoalEvent goal1a = new GoalEvent(1, "1526", "Home", "E", 41, 20, 30);
+        GoalEvent goal2 = new GoalEvent(2, "1526", "Away", "E", 41, 20, 30);
+        PeriodEndEvent periodEnd1 = new PeriodEndEvent(1);
+        PenaltyEvent penalty1 = new PenaltyEvent(2, "1234", "Away", "HOOK", 23, 2);
+
+        assertEquals(goal1, goal1);
+        assertEquals(goal1, goal1a);
+        assertNotEquals(goal1, goal2);
+        assertNotEquals(goal1, periodEnd1);
+        assertNotEquals(goal1, penalty1);
+
+        assertEquals(goal1.hashCode(), goal1a.hashCode());
+        assertNotEquals(goal1.hashCode(), goal2.hashCode());
+        assertNotEquals(goal1.hashCode(), penalty1.hashCode());
+    }
+
+    @Test
+    public void testRemoveEvent() {
+        GoalEvent event1 = new GoalEvent(1, "1526", "Home", "E", 41, 20, 30);
+        model.addEvent(event1);
+        model.addEvent(new GoalEvent(2, "1526", "Away", "E", 41, 20, 30));
+        model.removeEvent(event1);
+        assertEquals(1, model.getEvents().size());
+    }
+
+    @Test
+    public void testAssistTotals() {
+        model.addEvent(new GoalEvent(1, "1526", "Home", "E", 41, 20, 30));
+        model.addEvent(new GoalEvent(2, "1526", "Away", "E", 41, 20, 30));
+        model.addEvent(new GoalEvent(3, "0026", "Home", "E", 15, 20, 0));
+
+        int[] totals = model.assistTotals("Home");
+        assertEquals(3, totals[4]);
     }
 }

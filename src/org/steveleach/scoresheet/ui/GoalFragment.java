@@ -41,7 +41,16 @@ public class GoalFragment extends Fragment implements ModelAware {
     private View view = null;
     private EditText periodField = null;
     private EditText clockField = null;
+    private EditText scorerField = null;
+    private EditText assist1Field = null;
+    private EditText assist2Field = null;
     private InputMethodManager imgr = null;
+    private GoalEvent eventToEdit = null;
+    private AutoCompleteTextView goalTypeField = null;
+
+    public void setEventToEdit(GoalEvent event) {
+        this.eventToEdit = event;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,10 +60,10 @@ public class GoalFragment extends Fragment implements ModelAware {
 
         periodField = (EditText)view.findViewById(R.id.fldPeriod);
         clockField = (EditText)view.findViewById(R.id.fldClock);
-        EditText scorerField = (EditText)view.findViewById(R.id.fldScoredBy);
-        EditText assist1Field = (EditText)view.findViewById(R.id.fldAssist1);
-        EditText assist2Field = (EditText)view.findViewById(R.id.fldAssist2);
-        AutoCompleteTextView goalTypeField = (AutoCompleteTextView)view.findViewById(R.id.fldGoalType);
+        scorerField = (EditText)view.findViewById(R.id.fldScoredBy);
+        assist1Field = (EditText)view.findViewById(R.id.fldAssist1);
+        assist2Field = (EditText)view.findViewById(R.id.fldAssist2);
+        goalTypeField = (AutoCompleteTextView)view.findViewById(R.id.fldGoalType);
 
         //goalTypeField.setImeOptions(IME_ACTION_NEXT|TYPE_CLASS_TEXT|TYPE_TEXT_FLAG_CAP_CHARACTERS|TYPE_TEXT_VARIATION_SHORT_MESSAGE|TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
@@ -83,7 +92,8 @@ public class GoalFragment extends Fragment implements ModelAware {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GoalEvent event = new GoalEvent();
+                GoalEvent event = (eventToEdit == null) ? new GoalEvent() : eventToEdit;
+
                 event.setTeam(team);
                 event.setPeriod(Integer.parseInt(periodField.getText().toString()));
                 event.setClockTime(clockField.getText().toString());
@@ -93,7 +103,10 @@ public class GoalFragment extends Fragment implements ModelAware {
                 event.setSubType(goalTypeField.getText().toString());
 
                 model.setChanged(true);
-                model.addEvent(event);
+
+                if (eventToEdit == null) {
+                    model.addEvent(event);
+                }
 
                 imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
 
@@ -107,8 +120,17 @@ public class GoalFragment extends Fragment implements ModelAware {
     @Override
     public void onResume() {
         super.onResume();
+        if (eventToEdit != null) {
+            periodField.setText(Integer.toString(eventToEdit.getPeriod()));
+            clockField.setText(eventToEdit.getClockTime());
+            scorerField.setText(Integer.toString(eventToEdit.getPlayer()));
+            assist1Field.setText(eventToEdit.getAssist1() == 0 ? "" : Integer.toString(eventToEdit.getAssist1()));
+            assist2Field.setText(eventToEdit.getAssist2() == 0 ? "" : Integer.toString(eventToEdit.getAssist2()));
+            goalTypeField.setText(eventToEdit.getSubType());
+        } else {
+            periodField.setText(Integer.toString(model.getPeriod()));
+        }
         clockField.requestFocus();
-        periodField.setText(Integer.toString(model.getPeriod()));
         imgr.showSoftInput(clockField, InputMethodManager.SHOW_IMPLICIT);
     }
 

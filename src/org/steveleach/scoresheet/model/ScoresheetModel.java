@@ -101,7 +101,27 @@ public class ScoresheetModel {
         if (event.getGameTime().equals(GameEvent.GAME_TIME_ERROR)) {
             String gameTime = gameTimeFromClock(event.getPeriod(), event.getClockTime());
             event.setGameTime(gameTime);
+        } else if (event.getClockTime().equals("0000") && !event.getGameTime().equals(GameEvent.GAME_TIME_ERROR)) {
+            String clockTime = clockTimeFromGameTime(event.getGameTime());
+            event.setClockTime(clockTime);
         }
+    }
+
+    public String clockTimeFromGameTime(String gameTime) {
+        String[] parts = gameTime.split(":");
+        int mins = Integer.parseInt(parts[0]);
+        int secs = Integer.parseInt(parts[1]);
+        int periodMins = rules.getPeriodMinutes();
+        while (mins > periodMins) {
+            mins -= periodMins;
+        }
+        int elapsedSecs = mins*SECS_PER_MIN+secs;
+        int periodSecs = periodMins*SECS_PER_MIN;
+        int remainingSecs = periodSecs-elapsedSecs;
+        int remainingMins = remainingSecs / SECS_PER_MIN;
+        remainingSecs = remainingSecs % SECS_PER_MIN;
+
+        return String.format("%02d%02d",remainingMins,remainingSecs);
     }
 
     /**
@@ -324,6 +344,19 @@ public class ScoresheetModel {
             return GameEvent.GAME_TIME_ZERO;
         } else {
             return events.get(events.size()-1).getGameTime();
+        }
+    }
+
+    public void removeEvent(GameEvent eventToDelete) {
+        // Use an iterator so that removing the item is safe
+        Iterator<GameEvent> iterator = events.iterator();
+        while (iterator.hasNext()) {
+            GameEvent event = iterator.next();
+            if (event.equals(eventToDelete)) {
+                iterator.remove();
+                notifyListeners(ModelUpdate.EVENT_REMOVED);
+                break;
+            }
         }
     }
 

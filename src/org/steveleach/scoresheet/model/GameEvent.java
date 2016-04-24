@@ -127,4 +127,28 @@ public abstract class GameEvent {
         return this.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GameEvent gameEvent = (GameEvent) o;
+
+        if (player != gameEvent.player) return false;
+        if (team != null ? !team.equals(gameEvent.team) : gameEvent.team != null) return false;
+        if (gameTime != null ? !gameTime.equals(gameEvent.gameTime) : gameEvent.gameTime != null) return false;
+        if (eventType != null ? !eventType.equals(gameEvent.eventType) : gameEvent.eventType != null) return false;
+        return subType != null ? subType.equals(gameEvent.subType) : gameEvent.subType == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = player;
+        result = 31 * result + (team != null ? team.hashCode() : 0);
+        result = 31 * result + (gameTime != null ? gameTime.hashCode() : 0);
+        result = 31 * result + (eventType != null ? eventType.hashCode() : 0);
+        result = 31 * result + (subType != null ? subType.hashCode() : 0);
+        return result;
+    }
 }

@@ -15,7 +15,6 @@
     limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/fileMenuOpen" android:title="@string/fileMenuOpenText"/>
-    <item android:id="@+id/fileMenuDelete" android:title="@string/fileMenuDeleteText"/>
-    <item android:id="@+id/fileMenuRename" android:title="@string/fileMenuRenameText"/>
+    <item android:id="@+id/historyMenuEdit" android:title="@string/historyMenuEditText"/>
+    <item android:id="@+id/historyMenuDelete" android:title="@string/historyMenuDeleteText"/>
 </menu>
