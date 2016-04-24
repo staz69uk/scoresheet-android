@@ -147,13 +147,12 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     }
 
     public void reportButtonClicked(View view) {
-        showReport(ReportFragment.GAME_REPORT);
+        showGameReport();
     }
 
-    private void showReport(String title) {
+    private void showGameReport() {
         ReportFragment fragment = new ReportFragment();
         fragment.setModel(model);
-        fragment.setTitle(title);
         showFragment(fragment);
     }
 

@@ -69,6 +69,15 @@
     <string name="txtBenchPanaltyHint">Use 0 for a bench penalty</string>
     <string name="benchShortCode">BCH</string>
     <string name="reportTeamHeader">%s - TEAM</string>
+    <string name="reportGoalsHeader">SCORING - %s</string>
+    <string name="reportPenaltiesHeader">PENALTIES - %s</string>
+    <string name="reportFragmentTitle">Game Report</string>
+    <string name="reportGoalTableHeaders">TIME,TYPE,G,A,A</string>
+    <string name="reportPenaltyTableHeaders">NO,PIM,OFFENCE,GIVEN,START,END</string>
+    <string name="reportTeamTableHeaders">No,Name,G,A,PIM</string>
+    <string name="reportScoresTableHeaders">PERIOD SCORES,1,2,3,OT,TOT</string>
+    <string name="reportAllPensTableHeaders">PENALTY MINS,1,2,3,OT,TOT</string>
+    <string name="reportAssistsTableHeaders">ASSISTS,1,2,3,OT,TOT</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

@@ -30,10 +30,7 @@ import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.internal.Shadow;
 import org.robolectric.shadows.ShadowAlertDialog;
-import org.steveleach.scoresheet.model.GoalEvent;
-import org.steveleach.scoresheet.model.PenaltyEvent;
-import org.steveleach.scoresheet.model.PeriodEndEvent;
-import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.model.*;
 import org.steveleach.scoresheet.support.JsonCodec;
 import org.steveleach.scoresheet.ui.*;
 
@@ -127,10 +124,12 @@ public class ScoresheetUITest extends AbstractUITest {
         ViewGroup root = (ViewGroup) fragment.getView();
         assertNotNull(root);
         ViewGroup panel = (ViewGroup) root.findViewById(panelNew);
-        assertEquals(24, panel.getChildCount());
+        assertEquals(15, panel.getChildCount());
         assertTrue( panel.getChildAt(0) instanceof TextView);
         assertTrue( panel.getChildAt(1) instanceof TableLayout);
-        assertTrue( panel.getChildAt(2) instanceof Space);
+
+        fragment.onModelUpdated(ModelUpdate.ALL_CHANGED);
+        assertEquals(15, panel.getChildCount());
     }
 
     private void selectHelpMenu() {
