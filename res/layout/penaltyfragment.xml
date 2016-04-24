@@ -90,6 +90,12 @@
                           android:textAppearance="?android:attr/textAppearanceLarge"/>
                 <EditText android:layout_width="107dp" android:layout_height="wrap_content" android:inputType="number"
                           android:ems="10" android:id="@+id/fldPenaltyPlayer"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/txtBenchPanaltyHint"
+                        android:id="@+id/textView21" android:layout_marginLeft="16dp"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"

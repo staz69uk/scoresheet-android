@@ -24,7 +24,7 @@ public class PeriodEndEvent extends GameEvent {
     public PeriodEndEvent() {
         setTeam("");
         setEventType("Period end");
-        setPlayer("");
+        setPlayer(0);
     }
 
     public PeriodEndEvent(int period) {

@@ -351,7 +351,7 @@ public class ScoresheetModel {
         PlayerStatsMap stats = new PlayerStatsMap();
         for (GameEvent event : getEvents()) {
             if (event.getTeam().equals(team)) {
-                int playerId = Integer.parseInt(event.getPlayer());
+                int playerId = event.getPlayer();
                 if (event instanceof GoalEvent) {
                     GoalEvent goal = (GoalEvent)event;
                     stats.getStats(playerId).goals += 1;

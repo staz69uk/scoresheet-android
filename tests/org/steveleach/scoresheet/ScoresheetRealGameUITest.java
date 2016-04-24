@@ -218,7 +218,7 @@ public class ScoresheetRealGameUITest extends AbstractUITest {
         GoalEvent goal2339 = model.goals("Home").get(3);
         assertEquals("23:39", goal2339.getGameTime());
         assertEquals("SH", goal2339.getSubType());
-        assertEquals("93", goal2339.getPlayer());
+        assertEquals(93, goal2339.getPlayer());
         assertEquals(28, goal2339.getAssist1());
         assertEquals(0, goal2339.getAssist2());
 

@@ -26,18 +26,18 @@ public abstract class GameEvent {
     public static final String GAME_TIME_ERROR = "99:99";
     public static final String GAME_TIME_ZERO = "00:00";
     protected int period = 0;
-    protected String player = "0";
+    protected int player = 0;
     protected String team = "Home";
     protected String gameTime = GAME_TIME_ERROR;
     protected String clockTime = "0000";
     protected String eventType = "Goal";
     protected String subType = "";
 
-    public String getPlayer() {
+    public int getPlayer() {
         return player;
     }
 
-    public void setPlayer(String player) {
+    public void setPlayer(int player) {
         this.player = player;
     }
 

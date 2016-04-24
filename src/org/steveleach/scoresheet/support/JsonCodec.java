@@ -44,7 +44,7 @@ public class JsonCodec {
     public String toJson(ScoresheetModel model) throws JSONException {
         JSONObject root = new JSONObject();
         root.put("@content", "Ice Hockey Scoresheet Data");
-        root.put("@version", "1.0.1");
+        root.put("@version", "1.1.0");
         root.put("@exported", new Date());
         root.put("homeTeamName", model.getHomeTeam().getName());
         root.put("awayTeamName", model.getAwayTeam().getName());
@@ -123,7 +123,13 @@ public class JsonCodec {
             event.setPeriod(jsonEvent.getInt("period"));
             event.setGameTime(jsonEvent.getString("gameTime"));
             event.setTeam(jsonEvent.getString("team"));
-            event.setPlayer(jsonEvent.getString("player"));
+
+            Object playerObj = jsonEvent.get("player");
+            if (playerObj instanceof Integer) {
+                event.setPlayer((Integer)playerObj);
+            } else {
+                event.setPlayer(Integer.parseInt("0"+playerObj.toString()));
+            }
 
             model.addEvent(event);
         }

@@ -185,7 +185,7 @@ public class ScoresheetModelTest {
         event.setPeriod(2);
         event.setClockTime("1500");
         event.setMinutes(10);
-        event.setPlayer("21");
+        event.setPlayer(21);
         event.setSubType("FIGHT");
         model.addEvent(event);
         assertEquals("25:00 - Home Penalty 10m (FIGHT) for 21 (35:00)", event.toString());
@@ -264,7 +264,7 @@ public class ScoresheetModelTest {
         model.clearEvents();
         assertEquals(5, model.penaltyTotals(model.getHomeTeam().getName()).length);
         assertEquals(0, model.penaltyTotals(model.getHomeTeam().getName())[4]);
-        model.addEvent(new PenaltyEvent(1,"1234",model.getHomeTeam().getName(),"HOOK","41",2));
+        model.addEvent(new PenaltyEvent(1,"1234",model.getHomeTeam().getName(),"HOOK",41,2));
         assertEquals(5, model.penaltyTotals(model.getHomeTeam().getName()).length);
         assertEquals(2, model.penaltyTotals(model.getHomeTeam().getName())[4]);
     }

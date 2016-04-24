@@ -87,7 +87,7 @@ public class GoalFragment extends Fragment implements ModelAware {
                 event.setTeam(team);
                 event.setPeriod(Integer.parseInt(periodField.getText().toString()));
                 event.setClockTime(clockField.getText().toString());
-                event.setPlayer(scorerField.getText().toString());
+                event.setPlayer(Integer.parseInt("0"+scorerField.getText().toString()));
                 event.setAssist1(Integer.parseInt("0"+assist1Field.getText().toString()));
                 event.setAssist2(Integer.parseInt("0"+assist2Field.getText().toString()));
                 event.setSubType(goalTypeField.getText().toString());

@@ -35,7 +35,7 @@ public class GoalEvent extends GameEvent {
         setClockTime(time);
         setTeam(team);
         setSubType(goalType);
-        setPlayer(""+scorer);
+        setPlayer(scorer);
         setAssist1(assist1);
         setAssist2(assist2);
     }

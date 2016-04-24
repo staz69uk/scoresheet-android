@@ -150,7 +150,7 @@ public class ScoresheetUITest extends AbstractUITest {
         PenaltyEvent penalty = (PenaltyEvent) model.getEvents().get(2);
         assertEquals(2, penalty.getPeriod());
         assertEquals("35:30", penalty.getGameTime());
-        assertEquals("25", penalty.getPlayer());
+        assertEquals(25, penalty.getPlayer());
         assertEquals(model.getAwayTeam().getName(), penalty.getTeam());
     }
 
@@ -182,7 +182,7 @@ public class ScoresheetUITest extends AbstractUITest {
         GoalEvent event = (GoalEvent) model.getEvents().get(1);
         assertEquals(2, event.getPeriod());
         assertEquals("27:26", event.getGameTime());
-        assertEquals("41", event.getPlayer());
+        assertEquals(41, event.getPlayer());
         assertEquals(model.getHomeTeam().getName(), event.getTeam());
         assertEquals(1, model.getHomeGoals());
         assertEquals(0, model.getAwayGoals());
