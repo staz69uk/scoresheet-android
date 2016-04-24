@@ -158,12 +158,18 @@ public class ReportFragment extends Fragment implements ModelAware {
         addSectionHeader(team.toUpperCase() + " - TEAM");
 
         TableLayout table = new TableLayout(getActivity());
+        addTeamRows(table, team, model);
+        panel.addView(table);
+        addSpace();
+    }
+
+    private void addTeamRows(TableLayout table, String team, ScoresheetModel model) {
         int index = 0;
 
         int[] widths = new int[] {10,15,10,10,10};  // Column widths in %
         String[] headers = new String[] {"No","Name","G","A","PIM"};
         addRow(table,headers,widths,index++);
-        
+
         for (ScoresheetModel.PlayerStats player : model.getPlayerStats(team).values()) {
             String[] values = new String[] {
                     activity.playerNum(player.playerNum),
@@ -174,8 +180,6 @@ public class ReportFragment extends Fragment implements ModelAware {
             };
             addRow(table,values,widths,index++);
         }
-        panel.addView(table);
-        addSpace();
     }
 
     private void addGoalTotals(ScoresheetModel model) {
@@ -252,16 +256,24 @@ public class ReportFragment extends Fragment implements ModelAware {
 
     private void refreshReport() {
         if (panel != null) {
-            addPlayerStats(model.getHomeTeam().getName(),model);
+            addPlayerStats2(model.getHomeTeam().getName(),model,R.id.reportHomeTeamHeader,R.id.tableHomeTeamStats);
             addGoals(model.getHomeTeam().getName(), model);
             addPenalties(model.getHomeTeam().getName(), model);
-            addPlayerStats(model.getAwayTeam().getName(),model);
+            addPlayerStats2(model.getAwayTeam().getName(),model,R.id.reportAwayTeamHeader,R.id.tableAwayTeamStats);
             addGoals(model.getAwayTeam().getName(), model);
             addPenalties(model.getAwayTeam().getName(), model);
             addGoalTotals(model);
             addPenaltyTotals(model);
             addAssistTotals(model);
         }
+    }
+
+    private void addPlayerStats2(String teamName, ScoresheetModel model, int headerId, int tableId) {
+        TextView header = (TextView) view.findViewById(headerId);
+        header.setText(getString(R.string.reportTeamHeader,teamName.toUpperCase()));
+
+        TableLayout table = (TableLayout) view.findViewById(tableId);
+        addTeamRows(table, teamName, model);
     }
 
     public void setTitle(String title) {

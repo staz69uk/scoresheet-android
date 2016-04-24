@@ -33,6 +33,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:id="@+id/panelNew"
                 android:padding="4dp" android:background="#ffffff">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reportTeamHeader"
+                    android:id="@+id/reportHomeTeamHeader" android:layout_gravity="left|center_horizontal"
+                    style="@style/gameReportTextStyle" android:textStyle="bold"/>
+            <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                    android:id="@+id/tableHomeTeamStats">
+            </TableLayout>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SCORING - HOME"
+                    android:id="@+id/reportScoringHomeHeader" style="@style/gameReportTextStyle" android:textStyle="bold"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reportPenaltiesHomeHeader" style="@style/gameReportTextStyle" android:textStyle="bold"
+                    android:text="PENALTIES - HOME"/>
+            <TextView style="@style/gameReportTextStyle" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" android:text="@string/reportTeamHeader"
+                      android:id="@+id/reportAwayTeamHeader" android:layout_gravity="left|center_horizontal"
+                      android:textStyle="bold"/>
+            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                         android:layout_gravity="center_horizontal" android:id="@+id/tableAwayTeamStats"/>
+            <TextView style="@style/gameReportTextStyle" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" android:text="SCORING - AWAY" android:id="@+id/textView24"
+                      android:textStyle="bold"/>
+            <TextView style="@style/gameReportTextStyle" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" android:text="PENALTIES - AWAY" android:id="@+id/textView25"
+                      android:textStyle="bold"/>
+            <TextView style="@style/gameReportTextStyle" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" android:text="PENALTIES - AWAY" android:id="@+id/textView27"
+                      android:textStyle="bold"/>
+            <TextView style="@style/gameReportTextStyle" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" android:text="PENALTIES - AWAY" android:id="@+id/textView28"
+                      android:textStyle="bold"/>
+            <TextView style="@style/gameReportTextStyle" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" android:text="PENALTIES - AWAY" android:id="@+id/textView26"
+                      android:textStyle="bold"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
