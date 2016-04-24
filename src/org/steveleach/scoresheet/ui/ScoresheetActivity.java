@@ -334,4 +334,16 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     public ScoresheetStore getStore() {
         return scoresheetStore;
     }
+
+    public String playerNum(int playerNum) {
+        if (playerNum == 0) {
+            return getString(R.string.benchShortCode);
+        } else {
+            return Integer.toString(playerNum);
+        }
+    }
+
+    public String playerNum(GameEvent event) {
+        return playerNum(event.getPlayer());
+    }
 }

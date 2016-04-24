@@ -112,12 +112,12 @@ public class HistoryFragment extends Fragment implements ModelAware {
     }
 
     class HistoryAdapter extends BaseAdapter {
-        private final Activity activity;
+        private final ScoresheetActivity activity;
         private final LayoutInflater inflater;
         private List<GameEvent> events = new LinkedList<>();
 
         public HistoryAdapter(Activity activity) {
-            this.activity = activity;
+            this.activity = (ScoresheetActivity) activity;
             this.inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -217,7 +217,8 @@ public class HistoryFragment extends Fragment implements ModelAware {
                 }
             } else if (event instanceof PenaltyEvent) {
                 PenaltyEvent penalty = (PenaltyEvent) event;
-                return activity.getString(R.string.historyListPenaltyDetail, penalty.getPlayer(), ""+penalty.getMinutes(), penalty.getSubType());
+                String player = activity.playerNum(penalty);
+                return activity.getString(R.string.historyListPenaltyDetail, player, ""+penalty.getMinutes(), penalty.getSubType());
             } else {
                 return "";
             }

@@ -34,6 +34,7 @@ public class ReportFragment extends Fragment implements ModelAware {
     private View view;
     private String title = "Report";
     private LinearLayout panel;
+    private ScoresheetActivity activity = null;
     public static final String GAME_REPORT = "Game Report";
 
     @Override
@@ -44,6 +45,8 @@ public class ReportFragment extends Fragment implements ModelAware {
 
         TextView title = (TextView)view.findViewById(R.id.reportTitle);
         title.setText(this.title);
+
+        activity = (ScoresheetActivity) getActivity();
 
         return view;
     }
@@ -94,7 +97,7 @@ public class ReportFragment extends Fragment implements ModelAware {
             String values[] = new String[] {
                 goal.getGameTime(),
                 goal.getSubType(),
-                playerNum(goal),
+                activity.playerNum(goal),
                 goal.getAssist1() == 0 ? "" : Integer.toString(goal.getAssist1()),
                 goal.getAssist2() == 0 ? "" : Integer.toString(goal.getAssist2())
             };
@@ -126,19 +129,6 @@ public class ReportFragment extends Fragment implements ModelAware {
         panel.addView(space);
     }
 
-    private String playerNum(int playerNum) {
-        if (playerNum == 0) {
-            return "BCH";
-        } else {
-            return Integer.toString(playerNum);
-        }
-    }
-
-
-    private String playerNum(GameEvent event) {
-        return playerNum(event.getPlayer());
-    }
-
     private void addPenalties(String team, ScoresheetModel model) {
         addSectionHeader("PENALTIES - " + team.toUpperCase());
 
@@ -151,7 +141,7 @@ public class ReportFragment extends Fragment implements ModelAware {
         int index = 1;
         for (PenaltyEvent penalty : model.penalties(team)) {
             String values[] = new String[] {
-                    playerNum(penalty),
+                    activity.playerNum(penalty),
                     Integer.toString(penalty.getMinutes()),
                     penalty.getSubType(),
                     penalty.getGameTime(),
@@ -176,7 +166,7 @@ public class ReportFragment extends Fragment implements ModelAware {
         
         for (ScoresheetModel.PlayerStats player : model.getPlayerStats(team).values()) {
             String[] values = new String[] {
-                    playerNum(player.playerNum),
+                    activity.playerNum(player.playerNum),
                     "--",
                     Integer.toString(player.goals),
                     Integer.toString(player.assists),

@@ -67,6 +67,7 @@
     <string name="awayTeamLabel">Away team:</string>
     <string name="venueLabel">Venue:</string>
     <string name="txtBenchPanaltyHint">Use 0 for a bench penalty</string>
+    <string name="benchShortCode">BCH</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>
