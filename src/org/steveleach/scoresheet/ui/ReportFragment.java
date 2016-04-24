@@ -62,7 +62,6 @@ public class ReportFragment extends Fragment implements ModelAware {
             textView.setText(value);
             textView.setTextAppearance(activity,R.style.gameReportTextStyle);
             textView.setWidth(totalWidth * widths[colIndex] / 100);
-            textView.setHeight(28);
             textView.setGravity(alignment[colIndex]);
             if (rowIndex == 0) {
                 textView.setTypeface(null, Typeface.BOLD);
