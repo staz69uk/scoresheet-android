@@ -373,6 +373,14 @@ public class ScoresheetModelTest {
     }
 
     @Test
+    public void removeMissingEvent() {
+        GoalEvent event1 = new GoalEvent(1, "1526", "Home", "E", 41, 20, 30);
+        model.addEvent(new GoalEvent(2, "1526", "Away", "E", 41, 20, 30));
+        model.removeEvent(event1);
+        assertEquals(1, model.getEvents().size());
+    }
+
+    @Test
     public void testAssistTotals() {
         model.addEvent(new GoalEvent(1, "1526", "Home", "E", 41, 20, 30));
         model.addEvent(new GoalEvent(2, "1526", "Away", "E", 41, 20, 30));
