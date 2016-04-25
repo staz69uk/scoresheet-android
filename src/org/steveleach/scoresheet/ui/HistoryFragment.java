@@ -102,12 +102,6 @@ public class HistoryFragment extends Fragment implements ModelAware {
             fragment.setEventToEdit((GoalEvent)event);
             fragment.setTeam(event.getTeam());
             activity.showFragment(fragment);
-        } else if (event instanceof PenaltyEvent) {
-            PenaltyFragment fragment = new PenaltyFragment();
-            fragment.setModel(model);
-            fragment.setEventToEdit((PenaltyEvent)event);
-            fragment.setTeam(event.getTeam());
-            activity.showFragment(fragment);
         }
     }
 
