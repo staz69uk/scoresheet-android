@@ -396,7 +396,7 @@ public class ScoresheetModel {
                     }
                 } else if (event instanceof PenaltyEvent) {
                     PenaltyEvent penaltyEvent = (PenaltyEvent)event;
-                    stats.getStats(playerId).penaltyMins += penaltyEvent.getMinutes();
+                    stats.getStats(playerId).penaltyMins += penaltyEvent.getMinutes() + penaltyEvent.getPlusMins();
                 }
             }
         }
@@ -407,7 +407,7 @@ public class ScoresheetModel {
         int[] totals = {0,0,0,0,0};
         for (PenaltyEvent penalty: penalties(team)) {
             int periodIndex = penalty.getPeriod()-1;
-            totals[periodIndex] += penalty.getMinutes();
+            totals[periodIndex] += penalty.getMinutes() + penalty.getPlusMins();
         }
         totals[4] = sum(totals);
         return totals;

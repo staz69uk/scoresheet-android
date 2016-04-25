@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Verify that the latest code can load various old game files.
@@ -63,6 +64,14 @@ public class LoadOldGameFileTest {
         assertEquals(8, model.getHomeGoals());
         assertEquals(7, model.getAwayGoals());
         assertEquals(93, model.getEvents().get(0).getPlayer());
+    }
+
+    @Test
+    public void testLoadAll() throws IOException {
+        for (String fileName : testDataDir.list()) {
+            ScoresheetModel model = loadModel(fileName);
+            assertTrue(model.getEvents().size() > 0);
+        }
     }
 
     private ScoresheetModel loadModel(String fileName) throws IOException {

@@ -31,6 +31,7 @@ import java.util.Date;
 public class JsonCodec {
 
     private static final SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static final String FORMAT_VERSION = "1.1.1";
 
     /**
      * Returns a JSON String representation of the specified scoresheet model.
@@ -44,7 +45,7 @@ public class JsonCodec {
     public String toJson(ScoresheetModel model) throws JSONException {
         JSONObject root = new JSONObject();
         root.put("@content", "Ice Hockey Scoresheet Data");
-        root.put("@version", "1.1.0");
+        root.put("@version", FORMAT_VERSION);
         root.put("@exported", new Date());
         root.put("homeTeamName", model.getHomeTeam().getName());
         root.put("awayTeamName", model.getAwayTeam().getName());
@@ -67,6 +68,7 @@ public class JsonCodec {
             } else if (event instanceof PenaltyEvent) {
                 PenaltyEvent penalty = (PenaltyEvent) event;
                 jsonEvent.put("minutes", penalty.getMinutes());
+                jsonEvent.put("plusMins", penalty.getPlusMins());
             }
             jsonEvents.put(jsonEvent);
         }
@@ -119,6 +121,7 @@ public class JsonCodec {
             } else if (eventType.equals("Penalty")) {
                 PenaltyEvent penalty = new PenaltyEvent();
                 penalty.setMinutes(jsonEvent.optInt("minutes",2));
+                penalty.setPlusMins(jsonEvent.optInt("plusMins",0));
                 event = penalty;
             } else if (eventType.equals("Period end")) {
                 event = new PeriodEndEvent();

@@ -21,6 +21,7 @@ package org.steveleach.scoresheet.model;
  */
 public class PenaltyEvent extends GameEvent {
     private int minutes = 2;
+    private int plusMins = 0;
 
     public PenaltyEvent() {
         super();
@@ -35,14 +36,22 @@ public class PenaltyEvent extends GameEvent {
         super.team = team;
         super.player = player;
         this.minutes = minutes;
+    }
 
-}
     public int getMinutes() {
         return minutes;
     }
 
     public void setMinutes(int minutes) {
         this.minutes = minutes;
+    }
+
+    public int getPlusMins() {
+        return plusMins;
+    }
+
+    public void setPlusMins(int plusMins) {
+        this.plusMins = plusMins;
     }
 
     @Override

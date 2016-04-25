@@ -81,6 +81,7 @@
     <string name="periodAbbrevs">1st,2nd,3rd,OT</string>
     <string name="historyMenuEditText">Edit event</string>
     <string name="historyMenuDeleteText">Delete event</string>
+    <string name="textPenPlusMinsPrompt">plus</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

@@ -33,6 +33,7 @@ import org.steveleach.scoresheet.support.FileManager;
 import org.steveleach.scoresheet.support.JsonCodec;
 import org.steveleach.scoresheet.model.*;
 import org.steveleach.scoresheet.support.WeakSet;
+import org.steveleach.scoresheet.ui.ScoresheetActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -211,5 +212,32 @@ public class ScoresheetSupportTest {
         store.renameFile(oldFile.getName(), newFile.getName());
 
         assertEquals("Content", ffm.getContentOf("gamedata-2.json"));
+    }
+
+    /**
+     * Write a model to a file named after the current JSON model format.
+     *
+     * This will be used to test the ability to load it again with a later version of the code. Not actually a test
+     * really, more preparation for future tests.
+     */
+    @Test
+    public void writeModelToFile() throws IOException {
+        FileManager fm = new FileManager();
+        File testDataDir = new File("testdata");
+
+        ScoresheetModel model = new ScoresheetModel();
+        model.setHomeTeamName("Blues");
+        model.setAwayTeamName("Reds");
+        model.setGameLocation("Somewhere over the rainbow");
+        FastTestSuite.addTestEvents(model);
+
+        String json = new JsonCodec().toJson(model);
+        String versionStr = JsonCodec.FORMAT_VERSION.replace('.','_');
+
+        File targetFile = new File(testDataDir,"gamedata-v"+versionStr+".json");
+
+        if (!targetFile.exists()) {
+            fm.writeTextFile(targetFile, json);
+        }
     }
 }

@@ -63,10 +63,20 @@
                           android:text="Minutes:"
                           android:id="@+id/textView12" android:textColor="@color/appdark"
                           android:textAppearance="?android:attr/textAppearanceLarge"/>
-                <EditText android:layout_width="105dp" android:layout_height="wrap_content" android:inputType="number"
+                <EditText android:layout_width="100dp" android:layout_height="wrap_content" android:inputType="number"
                           android:ems="10" android:id="@+id/fldPenaltyMins"
                           android:textIsSelectable="false" android:selectAllOnFocus="true"
                           android:focusable="true" android:numeric="integer" android:text="2"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/textPenPlusMinsPrompt"
+                        android:id="@+id/textView22"/>
+                <EditText android:layout_width="100dp" android:layout_height="wrap_content" android:inputType="number"
+                          android:ems="10" android:id="@+id/fldPenaltyPlusMins" android:textIsSelectable="false"
+                          android:selectAllOnFocus="true" android:focusable="true" android:numeric="integer"
+                />
             </LinearLayout>
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp"
             >

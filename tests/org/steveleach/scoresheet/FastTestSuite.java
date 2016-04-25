@@ -34,13 +34,13 @@ public class FastTestSuite {
      * Adds a set of test events to a ScoresheetModel.
      */
     public static void addTestEvents(ScoresheetModel model) {
-        model.addEvent(new GoalEvent(model.getPeriod(),"1950","Home","E",41,13,2));
-        model.addEvent(new GoalEvent(model.getPeriod(),"1830","Away","E",2,1,0));
-        model.addEvent(new PenaltyEvent(model.getPeriod(), "1515", "Away", "Hook", 2, 2));
-        model.addEvent(new GoalEvent(model.getPeriod(),"0824","Home","SH",12,93,41));
+        model.addEvent(new GoalEvent(model.getPeriod(),"1950",model.homeTeamName(),"E",41,13,2));
+        model.addEvent(new GoalEvent(model.getPeriod(),"1830",model.awayTeamName(),"E",2,1,0));
+        model.addEvent(new PenaltyEvent(model.getPeriod(), "1515", model.awayTeamName(), "Hook", 2, 2));
+        model.addEvent(new GoalEvent(model.getPeriod(),"0824",model.homeTeamName(),"SH",12,93,41));
         model.addEvent(new PeriodEndEvent(model.getPeriod()));
-        model.addEvent(new GoalEvent(model.getPeriod(),"1813","Home","PP",24,41,0));
-        model.addEvent(new PenaltyEvent(model.getPeriod(), "1213", "Home", "Fight", 2, 5));
+        model.addEvent(new GoalEvent(model.getPeriod(),"1813",model.homeTeamName(),"PP",24,41,0));
+        model.addEvent(new PenaltyEvent(model.getPeriod(), "1213", model.homeTeamName(), "Fight", 2, 5));
     }
 
 }

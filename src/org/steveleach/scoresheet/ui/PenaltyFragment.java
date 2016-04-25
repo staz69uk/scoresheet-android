@@ -45,6 +45,7 @@ public class PenaltyFragment extends Fragment implements ModelAware {
     private InputMethodManager imgr;
     private EditText minutesField;
     private PenaltyEvent eventToEdit = null;
+    private EditText plusMinsField;
 
     public void setTeam(String homeAway) {
         this.team = homeAway;
@@ -64,11 +65,13 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         penaltyField = (AutoCompleteTextView)view.findViewById(R.id.fldPenaltyCode);
         playerField = (EditText)view.findViewById(R.id.fldPenaltyPlayer);
         minutesField = (EditText)view.findViewById(R.id.fldPenaltyMins);
+        plusMinsField = (EditText)view.findViewById(R.id.fldPenaltyPlusMins);
 
         clockField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(4) });
         periodField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(1) });
         penaltyField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(5) });
         minutesField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(2) });
+        plusMinsField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(2) });
         playerField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
 
         clockField.setOnFocusChangeListener(new ClockFieldFocusListener(periodField,model));
@@ -105,6 +108,9 @@ public class PenaltyFragment extends Fragment implements ModelAware {
                 playerField.setText(Integer.toString(eventToEdit.getPlayer()));
                 penaltyField.setText(eventToEdit.getSubType());
                 minutesField.setText(Integer.toString(eventToEdit.getMinutes()));
+                if (eventToEdit.getPlusMins() > 0) {
+                    plusMinsField.setText(Integer.toString(eventToEdit.getPlusMins()));
+                }
             } else {
                 periodField.setText(Integer.toString(model.getPeriod()));
             }
@@ -121,7 +127,8 @@ public class PenaltyFragment extends Fragment implements ModelAware {
             event.setTeam(team);
             event.setPlayer(Integer.parseInt("0"+playerField.getText().toString()));
             event.setSubType(penaltyField.getText().toString());
-            event.setMinutes(Integer.parseInt(minutesField.getText().toString()));
+            event.setMinutes(Integer.parseInt("0"+minutesField.getText().toString()));
+            event.setPlusMins(Integer.parseInt("0"+plusMinsField.getText().toString()));
             if (eventToEdit == null) {
                 model.addEvent(event);
             }
