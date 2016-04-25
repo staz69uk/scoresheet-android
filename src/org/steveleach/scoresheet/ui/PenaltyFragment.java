@@ -44,6 +44,7 @@ public class PenaltyFragment extends Fragment implements ModelAware {
     private EditText playerField;
     private InputMethodManager imgr;
     private EditText minutesField;
+    private PenaltyEvent eventToEdit = null;
 
     public void setTeam(String homeAway) {
         this.team = homeAway;
@@ -97,22 +98,34 @@ public class PenaltyFragment extends Fragment implements ModelAware {
     @Override
     public void onResume() {
         super.onResume();
-        clockField.requestFocus();
-        periodField.setText(Integer.toString(model.getPeriod()));
-        imgr.showSoftInput(clockField, InputMethodManager.SHOW_IMPLICIT);
+        if (view != null) {
+            if (eventToEdit != null) {
+                periodField.setText(Integer.toString(eventToEdit.getPeriod()));
+                clockField.setText(eventToEdit.getClockTime());
+                playerField.setText(Integer.toString(eventToEdit.getPlayer()));
+                penaltyField.setText(eventToEdit.getSubType());
+                minutesField.setText(Integer.toString(eventToEdit.getMinutes()));
+            } else {
+                periodField.setText(Integer.toString(model.getPeriod()));
+            }
+            clockField.requestFocus();
+            imgr.showSoftInput(clockField, InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
     public void penaltyDone(View view) {
-        PenaltyEvent event = new PenaltyEvent();
-        event.setPeriod(model.getPeriod());
         try {
-            model.setChanged(true);
+            PenaltyEvent event = (eventToEdit == null) ? new PenaltyEvent() : eventToEdit;
+            event.setPeriod(Integer.parseInt("0"+periodField.getText().toString()));
             event.setClockTime(clockField.getText().toString());
             event.setTeam(team);
             event.setPlayer(Integer.parseInt("0"+playerField.getText().toString()));
             event.setSubType(penaltyField.getText().toString());
             event.setMinutes(Integer.parseInt(minutesField.getText().toString()));
-            model.addEvent(event);
+            if (eventToEdit == null) {
+                model.addEvent(event);
+            }
+            model.setChanged(true);
         } catch (IllegalArgumentException e) {
             Toast.makeText(getActivity().getApplicationContext(), "Error, not created", Toast.LENGTH_LONG);
         }
@@ -130,5 +143,9 @@ public class PenaltyFragment extends Fragment implements ModelAware {
     @Override
     public void onModelUpdated(ModelUpdate update) {
 
+    }
+
+    public void setEventToEdit(PenaltyEvent event) {
+        this.eventToEdit = event;
     }
 }
