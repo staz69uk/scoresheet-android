@@ -199,30 +199,38 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        boolean consumed = false;
         switch (item.getItemId()) {
             case R.id.menuGameDetails:
-                return showGameDetails();
+                showGameDetails();
+                consumed = true;
+                break;
             case R.id.menuNewGame:
                 newGame();
-                return true;
+                consumed = true;
+                break;
             case R.id.menuSave:
                 saveGame();
-                return true;
+                consumed = true;
+                break;
             case R.id.menuLoad:
                 loadGame();
-                return true;
+                consumed = true;
+                break;
             case R.id.menuRefresh:
                 refreshModel();
-                return true;
+                consumed = true;
+                break;
             case R.id.menuAbout:
                 showAbout();
-                return true;
+                consumed = true;
+                break;
             case R.id.menuHelp:
                 showHelp();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+                consumed = true;
+                break;
         }
+        return consumed;
     }
 
     private boolean showGameDetails() {
