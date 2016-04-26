@@ -20,14 +20,16 @@
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowActionBar">true</item>
         <item name="android:actionBarStyle">@style/AppActionBar</item>
+        <item name="android:buttonStyle">@style/AppButton</item>
     </style>
     <style name="AppActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/appblue</item>
     </style>
     <style name="AppButton" parent="@android:style/Widget.Holo.Light.Button">
-        <item name="android:padding">4dp</item>
+        <item name="android:drawablePadding">4dp</item>
         <item name="android:layout_margin">4dp</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/button</item>
     </style>
     <style name="AppHeader" parent="@android:style/Widget.Holo.Light.TextView">
         <item name="android:background">@color/appgrey</item>
