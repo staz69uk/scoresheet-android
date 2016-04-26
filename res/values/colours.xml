@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="appblue">#607d8b</color>
-    <color name="appgrey">#cfd8dc</color>
+    <color name="appmain">#607d8b</color>
+    <color name="applight">#cfd8dc</color>
     <color name="appdark">#263238</color>
-    <color name="gameReportEvenRow">#cfd8dc</color>
+    <color name="gameReportEvenRow">@color/applight</color>
     <color name="homeTeamIcon">#aa0000</color>
     <color name="awayTeamIcon">#0000aa</color>
     <color name="neutralIcon">#607deb</color>

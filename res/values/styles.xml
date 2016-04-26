@@ -23,7 +23,7 @@
         <item name="android:buttonStyle">@style/AppButton</item>
     </style>
     <style name="AppActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/appblue</item>
+        <item name="android:background">@color/appmain</item>
     </style>
     <style name="AppButton" parent="@android:style/Widget.Holo.Light.Button">
         <item name="android:drawablePadding">4dp</item>
@@ -32,7 +32,7 @@
         <item name="android:background">@drawable/button</item>
     </style>
     <style name="AppHeader" parent="@android:style/Widget.Holo.Light.TextView">
-        <item name="android:background">@color/appgrey</item>
+        <item name="android:background">@color/applight</item>
         <item name="android:padding">6dip</item>
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
     </style>

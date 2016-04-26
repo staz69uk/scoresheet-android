@@ -4,7 +4,7 @@
             android:radius="6dp"
     />
     <solid
-            android:color="@color/appblue"
+            android:color="@color/appmain"
     />
     <padding
             android:left="4dp"
@@ -14,7 +14,7 @@
     />
     <stroke
             android:width="2dp"
-            android:color="@color/appgrey"
+            android:color="@color/applight"
             android:dashWidth="2dp"
             android:dashGap="1dp"
     />
