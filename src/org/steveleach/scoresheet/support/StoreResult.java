@@ -12,34 +12,26 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet.model;
+package org.steveleach.scoresheet.support;
 
 /**
- * Holds values for home and away teams.
+ * The result of a ScoresheetStore operation.
  *
  * @author Steve Leach
  */
-public class HomeAway<T> {
+public class StoreResult {
+    public String text = "Unknown";
+    public boolean success = false;
+    public Throwable error = null;
 
-    private final T home;
-    private final T away;
-
-    public HomeAway(T home, T away) {
-        this.home = home;
-        this.away = away;
+    public StoreResult(String text, boolean success) {
+        this.text = text;
+        this.success = success;
     }
 
-    public T getAway() {
-        return away;
-    }
-
-    public T getHome() {
-
-        return home;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("(%s,%s)",getHome().toString(),getAway().toString());
+    public StoreResult(String text, Throwable error) {
+        this.text = text;
+        this.error = error;
+        this.success = false;
     }
 }

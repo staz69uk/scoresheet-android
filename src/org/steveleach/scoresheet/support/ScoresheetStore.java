@@ -87,23 +87,6 @@ public class ScoresheetStore {
         this.fileManager = fileManager;
     }
 
-    public class StoreResult {
-        public String text = "Unknown";
-        public boolean success = false;
-        public Throwable error = null;
-
-        public StoreResult(String text, boolean success) {
-            this.text = text;
-            this.success = success;
-        }
-
-        public StoreResult(String text, Throwable error) {
-            this.text = text;
-            this.error = error;
-            this.success = false;
-        }
-    }
-
     private void checkFileSystemStatus() throws IOException {
         if (!system.isExternalStorageAvailable()) {
             throw new IOException("External storage not mounted for writing");

@@ -16,10 +16,11 @@ package org.steveleach.scoresheet;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.steveleach.scoresheet.model.GoalEvent;
-import org.steveleach.scoresheet.model.PenaltyEvent;
-import org.steveleach.scoresheet.model.PeriodEndEvent;
-import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.model.ScoresheetModelTest;
+import org.steveleach.scoresheet.support.LoadOldGameFileTest;
+import org.steveleach.scoresheet.support.ScoresheetSupportTest;
+import org.steveleach.scoresheet.ui.ScoresheetRealGameUITest;
+import org.steveleach.scoresheet.ui.ScoresheetUITest;
 
 /**
  * Unit test suite for Scoreboard app.

@@ -12,7 +12,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.support;
 
 import org.json.JSONException;
 import org.junit.Before;
@@ -27,16 +27,20 @@ import static org.mockito.Mockito.when;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.steveleach.scoresheet.FakeFileManager;
+import org.steveleach.scoresheet.FastTestSuite;
+import org.steveleach.scoresheet.support.*;
 import org.steveleach.scoresheet.ui.AndroidSystemContext;
-import org.steveleach.scoresheet.support.ScoresheetStore;
-import org.steveleach.scoresheet.support.FileManager;
-import org.steveleach.scoresheet.support.JsonCodec;
 import org.steveleach.scoresheet.model.*;
-import org.steveleach.scoresheet.support.WeakSet;
 import org.steveleach.scoresheet.ui.ScoresheetActivity;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
+import java.sql.Ref;
+import java.util.Iterator;
 
 import static org.steveleach.scoresheet.FastTestSuite.*;
 
@@ -74,7 +78,7 @@ public class ScoresheetSupportTest {
 
         ScoresheetStore store = new ScoresheetStore(fileManager,jsonCodec,context);
 
-        ScoresheetStore.StoreResult status = store.save(model);
+        StoreResult status = store.save(model);
 
         assertEquals("Saved gamedata", status.text);
     }
@@ -113,6 +117,34 @@ public class ScoresheetSupportTest {
     }
 
     @Test
+    public void testWeakSetCleanDead() {
+        // Set up state so that first call to referenceQueue.poll returns non-null, second call returns null
+        WeakReference<String> ref = new WeakReference<String>("Bob");
+        final WeakReference<String>[] refs = new WeakReference[] {ref,null};
+        WeakSet<String> list = new WeakSet<String>() {
+            int index = 0;
+            @Override
+            Reference<?> pollQueue() {
+                return refs[index++];
+            }
+        };
+        // Make sure that removing the result of the first call to poll will succeed
+        list.add(ref);
+
+        // Then run the actual test
+        list.removeDeadItems();
+
+        assertEquals(0, list.size());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testWeakSetRemove() {
+        WeakSet<String> list = new WeakSet<>();
+        Iterator<?> iterator = list.iterator();
+        iterator.remove();
+    }
+
+    @Test
     public void verifyBasicFileManagerFunctionality() throws IOException {
         final String testText = "Testing";
         FileManager fileManager = new FileManager();
@@ -144,7 +176,7 @@ public class ScoresheetSupportTest {
 
         assertEquals(0, model.getEvents().size());
 
-        ScoresheetStore.StoreResult result = store.loadInto(model, "test.json");
+        StoreResult result = store.loadInto(model, "test.json");
 
         assertEquals(true, result.success);
 
@@ -164,7 +196,7 @@ public class ScoresheetSupportTest {
 
         ScoresheetStore store = new ScoresheetStore(fileManager,null,context);
 
-        ScoresheetStore.StoreResult result = store.delete("somefile.json");
+        StoreResult result = store.delete("somefile.json");
         assertTrue(result.success);
         assertEquals("Deleted somefile.json", result.text);
     }
@@ -190,7 +222,7 @@ public class ScoresheetSupportTest {
 
         ScoresheetModel model = new ScoresheetModel();
 
-        ScoresheetStore.StoreResult result = store.loadInto(model, "gamedata.json");
+        StoreResult result = store.loadInto(model, "gamedata.json");
 
         assertFalse(result.success);
         assertNotNull(result.error);
@@ -239,5 +271,22 @@ public class ScoresheetSupportTest {
         if (!targetFile.exists()) {
             fm.writeTextFile(targetFile, json);
         }
+    }
+
+    @Test
+    public void testFileManagerRename() {
+        File from = mock(File.class);
+        File to = mock(File.class);
+
+        when(from.renameTo(any())).thenReturn(true);
+
+        boolean result = new FileManager().rename(from, to);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void testFileManagerListNull() {
+        assertEquals(0, new FileManager().dirContents(null).size());
     }
 }

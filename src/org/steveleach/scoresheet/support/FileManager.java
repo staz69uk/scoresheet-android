@@ -25,10 +25,13 @@ import java.util.List;
  * Application code should interact with the FileManager rather than directly, as it can
  * be mocked for unit testing.
  *
- * Created by steve on 11/03/16.
+ * @author Steve Leach
  */
 public class FileManager {
 
+    /**
+     * Writes text to a file.
+     */
     public void writeTextFile(File file, String text) throws IOException {
         FileWriter writer = new FileWriter(file);
         try {
@@ -38,6 +41,9 @@ public class FileManager {
         }
     }
 
+    /**
+     * Reads and returns the contents of a text file.
+     */
     public String readTextFileContent(File file) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -53,10 +59,16 @@ public class FileManager {
         return sb.toString().trim();
     }
 
+    /**
+     * Returns a directory that can be used for storing temporary files.
+     */
     public File tempDir() {
         return new File(System.getProperty("java.io.tmpdir"));
     }
 
+    /**
+     * Copies a file.
+     */
     public void copyFile(File src, File dst) throws IOException {
         InputStream in = new FileInputStream(src);
         OutputStream out = new FileOutputStream(dst);
@@ -74,18 +86,30 @@ public class FileManager {
         }
     }
 
+    /**
+     * Deletes a file.
+     */
     public boolean delete(File file) {
         return file.delete();
     }
 
+    /**
+     * Creates a directory if it does not exist, including all parent directories as necessary.
+     */
     public void ensureDirectoryExists(File dir) {
         dir.mkdirs();
     }
 
+    /**
+     * Returns true if the specified file exists.
+     */
     public boolean exists(File file) {
         return file.exists();
     }
 
+    /**
+     * Returns a list of the contents of a directory.
+     */
     public List<File> dirContents(File dir) {
         if ((dir == null) || (dir.listFiles() == null)) {
             return new ArrayList<>();
@@ -94,6 +118,9 @@ public class FileManager {
         }
     }
 
+    /**
+     * Renames a file.
+     */
     public boolean rename(File oldFile, File newFile) {
         return oldFile.renameTo(newFile);
     }

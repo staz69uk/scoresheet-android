@@ -12,10 +12,11 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.steveleach.scoresheet.BeanTester;
 import org.steveleach.scoresheet.model.*;
 
 import java.util.concurrent.atomic.AtomicBoolean;

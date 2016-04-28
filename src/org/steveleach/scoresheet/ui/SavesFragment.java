@@ -24,6 +24,7 @@ import org.steveleach.ihscoresheet.R;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.support.ScoresheetStore;
 import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.support.StoreResult;
 
 import java.io.File;
 import java.util.Collections;
@@ -77,29 +78,28 @@ public class SavesFragment extends Fragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.filescontextmenu, menu);
+        getActivity().getMenuInflater().inflate(R.menu.filescontextmenu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        boolean result = super.onContextItemSelected(item);
-
-        int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
-        handleContextMenu(item.getItemId(), position);
-
-        return result;
+        return handleContextMenu(item.getItemId(), ScoresheetActivity.listContextMenuPosition(item));
     }
 
-    public void handleContextMenu(int selection, int position) {
+    public boolean handleContextMenu(int selection, int position) {
+        boolean handled = false;
         String selectedItem = (String) savesList.getItemAtPosition(position);
         if (selection == R.id.fileMenuOpen) {
             loadSavedData(selectedItem);
+            handled = true;
         } else if (selection == R.id.fileMenuDelete) {
             askToDelete(selectedItem);
+            handled = true;
         } else if (selection == R.id.fileMenuRename) {
             askToRename(selectedItem);
+            handled = true;
         }
+        return handled;
     }
 
     public void askToRename(String selectedItem) {
@@ -129,7 +129,7 @@ public class SavesFragment extends Fragment {
         activity.yesNoDialog(text, new Runnable() {
             @Override
             public void run() {
-                ScoresheetStore.StoreResult result = store.delete(item);
+                StoreResult result = store.delete(item);
                 activity.toast(result.text);
                 if (result.success) {
                     refreshList();
@@ -150,7 +150,7 @@ public class SavesFragment extends Fragment {
     }
 
     private void loadSavedData(String item) {
-        ScoresheetStore.StoreResult result = store.loadInto(model, item);
+        StoreResult result = store.loadInto(model, item);
         model.setChanged(false);
         model.notifyListeners(new ModelUpdate("Model loaded"));
         if (result.success) {

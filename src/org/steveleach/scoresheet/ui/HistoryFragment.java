@@ -56,43 +56,34 @@ public class HistoryFragment extends Fragment implements ModelAware {
 
         registerForContextMenu(eventList);
 
-//        eventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                return handleListItemLongClick(adapterView, position, (int) id);
-//            }
-//        });
-
         return view;
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.historycontextenu, menu);
+        getActivity().getMenuInflater().inflate(R.menu.historycontextenu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        boolean result = super.onContextItemSelected(item);
-
-        int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
-        handleContextMenu(item.getItemId(), position);
-
-        return result;
+        return handleContextMenu(item.getItemId(), ScoresheetActivity.listContextMenuPosition(item));
     }
 
-    public void handleContextMenu(int selection, int position) {
+    public boolean handleContextMenu(int selection, int position) {
+        boolean handled = false;
         GameEvent selectedItem = (GameEvent) eventList.getItemAtPosition(position);
         switch (selection) {
             case R.id.historyMenuEdit:
                 editEvent(selectedItem);
+                handled = true;
                 break;
             case R.id.historyMenuDelete:
                 askToDelete(selectedItem);
+                handled = true;
                 break;
         }
+        return handled;
     }
 
     private void editEvent(GameEvent event) {

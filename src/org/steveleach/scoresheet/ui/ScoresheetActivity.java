@@ -26,14 +26,12 @@ import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.steveleach.ihscoresheet.*;
-import org.steveleach.scoresheet.support.ScoresheetStore;
-import org.steveleach.scoresheet.support.FileManager;
-import org.steveleach.scoresheet.support.JsonCodec;
-import org.steveleach.scoresheet.support.SystemContext;
+import org.steveleach.scoresheet.support.*;
 import org.steveleach.scoresheet.model.*;
 
 /**
@@ -268,7 +266,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         yesNoDialog(R.string.saveGamePrompt, new Runnable() {
             @Override
             public void run() {
-                ScoresheetStore.StoreResult result = scoresheetStore.save(model);
+                StoreResult result = scoresheetStore.save(model);
                 if (result.success) {
                     model.setChanged(false);
                     model.notifyListeners(ModelUpdate.ALL_CHANGED);
@@ -349,5 +347,12 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
 
     public String playerNum(GameEvent event) {
         return playerNum(event.getPlayer());
+    }
+
+    /**
+     * Return the list position for a context menu selection on an item in a ListView.
+     */
+    public static int listContextMenuPosition(MenuItem item) {
+        return ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
     }
 }

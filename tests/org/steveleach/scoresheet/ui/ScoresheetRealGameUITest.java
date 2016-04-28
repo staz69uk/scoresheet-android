@@ -12,7 +12,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.ui;
 
 import android.content.DialogInterface;
 import android.widget.*;
@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.steveleach.ihscoresheet.R;
+import org.steveleach.scoresheet.AbstractUITest;
 import org.steveleach.scoresheet.model.GoalEvent;
 import org.steveleach.scoresheet.model.ScoresheetModel;
 import org.steveleach.scoresheet.ui.*;

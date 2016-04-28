@@ -26,6 +26,8 @@ import java.util.List;
  *
  * Being in this collection will not prevent the item being garbage collected.
  *
+ * Note that this class does not actually implement the Java collections Set interface.
+ *
  * @author Steve Leach
  */
 public class WeakSet<T> implements Iterable<T> {
@@ -42,8 +44,12 @@ public class WeakSet<T> implements Iterable<T> {
      */
     public void add(T item) {
         if (! containsItem(item)) {
-            references.add(new WeakReference<>(item, referenceQueue));
+            add(new WeakReference<>(item, referenceQueue));
         }
+    }
+
+    void add(WeakReference<T> ref) {
+        references.add(ref);
     }
 
     public boolean containsItem(T target) {
@@ -59,11 +65,15 @@ public class WeakSet<T> implements Iterable<T> {
      * Remove any list items that have been garbage collected.
      */
     public void removeDeadItems() {
-        Reference<?> ref = referenceQueue.poll();
+        Reference<?> ref = pollQueue();
         while (ref != null) {
             references.remove(ref);
-            ref = referenceQueue.poll();
+            ref = pollQueue();
         }
+    }
+
+    Reference<?> pollQueue() {
+        return referenceQueue.poll();
     }
 
     /**
@@ -91,8 +101,12 @@ public class WeakSet<T> implements Iterable<T> {
 
             @Override
             public void remove() {
-                iterator.remove();
+                throw new UnsupportedOperationException("Cannot remove items with this iterator");
             }
         };
+    }
+
+    public int size() {
+        return references.size();
     }
 }

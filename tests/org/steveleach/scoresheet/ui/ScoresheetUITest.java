@@ -12,7 +12,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-package org.steveleach.scoresheet;
+package org.steveleach.scoresheet.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,6 +30,7 @@ import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.internal.Shadow;
 import org.robolectric.shadows.ShadowAlertDialog;
+import org.steveleach.scoresheet.AbstractUITest;
 import org.steveleach.scoresheet.model.*;
 import org.steveleach.scoresheet.support.JsonCodec;
 import org.steveleach.scoresheet.ui.*;
@@ -366,6 +367,18 @@ public class ScoresheetUITest extends AbstractUITest {
     }
 
     @Test
+    public void testToggleAllSaves() {
+        activity.getStore().save(model);
+
+        assertEquals(2, fakeFileManager.fileCount());
+
+        clickMenuItem(menuLoad);
+        assertEquals(SavesFragment.class, visibleFragmentClass());
+
+        click(savesAllFilesSwitch);
+    }
+
+    @Test
     public void testRenameFile() {
         activity.getStore().save(model);
 
@@ -458,5 +471,50 @@ public class ScoresheetUITest extends AbstractUITest {
     public void miscTests() {
         // Basically a bunch of silly stuff to get coverage up to help avoid "broken window syndrome"
         new GoalFragment().onModelUpdated(ModelUpdate.ALL_CHANGED);
+    }
+
+    @Test
+    public void testEditGoal() {
+        addPenalty("1500", "HOOK", "2", "Home", "41");
+        addGoal("1000", "E", "Home", "41", "", "");
+
+        ListView list = (ListView)activity.findViewById(historyList2);
+
+        assertEquals(2, list.getAdapter().getCount());
+
+        assertEquals(HistoryFragment.class, visibleFragmentClass());
+
+        HistoryFragment fragment = (HistoryFragment) activity.getVisibleFragment();
+        fragment.handleContextMenu(historyMenuEdit, 0);
+
+        assertEquals(GoalFragment.class, visibleFragmentClass());
+
+        setField(fldAssist1, "12");
+        click(btnDone);
+
+        assertEquals(12, ((GoalEvent)model.getEvents().get(1)).getAssist1());
+    }
+
+    @Test
+    public void testEditPenalty() {
+        addPenalty("1500", "HOOK", "2", "Home", "41");
+        addGoal("1000", "E", "Home", "41", "", "");
+
+        ListView list = (ListView)activity.findViewById(historyList2);
+
+        assertEquals(2, list.getAdapter().getCount());
+
+        assertEquals(HistoryFragment.class, visibleFragmentClass());
+
+        HistoryFragment fragment = (HistoryFragment) activity.getVisibleFragment();
+        fragment.handleContextMenu(historyMenuEdit, 1);
+
+        assertEquals(PenaltyFragment.class, visibleFragmentClass());
+
+        setField(fldPenaltyCode, "HOLD");
+        click(btnPenaltyDone);
+
+        assertEquals("HOLD", model.getEvents().get(0).getSubType());
+        ;
     }
 }

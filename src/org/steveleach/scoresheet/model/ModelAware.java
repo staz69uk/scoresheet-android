@@ -20,6 +20,13 @@ package org.steveleach.scoresheet.model;
  * @author Steve Leach
  */
 public interface ModelAware {
+    /**
+     * Sets the ScoresheetModel that the component will use.
+     */
     void setModel(ScoresheetModel model);
+
+    /**
+     * Method invoked when the model is updated.
+     */
     void onModelUpdated(ModelUpdate update);
 }

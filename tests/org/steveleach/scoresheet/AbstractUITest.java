@@ -16,6 +16,7 @@ package org.steveleach.scoresheet;
 
 import android.app.AlertDialog;
 import android.os.Environment;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import org.jetbrains.annotations.NotNull;
@@ -79,7 +80,11 @@ public abstract class AbstractUITest {
     }
 
     protected void click(int id) {
-        activity.findViewById(id).performClick();
+        View view = activity.findViewById(id);
+        if (view == null) {
+            throw new AssertionError("No view found with ID " + id);
+        }
+        view.performClick();
     }
 
     protected Class<?> visibleFragmentClass() {
