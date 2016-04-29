@@ -82,6 +82,8 @@
     <string name="historyMenuEditText">Edit event</string>
     <string name="historyMenuDeleteText">Delete event</string>
     <string name="textPenPlusMinsPrompt">plus</string>
+    <string name="playersHeader">%s Players</string>
+    <string name="addPlayerButtonText">Add Player</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

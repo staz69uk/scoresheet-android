@@ -14,24 +14,39 @@
 */
 package org.steveleach.scoresheet.model;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 /**
- * A team taking part in an ice hockey game.
+ * A player on an ice hockey team.
  *
  * @author Steve Leach
  */
-public class Team {
-    private String name = null;
-    private Map<Integer,Player> players = new TreeMap<>();
+public class Player {
+    private int number = 0;
+    private boolean playing = true;
+    private String name = "";
 
-    public Team(String name) {
+    public Player() {
+        this(0,"");
+    }
+
+    public Player(int number, String name) {
+        this.number = number;
         this.name = name;
     }
 
-    public Team() {
-        this("");
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 
     public String getName() {
@@ -40,17 +55,5 @@ public class Team {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Map<Integer, Player> getPlayers() {
-        return players;
-    }
-
-    public void addPlayer(int number, String name) {
-        getPlayers().put(number, new Player(number,name));
-    }
-
-    public String playerName(int number) {
-        return getPlayers().containsKey(number) ? getPlayers().get(number).getName() : null;
     }
 }

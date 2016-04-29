@@ -224,8 +224,19 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
                 showHelp();
                 consumed = true;
                 break;
+            case R.id.menuTest:
+                showPlayers();
+                consumed = true;
+                break;
         }
         return consumed;
+    }
+
+    private void showPlayers() {
+        PlayersFragment fragment = new PlayersFragment();
+        fragment.setModel(model);
+        fragment.setTeam("Home");
+        showFragment(fragment);
     }
 
     private boolean showGameDetails() {

@@ -180,9 +180,10 @@ public class ScoresheetModelTest {
         assertEquals(5, model.getRules().getOvertimeMinutes());
         assertFalse(model.getRules().isAllowTie());
 
-        model.getHomeTeam().getPlayers().put(25, "John Smith");
-        model.getHomeTeam().getPlayers().put(57, "John Johnson");
+        model.getHomeTeam().addPlayer(25, "John Smith");
+        model.getHomeTeam().addPlayer(57, "John Johnson");
         assertEquals(2, model.getHomeTeam().getPlayers().size());
+        assertEquals("John Smith", model.getHomeTeam().playerName(25));
 
         model.setHomeTeam(new Team());
         model.setAwayTeam(new Team());
@@ -221,6 +222,7 @@ public class ScoresheetModelTest {
         tester.testBean(GoalEvent.class);
         tester.testBean(PenaltyEvent.class);
         tester.testBean(PeriodEndEvent.class);
+        tester.testBean(Player.class);
     }
 
     @Test
