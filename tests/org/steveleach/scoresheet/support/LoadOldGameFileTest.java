@@ -69,8 +69,10 @@ public class LoadOldGameFileTest {
     @Test
     public void testLoadAll() throws IOException {
         for (String fileName : testDataDir.list()) {
-            ScoresheetModel model = loadModel(fileName);
-            assertTrue(model.getEvents().size() > 0);
+            if (fileName.contains("gamedata")) {
+                ScoresheetModel model = loadModel(fileName);
+                assertTrue(model.getEvents().size() > 0);
+            }
         }
     }
 

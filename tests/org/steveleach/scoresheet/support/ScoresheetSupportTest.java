@@ -21,6 +21,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -41,6 +42,7 @@ import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.sql.Ref;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.steveleach.scoresheet.FastTestSuite.*;
 
@@ -213,7 +215,7 @@ public class ScoresheetSupportTest {
     }
 
     @Test
-    public void testLoadMissingFile() throws IOException {
+    public void testLoadBrokenFile() throws IOException {
         when(fileManager.exists(any())).thenReturn(true);
         when(fileManager.readTextFileContent(any())).thenThrow(new IOException("Broken"));
         when(context.getScoresheetFolder()).thenReturn(new File("."));
@@ -331,5 +333,85 @@ public class ScoresheetSupportTest {
     @Test(expected = JSONException.class)
     public void testJsonFromNull() {
         new JsonCodec().fromJson(new ScoresheetModel(), null);
+    }
+
+    @Test
+    public void testStoreMisc() {
+        when(fileManager.rename(any(), any())).thenReturn(false);
+
+        ScoresheetStore store = new ScoresheetStore(fileManager, new JsonCodec(), context);
+        StoreResult result = store.renameFile("A", "B");
+        assertFalse(result.success);
+    }
+
+    @Test
+    public void testListSavedFiles() {
+        when(context.isExternalStorageAvailable()).thenReturn(true);
+        when(context.getScoresheetFolder()).thenReturn(new File("."));
+
+        ScoresheetStore store = new ScoresheetStore(null, new JsonCodec(), context);
+        FakeFileManager ffm = new FakeFileManager();
+        store.setFileManager(ffm);
+
+        StoreResult stored = store.save(new ScoresheetModel());
+
+        System.out.println(stored.text);
+
+        assertTrue(stored.success);
+        assertEquals(2, ffm.fileCount());
+
+        store.renameFile("gamedata.json", "different.json");
+
+        List<File> files = store.savedFiles();
+        assertEquals(1, files.size());
+    }
+
+    @Test
+    public void testSaveJsonErrors() {
+        ScoresheetStore store = new ScoresheetStore(fileManager, jsonCodec, context);
+
+        when(jsonCodec.toJson(any())).thenThrow(new JSONException(""));
+
+        StoreResult result = store.save(new ScoresheetModel());
+
+        assertFalse(result.success);
+        assertEquals(JSONException.class, result.error.getClass());
+    }
+
+    @Test
+    public void testSaveIOErrors() {
+        ScoresheetStore store = new ScoresheetStore(fileManager, jsonCodec, context);
+
+        when(jsonCodec.toJson(any())).thenReturn("");
+        when(context.isExternalStorageAvailable()).thenReturn(false);
+
+        StoreResult result = store.save(new ScoresheetModel());
+
+        assertFalse(result.success);
+        assertEquals(IOException.class, result.error.getClass());
+    }
+
+    @Test
+    public void testLoadMissingFile() {
+        when(fileManager.exists(any())).thenReturn(false);
+
+        ScoresheetStore store = new ScoresheetStore(fileManager, jsonCodec, context);
+
+        StoreResult result = store.loadInto(new ScoresheetModel(), "gamedata.json");
+
+        assertFalse(result.success);
+    }
+
+    @Test
+    public void testLoadBadJson() throws IOException {
+        when(fileManager.exists(any())).thenReturn(true);
+        when(fileManager.readTextFileContent(any())).thenReturn("{}");
+
+        ScoresheetStore store = new ScoresheetStore(fileManager, new JsonCodec(), context);
+
+        StoreResult result = store.loadInto(new ScoresheetModel(), "gamedata.json");
+
+        assertFalse(result.success);
+        assertEquals(JSONException.class, result.error.getClass());
     }
 }

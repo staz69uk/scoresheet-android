@@ -63,10 +63,11 @@ public class FakeFileManager extends FileManager {
 
     @Override
     public List<File> dirContents(File dir) {
+        dir = dir.getAbsoluteFile();
         List<File> results = new LinkedList<>();
         for (String fileName : files.keySet()) {
             File f = new File(fileName);
-            if (f.getParentFile().equals(dir)) {
+            if (f.getParentFile().getAbsoluteFile().equals(dir)) {
                 results.add(f);
             }
         }
@@ -90,5 +91,10 @@ public class FakeFileManager extends FileManager {
         delete(oldFile);
         files.put(newFile.getAbsolutePath(), content);
         return true;
+    }
+
+    @Override
+    public void ensureDirectoryExists(File dir) {
+        //
     }
 }
