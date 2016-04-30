@@ -51,24 +51,13 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
         playersTable = (TableLayout) view.findViewById(R.id.playersTable);
 
-        view.findViewById(R.id.btnAddPlayer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addPlayer();
-            }
-        });
-
         return view;
-    }
-
-    private void addPlayer() {
-        model.getHomeTeam().addPlayer(0,"");
-        refresh();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("STAZ","onResume");
         refresh();
     }
 
@@ -140,6 +129,8 @@ public class PlayersFragment extends Fragment implements ModelAware {
             return;
         }
 
+        Log.d("STAZ","Refresh");
+
         title.setText(getString(R.string.playersHeader,team));
         Team team = loadTestTeam();
 
@@ -158,7 +149,6 @@ public class PlayersFragment extends Fragment implements ModelAware {
     private int[] calculateColumnWidths() {
         int[] widths = new int[] {80,120,80};
         int totalWidth = getResources().getDisplayMetrics().widthPixels;
-        ;
         widths[1] = totalWidth - widths[0] - widths[2] - 12;
         return widths;
     }
@@ -186,7 +176,6 @@ public class PlayersFragment extends Fragment implements ModelAware {
         ScoresheetStore store = ((ScoresheetActivity)getActivity()).scoresheetStore;
         try {
             Team team = store.getTeam("smoke.json");
-            //((PlayersAdapter)list.getAdapter()).setTeam(team);
             return team;
         } catch (IOException|JSONException e) {
             e.printStackTrace();
@@ -202,6 +191,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
     @Override
     public void onModelUpdated(ModelUpdate update) {
+        Log.d("STAZ","onModelUpdated");
         refresh();
     }
 
