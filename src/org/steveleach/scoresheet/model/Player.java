@@ -56,4 +56,9 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Player %2d : %s (%s)", number, name, playing ? "Y" : "N");
+    }
 }

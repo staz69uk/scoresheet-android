@@ -46,7 +46,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     private ScoresheetModel model = new ScoresheetModel();
     private FileManager fileManager = new FileManager();
     private JsonCodec jsonCodec = new JsonCodec();
-    private ScoresheetStore scoresheetStore;
+    ScoresheetStore scoresheetStore;
     private SystemContext context;
 
     @Override

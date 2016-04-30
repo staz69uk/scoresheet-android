@@ -26,47 +26,20 @@
         <TextView style="@style/AppHeader" android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:text="@string/playersHeader" android:id="@+id/playersHeader"
                   android:layout_gravity="center_horizontal" android:layout_weight="1"/>
-        <Button
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:background="@color/applight" android:padding="6dp">
+        <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
-                android:id="@+id/button" android:layout_gravity="right|top" style="@style/AppButton"
-                android:padding="2dp"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_gravity="right">
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:padding="4dp" android:background="@color/applight">
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:background="@color/applight" android:paddingBottom="8dp">
-            <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:text="No."
-                    android:id="@+id/textView23" style="@style/gameReportTextStyle"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Player Name"
-                    android:id="@+id/textView24" android:layout_weight="1" style="@style/gameReportTextStyle"/>
-            <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:text="Active?"
-                    android:id="@+id/textView25" style="@style/gameReportTextStyle" android:layout_gravity="right"
-                    android:textAlignment="viewEnd" android:gravity="right"/>
-        </LinearLayout>
-        <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/playersList" android:layout_gravity="center_horizontal" android:background="#ffffff"
-        />
+                android:id="@+id/scrollView5">
+            <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_gravity="center_horizontal"
+                    android:id="@+id/playersTable" android:background="#ffffff">
+            </TableLayout>
+        </ScrollView>
     </LinearLayout>
 </LinearLayout>

@@ -16,6 +16,7 @@ package org.steveleach.scoresheet.support;
 
 import org.json.JSONException;
 import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.model.Team;
 
 import java.io.File;
 import java.io.IOException;
@@ -179,4 +180,9 @@ public class ScoresheetStore {
         return new File(baseDir,baseName+".json");
     }
 
+    public Team getTeam(String fileName) throws IOException, JSONException {
+        File teamsDir = new File(baseDir,"Teams");
+        String content = fileManager.readTextFileContent(new File(teamsDir,fileName));
+        return codec.teamFromJson(content);
+    }
 }

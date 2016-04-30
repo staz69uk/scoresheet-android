@@ -21,16 +21,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TextView;
+import android.widget.*;
+import org.json.JSONException;
 import org.steveleach.ihscoresheet.R;
 import org.steveleach.scoresheet.model.*;
+import org.steveleach.scoresheet.support.ScoresheetStore;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import static android.text.InputType.*;
 
 /**
  * Fragment code for team Players editor.
@@ -41,7 +39,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
     private ScoresheetModel model;
     private View view;
-    private ListView list;
+    private TableLayout playersTable;
     private String team = null;
     private TextView title;
 
@@ -51,8 +49,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
         title = (TextView)view.findViewById(R.id.playersHeader);
 
-        list = (ListView) view.findViewById(R.id.playersList);
-        list.setAdapter(new PlayersAdapter(model.getHomeTeam()));
+        playersTable = (TableLayout) view.findViewById(R.id.playersTable);
 
         view.findViewById(R.id.btnAddPlayer).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +69,6 @@ public class PlayersFragment extends Fragment implements ModelAware {
     @Override
     public void onResume() {
         super.onResume();
-        model.getHomeTeam().addPlayer(41,"S Leach");
         refresh();
     }
 
@@ -80,69 +76,133 @@ public class PlayersFragment extends Fragment implements ModelAware {
         team = teamName;
     }
 
+    public class PlayerTableRow extends TableRow implements View.OnFocusChangeListener, CompoundButton.OnCheckedChangeListener {
+        private Player player = null;
+        private EditText numberField;
+        private EditText nameField;
+        private Switch activeSwitch;
+
+        public PlayerTableRow(Context context, Player player, int[] widths) {
+            super(context);
+            setPlayer(player);
+
+            numberField = makeField(context,widths[0]);
+            numberField.setText(Integer.toString(player.getNumber()));
+            numberField.setInputType(TYPE_CLASS_NUMBER);
+
+            nameField = makeField(context,widths[1]);
+            nameField.setText(player.getName());
+            nameField.setInputType(TYPE_CLASS_TEXT|TYPE_TEXT_VARIATION_PERSON_NAME|TYPE_TEXT_FLAG_CAP_WORDS);
+
+            activeSwitch = new Switch(context);
+            activeSwitch.setWidth(widths[2]);
+            activeSwitch.setChecked(player.isPlaying());
+            activeSwitch.setOnCheckedChangeListener(this);
+            addView(activeSwitch);
+        }
+
+
+        private EditText makeField(Context context, int width) {
+            EditText field = new EditText(context);
+            field.setWidth(width);
+            field.setOnFocusChangeListener(this);
+            addView(field);
+            return field;
+        }
+
+        public void setPlayer(Player player) {
+            this.player = player;
+        }
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (!hasFocus) {
+                // Update when field loses focus
+                updatePlayer();
+            }
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            updatePlayer();
+        }
+
+        private void updatePlayer() {
+            player.setNumber(Integer.parseInt("0" + numberField.getText().toString().trim()));
+            player.setName(nameField.getText().toString().trim());
+            player.setPlaying(activeSwitch.isChecked());
+            Log.d("STAZ", player.toString());
+        }
+    }
+
     private void refresh() {
+        if (playersTable == null) {
+            return;
+        }
+
         title.setText(getString(R.string.playersHeader,team));
-        ((PlayersAdapter)list.getAdapter()).notifyDataSetChanged();
+        Team team = loadTestTeam();
+
+        playersTable.removeAllViews();
+
+        int[] widths = calculateColumnWidths();
+
+        addHeaders(widths);
+
+        for (Player player : team.getPlayers().values()) {
+            PlayerTableRow row = new PlayerTableRow(getActivity(),player,widths);
+            playersTable.addView(row);
+        }
+    }
+
+    private int[] calculateColumnWidths() {
+        int[] widths = new int[] {80,120,80};
+        int totalWidth = getResources().getDisplayMetrics().widthPixels;
+        ;
+        widths[1] = totalWidth - widths[0] - widths[2] - 12;
+        return widths;
+    }
+
+    private void addHeaders(int[] widths) {
+        TableRow headers = new TableRow(getActivity());
+        addHeader("No.",headers,widths[0]);
+        addHeader("Name",headers,widths[1]);
+        addHeader("Active?",headers,widths[2]);
+        headers.setBackgroundColor(getResources().getColor(R.color.applight));
+        headers.setPadding(2,2,2,2);
+        playersTable.addView(headers);
+    }
+
+    private void addHeader(String text, TableRow headers, int width) {
+        Context context = getActivity();
+        TextView view = new TextView(context);
+        view.setTextAppearance(context,R.style.gameReportTextStyle);
+        view.setText(text);
+        view.setWidth(width);
+        headers.addView(view);
+    }
+
+    private Team loadTestTeam() {
+        ScoresheetStore store = ((ScoresheetActivity)getActivity()).scoresheetStore;
+        try {
+            Team team = store.getTeam("smoke.json");
+            //((PlayersAdapter)list.getAdapter()).setTeam(team);
+            return team;
+        } catch (IOException|JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public void setModel(ScoresheetModel model) {
         this.model = model;
+        refresh();
     }
 
     @Override
-    public void onModelUpdated(ModelUpdate update) {}
-
-    class PlayersAdapter extends BaseAdapter {
-
-        private Team team = null;
-        private LayoutInflater inflater;
-
-        public PlayersAdapter(Team team) {
-            this.team = team;
-            inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override
-        public int getCount() {
-            return team.getPlayers().size();
-        }
-
-        @Override
-        public Player getItem(int position) {
-            List<Player> players = new LinkedList<>(team.getPlayers().values());
-
-            return players.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View rowView = inflater.inflate(R.layout.playerlistentry, null);
-            Player player = getItem(position);
-            rowView.setTag(1,player);
-            setField(rowView,R.id.fldPlayerNum,Integer.toString(player.getNumber()));
-            setField(rowView,R.id.fldPlayerName,player.getName());
-            ((Switch)rowView.findViewById(R.id.fldPlayerActive)).setChecked(player.isPlaying());
-            return rowView;
-        }
-
-        private void setField(View rowView, int fieldId, String value) {
-            TextView field = (TextView)rowView.findViewById(fieldId);
-            field.setText(value);
-            field.setTag(1,view.getTag(1));
-            field.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (! hasFocus) {
-                        Log.d("Staz","Updating row " + v.getTag(1));
-                    }
-                }
-            });
-        }
+    public void onModelUpdated(ModelUpdate update) {
+        refresh();
     }
+
 }
