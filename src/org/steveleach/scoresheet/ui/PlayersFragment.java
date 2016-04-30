@@ -28,7 +28,6 @@ import org.steveleach.scoresheet.model.*;
 import org.steveleach.scoresheet.support.ScoresheetStore;
 
 import java.io.IOException;
-import static android.text.InputType.*;
 
 /**
  * Fragment code for team Players editor.
@@ -63,65 +62,6 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
     public void setTeam(String teamName) {
         team = teamName;
-    }
-
-    public class PlayerTableRow extends TableRow implements View.OnFocusChangeListener, CompoundButton.OnCheckedChangeListener {
-        private Player player = null;
-        private EditText numberField;
-        private EditText nameField;
-        private Switch activeSwitch;
-
-        public PlayerTableRow(Context context, Player player, int[] widths) {
-            super(context);
-            setPlayer(player);
-
-            numberField = makeField(context,widths[0]);
-            numberField.setText(Integer.toString(player.getNumber()));
-            numberField.setInputType(TYPE_CLASS_NUMBER);
-
-            nameField = makeField(context,widths[1]);
-            nameField.setText(player.getName());
-            nameField.setInputType(TYPE_CLASS_TEXT|TYPE_TEXT_VARIATION_PERSON_NAME|TYPE_TEXT_FLAG_CAP_WORDS);
-
-            activeSwitch = new Switch(context);
-            activeSwitch.setWidth(widths[2]);
-            activeSwitch.setChecked(player.isPlaying());
-            activeSwitch.setOnCheckedChangeListener(this);
-            addView(activeSwitch);
-        }
-
-
-        private EditText makeField(Context context, int width) {
-            EditText field = new EditText(context);
-            field.setWidth(width);
-            field.setOnFocusChangeListener(this);
-            addView(field);
-            return field;
-        }
-
-        public void setPlayer(Player player) {
-            this.player = player;
-        }
-
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            if (!hasFocus) {
-                // Update when field loses focus
-                updatePlayer();
-            }
-        }
-
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            updatePlayer();
-        }
-
-        private void updatePlayer() {
-            player.setNumber(Integer.parseInt("0" + numberField.getText().toString().trim()));
-            player.setName(nameField.getText().toString().trim());
-            player.setPlaying(activeSwitch.isChecked());
-            Log.d("STAZ", player.toString());
-        }
     }
 
     private void refresh() {
