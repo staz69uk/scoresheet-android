@@ -31,7 +31,9 @@ import java.util.Date;
 public class JsonCodec {
 
     private static final SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     public static final String FORMAT_VERSION = "1.1.1";
+    public static final String TEAM_FORMAT_VERSION = "1.0.0";
 
     /**
      * Returns a JSON String representation of the specified scoresheet model.
@@ -46,7 +48,7 @@ public class JsonCodec {
         JSONObject root = new JSONObject();
         root.put("@content", "Ice Hockey Scoresheet Data");
         root.put("@version", FORMAT_VERSION);
-        root.put("@exported", new Date());
+        root.put("@exported", timeStampFormat.format(new Date()));
         root.put("homeTeamName", model.getHomeTeam().getName());
         root.put("awayTeamName", model.getAwayTeam().getName());
         root.put("location", model.getGameLocation());
@@ -82,7 +84,7 @@ public class JsonCodec {
      * Populates a model from a JSON string representation.
      *
      * @param model
-     *          the model to askToLoad the data into
+     *          the model to load the data into
      * @param json
      * @throws JSONException
      */
@@ -99,14 +101,7 @@ public class JsonCodec {
         model.getAwayTeam().setName(root.optString("awayTeamName","Home"));
         model.setGameLocation(root.optString("location",""));
 
-        String dateStr = root.optString("gameDate","");
-        if (dateStr.length() == 10) {
-            try {
-                model.setGameDateTime(dateOnlyFormat.parse(dateStr));
-            } catch (ParseException e) {
-                e.printStackTrace(); // TODO
-            }
-        }
+        model.setGameDateTime(getDate(root.optString("gameDate","")));
 
         JSONArray jsonEvents = root.getJSONArray("events");
         for (int n = 0; n < jsonEvents.length(); n++) {
@@ -130,15 +125,83 @@ public class JsonCodec {
             event.setPeriod(jsonEvent.getInt("period"));
             event.setGameTime(jsonEvent.getString("gameTime"));
             event.setTeam(jsonEvent.getString("team"));
-
-            Object playerObj = jsonEvent.get("player");
-            if (playerObj instanceof Integer) {
-                event.setPlayer((Integer)playerObj);
-            } else {
-                event.setPlayer(Integer.parseInt("0"+playerObj.toString()));
-            }
+            event.setPlayer(getInt(jsonEvent.get("player")));
 
             model.addEvent(event);
         }
+    }
+
+    public static Date getDate(String dateStr) {
+        if (dateStr.length() == 10) {
+            try {
+                return dateOnlyFormat.parse(dateStr);
+            } catch (ParseException e) {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public static int getInt(Object obj) {
+        if (obj instanceof Integer) {
+            return ((Integer)obj).intValue();
+        } else {
+            return Integer.parseInt("0"+obj.toString());
+        }
+    }
+
+    /**
+     * Returns a JSON String representation of the specified team.
+     *
+     * @param team
+     *          the team to convert
+     * @return
+     *          a string representing the team in JSON format
+     * @throws JSONException
+     */
+    public String teamToJson(Team team) throws JSONException {
+        JSONObject root = new JSONObject();
+        root.put("@content", "Ice Hockey Scoresheet Team");
+        root.put("@version", TEAM_FORMAT_VERSION);
+        root.put("@exported", timeStampFormat.format(new Date()));
+        root.put("shortName", team.getName());
+        JSONArray jsonPlayers = new JSONArray();
+        for (Player player : team.getPlayers().values()) {
+            JSONObject jsonPlayer = new JSONObject();
+            jsonPlayer.put("number", player.getNumber());
+            jsonPlayer.put("name", player.getName());
+            jsonPlayer.put("active", player.isPlaying());
+            jsonPlayers.put(jsonPlayer);
+        }
+        root.put("players", jsonPlayers);
+        return root.toString(4);
+    }
+
+    /**
+     * Populates a Team from a JSON string representation.
+     *
+     * @param json
+     * @throws JSONException
+     */
+    public Team teamFromJson(String json) throws JSONException {
+        Team team = new Team();
+        team.getPlayers().clear();
+        JSONObject root = new JSONObject(json);
+
+        team.setName(root.optString("shortName",""));
+
+        JSONArray jsonPlayers = root.getJSONArray("players");
+        for (int n = 0; n < jsonPlayers.length(); n++) {
+            JSONObject jsonPlayer = (JSONObject) jsonPlayers.get(n);
+
+            Player player = new Player();
+            player.setNumber(jsonPlayer.getInt("number"));
+            player.setName(jsonPlayer.optString("name",""));
+            player.setPlaying(jsonPlayer.optBoolean("active",true));
+
+            team.getPlayers().put(player.getNumber(), player);
+        }
+        return team;
     }
 }

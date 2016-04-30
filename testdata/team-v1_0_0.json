@@ -1,0 +1,33 @@
+{
+  "@content": "Ice Hockey Scoresheet Team",
+  "@version": "1.00",
+  "teamName": "Teemeford Teems",
+  "shortName": "Teeme",
+  "players": [
+    {
+      "number": 41,
+      "name": "J Smith",
+      "active": true
+    },
+    {
+      "number": 24,
+      "name": "F Bloggs",
+      "active": true
+    },
+    {
+      "number": 76,
+      "name": "D Jones",
+      "active": true
+    },
+    {
+      "number": 11,
+      "name": "J Jenkins",
+      "active": true
+    },
+    {
+      "number": 32,
+      "name": "O Smith",
+      "active": true
+    }
+  ]
+}

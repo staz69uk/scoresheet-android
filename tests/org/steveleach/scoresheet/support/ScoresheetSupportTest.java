@@ -289,4 +289,47 @@ public class ScoresheetSupportTest {
     public void testFileManagerListNull() {
         assertEquals(0, new FileManager().dirContents(null).size());
     }
+
+    @Test
+    public void testLoadTeamFromFile() throws IOException {
+        String json = new FileManager().readTextFileContent(new File("./testdata/team-v1_0_0.json"));
+        Team team = new JsonCodec().teamFromJson(json);
+
+        assertEquals("Teeme", team.getName());
+        assertEquals(5, team.getPlayers().size());
+        Player p41 = team.getPlayers().get(41);
+        assertEquals("J Smith", p41.getName());
+        assertEquals(41, p41.getNumber());
+        assertTrue(p41.isPlaying());
+    }
+
+    @Test
+    public void testTeamJsonRoundTrip() {
+        Team team1 = new Team();
+        team1.setName("Teeme");
+        team1.addPlayer(25,"J Smith");
+        team1.addPlayer(39,"F Bloggs");
+
+        JsonCodec codec = new JsonCodec();
+
+        String json = codec.teamToJson(team1);
+
+        Team team2 = codec.teamFromJson(json);
+
+        assertEquals(team1.getName(), team2.getName());
+        assertEquals(team1.getPlayers().size(), team2.getPlayers().size());
+        assertEquals(team1.getPlayers().get(25).getName(), team2.getPlayers().get(25).getName());
+    }
+
+    @Test
+    public void testJsonCodecMisc() {
+        assertEquals(5, JsonCodec.getInt("5"));
+        assertNull(JsonCodec.getDate("X"));
+        assertNull(JsonCodec.getDate("1234567890"));
+    }
+
+    @Test(expected = JSONException.class)
+    public void testJsonFromNull() {
+        new JsonCodec().fromJson(new ScoresheetModel(), null);
+    }
 }
