@@ -525,16 +525,18 @@ public class ScoresheetUITest extends AbstractUITest {
         // Read the sample file
         FileManager fm = new FileManager();
         String json = fm.readTextFileContent(new File("testdata/team-v1_0_0.json"));
-        System.out.println(json);
         Team team = new JsonCodec().teamFromJson(json);
-        System.out.println(team.getName());
 
         FakeFileManager ffm = new FakeFileManager();
         activity.getStore().setFileManager(ffm);
 
         activity.getStore().saveTeam(team);
 
-        clickMenuItem(menuTest);
+        clickMenuItem(menuGameDetails);
+        assertEquals(GameFragment.class, visibleFragmentClass());
+        setField(fldHomeTeamName,"Teeme");
+
+        click(btnHomePlayers);
         assertEquals(PlayersFragment.class, visibleFragmentClass());
     }
 }
