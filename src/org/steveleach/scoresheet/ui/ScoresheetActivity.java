@@ -235,7 +235,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
     private void showPlayers() {
         PlayersFragment fragment = new PlayersFragment();
         fragment.setModel(model);
-        fragment.setTeam("Home");
+        fragment.setTeamName("Teeme");
         showFragment(fragment);
     }
 

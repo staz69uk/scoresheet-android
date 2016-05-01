@@ -180,9 +180,16 @@ public class ScoresheetStore {
         return new File(baseDir,baseName+".json");
     }
 
-    public Team getTeam(String fileName) throws IOException, JSONException {
+    public Team loadTeam(String fileName) throws IOException, JSONException {
         File teamsDir = new File(baseDir,"Teams");
         String content = fileManager.readTextFileContent(new File(teamsDir,fileName));
         return codec.teamFromJson(content);
+    }
+
+    public void saveTeam(Team team) throws JSONException, IOException {
+        File teamsDir = new File(baseDir,"Teams");
+        String json = codec.teamToJson(team);
+        File teamFile = new File(teamsDir, team.getName().toLowerCase()+".json");
+        fileManager.writeTextFile(teamFile, json);
     }
 }

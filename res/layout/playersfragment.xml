@@ -32,14 +32,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:background="@color/applight" android:padding="6dp">
         <ScrollView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/scrollView5">
-            <TableLayout
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:layout_gravity="center_horizontal"
-                    android:id="@+id/playersTable" android:background="#ffffff">
-            </TableLayout>
+                    android:layout_height="match_parent">
+                <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:layout_gravity="center_horizontal"
+                        android:id="@+id/playersTable" android:background="@color/applightest">
+                </TableLayout>
+                <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:layout_weight="1" android:padding="12dp"
+                        android:background="@color/applightest">
+                    <Button
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/addPlayerButtonText"
+                            android:id="@+id/btnNewPlayer" android:layout_gravity="center"/>
+                </FrameLayout>
+            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </LinearLayout>

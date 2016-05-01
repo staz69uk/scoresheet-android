@@ -17,7 +17,6 @@ package org.steveleach.scoresheet.ui;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ import org.steveleach.scoresheet.support.ScoresheetStore;
 import java.io.IOException;
 
 /**
- * Fragment code for team Players editor.
+ * Fragment code for teamName Players editor.
  *
  * @author Steve Leach
  */
@@ -39,7 +38,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
     private ScoresheetModel model;
     private View view;
     private TableLayout playersTable;
-    private String team = null;
+    private String teamName = null;
     private TextView title;
 
     @Override
@@ -56,12 +55,11 @@ public class PlayersFragment extends Fragment implements ModelAware {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("STAZ","onResume");
         refresh();
     }
 
-    public void setTeam(String teamName) {
-        team = teamName;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     private void refresh() {
@@ -69,10 +67,9 @@ public class PlayersFragment extends Fragment implements ModelAware {
             return;
         }
 
-        Log.d("STAZ","Refresh");
-
-        title.setText(getString(R.string.playersHeader,team));
         Team team = loadTestTeam();
+
+        title.setText(getString(R.string.playersHeader,team.getName()));
 
         playersTable.removeAllViews();
 
@@ -80,6 +77,10 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
         addHeaders(widths);
 
+        addPlayerRows(team, widths);
+    }
+
+    private void addPlayerRows(Team team, int[] widths) {
         for (Player player : team.getPlayers().values()) {
             PlayerTableRow row = new PlayerTableRow(getActivity(),player,widths);
             playersTable.addView(row);
@@ -115,7 +116,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
     private Team loadTestTeam() {
         ScoresheetStore store = ((ScoresheetActivity)getActivity()).scoresheetStore;
         try {
-            Team team = store.getTeam("smoke.json");
+            Team team = store.loadTeam(teamName.toLowerCase()+".json");
             return team;
         } catch (IOException|JSONException e) {
             e.printStackTrace();
@@ -131,7 +132,6 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
     @Override
     public void onModelUpdated(ModelUpdate update) {
-        Log.d("STAZ","onModelUpdated");
         refresh();
     }
 

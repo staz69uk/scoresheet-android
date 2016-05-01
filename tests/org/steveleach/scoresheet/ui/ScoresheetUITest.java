@@ -31,10 +31,13 @@ import org.robolectric.annotation.Config;
 import org.robolectric.internal.Shadow;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.steveleach.scoresheet.AbstractUITest;
+import org.steveleach.scoresheet.FakeFileManager;
 import org.steveleach.scoresheet.model.*;
+import org.steveleach.scoresheet.support.FileManager;
 import org.steveleach.scoresheet.support.JsonCodec;
 import org.steveleach.scoresheet.ui.*;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -515,6 +518,23 @@ public class ScoresheetUITest extends AbstractUITest {
         click(btnPenaltyDone);
 
         assertEquals("HOLD", model.getEvents().get(0).getSubType());
-        ;
+    }
+
+    @Test
+    public void testPlayerList() throws IOException {
+        // Read the sample file
+        FileManager fm = new FileManager();
+        String json = fm.readTextFileContent(new File("testdata/team-v1_0_0.json"));
+        System.out.println(json);
+        Team team = new JsonCodec().teamFromJson(json);
+        System.out.println(team.getName());
+
+        FakeFileManager ffm = new FakeFileManager();
+        activity.getStore().setFileManager(ffm);
+
+        activity.getStore().saveTeam(team);
+
+        clickMenuItem(menuTest);
+        assertEquals(PlayersFragment.class, visibleFragmentClass());
     }
 }

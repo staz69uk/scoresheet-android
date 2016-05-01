@@ -21,7 +21,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -30,17 +29,13 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.steveleach.scoresheet.FakeFileManager;
 import org.steveleach.scoresheet.FastTestSuite;
-import org.steveleach.scoresheet.support.*;
 import org.steveleach.scoresheet.ui.AndroidSystemContext;
 import org.steveleach.scoresheet.model.*;
-import org.steveleach.scoresheet.ui.ScoresheetActivity;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.Reference;
-import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
-import java.sql.Ref;
 import java.util.Iterator;
 import java.util.List;
 
@@ -306,6 +301,17 @@ public class ScoresheetSupportTest {
     }
 
     @Test
+    public void testLoadTeamWithStore() throws IOException {
+        final Team blues = new Team();
+        blues.setName("Blues");
+        ScoresheetStore store = new ScoresheetStore(fileManager, jsonCodec, context);
+        when(fileManager.readTextFileContent(any())).thenReturn("");
+        when(jsonCodec.teamFromJson(any())).thenReturn(blues);
+        Team team = store.loadTeam("test.json");
+        assertEquals(blues.getName(), team.getName());
+    }
+
+    @Test
     public void testTeamJsonRoundTrip() {
         Team team1 = new Team();
         team1.setName("Teeme");
@@ -414,4 +420,5 @@ public class ScoresheetSupportTest {
         assertFalse(result.success);
         assertEquals(JSONException.class, result.error.getClass());
     }
+
 }
