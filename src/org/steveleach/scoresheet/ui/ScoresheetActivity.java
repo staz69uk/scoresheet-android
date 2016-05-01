@@ -225,17 +225,16 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
                 consumed = true;
                 break;
             case R.id.menuTest:
-                showPlayers();
                 consumed = true;
                 break;
         }
         return consumed;
     }
 
-    private void showPlayers() {
+    public void showPlayers(String teamName) {
         PlayersFragment fragment = new PlayersFragment();
         fragment.setModel(model);
-        fragment.setTeamName("Teeme");
+        fragment.setTeamName(teamName);
         showFragment(fragment);
     }
 

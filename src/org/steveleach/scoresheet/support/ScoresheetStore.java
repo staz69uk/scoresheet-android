@@ -186,14 +186,30 @@ public class ScoresheetStore {
         return new File(baseDir,teamsDirName);
     }
 
-    public Team loadTeam(String fileName) throws IOException, JSONException {
-        String content = fileManager.readTextFileContent(new File(teamsDir(),fileName));
+    protected File teamFile(String teamName) {
+        return new File(teamsDir(), teamName.toLowerCase()+jsonFileExtension);
+    }
+
+    public Team loadTeamFromFile(String fileName) throws IOException, JSONException {
+        return loadTeamFromFile(new File(teamsDir(),fileName));
+    }
+
+    public Team loadTeam(String teamName) throws IOException, JSONException {
+        return loadTeamFromFile(teamFile(teamName));
+    }
+
+    private Team loadTeamFromFile(File file) throws IOException, JSONException {
+        String content = fileManager.readTextFileContent(file);
         return codec.teamFromJson(content);
     }
 
     public void saveTeam(Team team) throws JSONException, IOException {
         String json = codec.teamToJson(team);
-        File teamFile = new File(teamsDir(), team.getName().toLowerCase()+jsonFileExtension);
-        fileManager.writeTextFile(teamFile, json);
+        fileManager.writeTextFile(teamFile(team.getName()), json);
     }
+
+    public boolean teamFileExists(String teamName) {
+        return fileManager.exists(teamFile(teamName));
+    }
+
 }

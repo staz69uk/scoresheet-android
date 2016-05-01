@@ -115,13 +115,16 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
     private Team loadTestTeam() {
         ScoresheetStore store = ((ScoresheetActivity)getActivity()).scoresheetStore;
-        try {
-            Team team = store.loadTeam(teamName.toLowerCase()+".json");
-            return team;
-        } catch (IOException|JSONException e) {
-            e.printStackTrace();
-            return null;
+
+        if (store.teamFileExists(teamName)) {
+            try {
+                return store.loadTeam(teamName);
+            } catch (IOException|JSONException e) {
+                e.printStackTrace();
+            }
         }
+
+        return new Team(teamName);
     }
 
     @Override

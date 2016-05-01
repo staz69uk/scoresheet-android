@@ -307,7 +307,7 @@ public class ScoresheetSupportTest {
         ScoresheetStore store = new ScoresheetStore(fileManager, jsonCodec, context);
         when(fileManager.readTextFileContent(any())).thenReturn("");
         when(jsonCodec.teamFromJson(any())).thenReturn(blues);
-        Team team = store.loadTeam("test.json");
+        Team team = store.loadTeamFromFile("test.json");
         assertEquals(blues.getName(), team.getName());
     }
 

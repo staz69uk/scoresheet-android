@@ -23,5 +23,5 @@
     <item android:id="@+id/menuRefresh" android:title="Refresh Screen" />
     <item android:id="@+id/menuHelp" android:title="Help" />
     <item android:id="@+id/menuAbout" android:title="About" />
-    <item android:id="@+id/menuTest" android:title="Test" android:visible="true"/>
+    <item android:id="@+id/menuTest" android:title="Test" android:visible="false"/>
 </menu>

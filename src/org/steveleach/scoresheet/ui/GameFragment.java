@@ -34,7 +34,6 @@ import org.steveleach.scoresheet.model.ScoresheetModel;
  * @author Steve Leach
  */
 public class GameFragment extends Fragment implements ModelAware {
-
     private ScoresheetModel model;
     private View view;
     private EditText locationField;
@@ -59,21 +58,37 @@ public class GameFragment extends Fragment implements ModelAware {
             }
         });
 
+        view.findViewById(R.id.btnHomePlayers).setOnClickListener(new PlayersClickListener());
+        view.findViewById(R.id.btnAwayPlayers).setOnClickListener(new PlayersClickListener());
+
         return view;
     }
 
+    public class PlayersClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            save();
+            String teamName = (v.getId() == R.id.btnHomePlayers) ? model.homeTeamName() : model.awayTeamName();
+            ((ScoresheetActivity)getActivity()).showPlayers(teamName);
+        }
+    }
+
     private void saveAndClose(View view) {
+        save();
+
+        imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+
+        final DefaultFragmentActivity activity = (DefaultFragmentActivity) getActivity();
+        activity.showDefaultFragment();
+    }
+
+    private void save() {
         model.setHomeTeamName(homeNameField.getText().toString());
         model.setAwayTeamName(awayNameField.getText().toString());
         model.setGameLocation(locationField.getText().toString());
 
         model.setChanged(true);
         model.notifyListeners(ModelUpdate.GAME_CHANGED);
-
-        imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
-
-        final DefaultFragmentActivity activity = (DefaultFragmentActivity) getActivity();
-        activity.showDefaultFragment();
     }
 
     @Override
