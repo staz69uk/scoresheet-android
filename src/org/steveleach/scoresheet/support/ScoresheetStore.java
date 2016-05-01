@@ -37,6 +37,8 @@ public class ScoresheetStore {
     private SystemContext system;
     private File baseDir = new File(".");
     private String baseFileName = "gamedata";
+    private String teamsDirName = "Teams";
+    private String jsonFileExtension = ".json";
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
     private static final String NAME_FORMAT_1 = "%s-%s.json";
     private static final String NAME_FORMAT_2 = "%s-%s--%d-%02d-%02d.json";
@@ -177,19 +179,21 @@ public class ScoresheetStore {
     }
 
     public File getLastFile(String baseName) {
-        return new File(baseDir,baseName+".json");
+        return new File(baseDir,baseName+jsonFileExtension);
+    }
+
+    protected File teamsDir() {
+        return new File(baseDir,teamsDirName);
     }
 
     public Team loadTeam(String fileName) throws IOException, JSONException {
-        File teamsDir = new File(baseDir,"Teams");
-        String content = fileManager.readTextFileContent(new File(teamsDir,fileName));
+        String content = fileManager.readTextFileContent(new File(teamsDir(),fileName));
         return codec.teamFromJson(content);
     }
 
     public void saveTeam(Team team) throws JSONException, IOException {
-        File teamsDir = new File(baseDir,"Teams");
         String json = codec.teamToJson(team);
-        File teamFile = new File(teamsDir, team.getName().toLowerCase()+".json");
+        File teamFile = new File(teamsDir(), team.getName().toLowerCase()+jsonFileExtension);
         fileManager.writeTextFile(teamFile, json);
     }
 }
