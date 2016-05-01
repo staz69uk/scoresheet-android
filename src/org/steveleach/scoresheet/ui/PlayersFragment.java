@@ -119,12 +119,9 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
         if ((team.getPlayers().size() == 0) && store.teamFileExists(team.getName())) {
             try {
-                // Load the saved team
                 Team savedTeam = store.loadTeam(team.getName());
-                // Copy the players into the active team
-                for (Player player : savedTeam.getPlayers().values()) {
-                    team.getPlayers().put(player.getNumber(), player);
-                }
+                // Just copy the players, don't replace all details
+                model.copyPlayers(savedTeam, team);
             } catch (IOException|JSONException e) {
                 e.printStackTrace();
             }

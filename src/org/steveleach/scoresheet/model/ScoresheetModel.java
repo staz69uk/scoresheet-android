@@ -360,6 +360,12 @@ public class ScoresheetModel {
         }
     }
 
+    public void copyPlayers(Team sourceTeam, Team destTeam) {
+        for (Player player : sourceTeam.getPlayers().values()) {
+            destTeam.getPlayers().put(player.getNumber(), player);
+        }
+    }
+
     public class PlayerStats {
         public int playerNum = 0;
         public int goals = 0;

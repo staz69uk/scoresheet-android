@@ -395,4 +395,17 @@ public class ScoresheetModelTest {
         int[] totals = model.assistTotals("Home");
         assertEquals(3, totals[4]);
     }
+
+    @Test
+    public void testCopyPlayers() {
+        Team source = new Team("Source");
+        source.addPlayer(1,"Fred");
+        source.addPlayer(21,"Bob");
+
+        Team dest = new Team("Dest");
+
+        model.copyPlayers(source, dest);
+        assertEquals(2, dest.getPlayers().size());
+        assertEquals("Dest", dest.getName());
+    }
 }
