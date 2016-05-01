@@ -85,6 +85,9 @@
     <string name="playersHeader">%s Players</string>
     <string name="addPlayerButtonText">Add Player</string>
     <string name="playersButtonText">Players</string>
+    <string name="playersNumHeader">Num</string>
+    <string name="playersNameHeader">Name</string>
+    <string name="playersActiveHeader">Active?</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

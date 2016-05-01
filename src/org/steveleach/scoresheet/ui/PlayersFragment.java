@@ -34,16 +34,18 @@ import java.io.IOException;
  * @author Steve Leach
  */
 public class PlayersFragment extends Fragment implements ModelAware {
-
+    private ScoresheetActivity activity;
     private ScoresheetModel model;
     private View view;
     private TableLayout playersTable;
-    private String teamName = null;
+    private Team team = null;
     private TextView title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.playersfragment, container, false);
+
+        activity = (ScoresheetActivity) getActivity();
 
         title = (TextView)view.findViewById(R.id.playersHeader);
 
@@ -58,8 +60,8 @@ public class PlayersFragment extends Fragment implements ModelAware {
         refresh();
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     private void refresh() {
@@ -67,7 +69,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
             return;
         }
 
-        Team team = loadTestTeam();
+        loadTeamFile();
 
         title.setText(getString(R.string.playersHeader,team.getName()));
 
@@ -82,7 +84,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
     private void addPlayerRows(Team team, int[] widths) {
         for (Player player : team.getPlayers().values()) {
-            PlayerTableRow row = new PlayerTableRow(getActivity(),player,widths);
+            PlayerTableRow row = new PlayerTableRow(activity,player,widths);
             playersTable.addView(row);
         }
     }
@@ -96,35 +98,37 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
     private void addHeaders(int[] widths) {
         TableRow headers = new TableRow(getActivity());
-        addHeader("No.",headers,widths[0]);
-        addHeader("Name",headers,widths[1]);
-        addHeader("Active?",headers,widths[2]);
+        addHeader(getString(R.string.playersNumHeader),headers,widths[0]);
+        addHeader(getString(R.string.playersNameHeader),headers,widths[1]);
+        addHeader(getString(R.string.playersActiveHeader),headers,widths[2]);
         headers.setBackgroundColor(getResources().getColor(R.color.applight));
         headers.setPadding(2,2,2,2);
         playersTable.addView(headers);
     }
 
     private void addHeader(String text, TableRow headers, int width) {
-        Context context = getActivity();
-        TextView view = new TextView(context);
-        view.setTextAppearance(context,R.style.gameReportTextStyle);
+        TextView view = new TextView(activity);
+        view.setTextAppearance(activity,R.style.gameReportTextStyle);
         view.setText(text);
         view.setWidth(width);
         headers.addView(view);
     }
 
-    private Team loadTestTeam() {
-        ScoresheetStore store = ((ScoresheetActivity)getActivity()).scoresheetStore;
+    private void loadTeamFile() {
+        ScoresheetStore store = activity.scoresheetStore;
 
-        if (store.teamFileExists(teamName)) {
+        if ((team.getPlayers().size() == 0) && store.teamFileExists(team.getName())) {
             try {
-                return store.loadTeam(teamName);
+                // Load the saved team
+                Team savedTeam = store.loadTeam(team.getName());
+                // Copy the players into the active team
+                for (Player player : savedTeam.getPlayers().values()) {
+                    team.getPlayers().put(player.getNumber(), player);
+                }
             } catch (IOException|JSONException e) {
                 e.printStackTrace();
             }
         }
-
-        return new Team(teamName);
     }
 
     @Override

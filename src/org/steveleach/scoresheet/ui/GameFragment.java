@@ -27,6 +27,7 @@ import org.steveleach.ihscoresheet.R;
 import org.steveleach.scoresheet.model.ModelAware;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.model.Team;
 
 /**
  * UI fragment for editing game details.
@@ -40,10 +41,13 @@ public class GameFragment extends Fragment implements ModelAware {
     private EditText homeNameField;
     private EditText awayNameField;
     private InputMethodManager imgr;
+    private ScoresheetActivity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.gamefragment, container, false);
+
+        activity = (ScoresheetActivity)getActivity();
 
         homeNameField = (EditText) view.findViewById(R.id.fldHomeTeamName);
         awayNameField = (EditText) view.findViewById(R.id.fldAwayTeamName);
@@ -68,8 +72,8 @@ public class GameFragment extends Fragment implements ModelAware {
         @Override
         public void onClick(View v) {
             save();
-            String teamName = (v.getId() == R.id.btnHomePlayers) ? model.homeTeamName() : model.awayTeamName();
-            ((ScoresheetActivity)getActivity()).showPlayers(teamName);
+            Team team = (v.getId() == R.id.btnHomePlayers) ? model.getHomeTeam() : model.getAwayTeam();
+            activity.showPlayers(team);
         }
     }
 
@@ -78,7 +82,6 @@ public class GameFragment extends Fragment implements ModelAware {
 
         imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
 
-        final DefaultFragmentActivity activity = (DefaultFragmentActivity) getActivity();
         activity.showDefaultFragment();
     }
 
