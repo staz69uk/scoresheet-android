@@ -131,7 +131,7 @@ public class ReportFragment extends Fragment implements ModelAware {
         }
     }
 
-    private void addTeamRows(TableLayout table, String team, ScoresheetModel model) {
+    private void addTeamRows(TableLayout table, Team team, ScoresheetModel model) {
         int index = 0;
 
         int[] widths = new int[] {10,15,10,10,10};  // Column widths in %
@@ -139,10 +139,10 @@ public class ReportFragment extends Fragment implements ModelAware {
 
         addRow(table,headers(R.string.reportTeamTableHeaders),widths,alignment,index++);
 
-        for (ScoresheetModel.PlayerStats player : model.getPlayerStats(team).values()) {
+        for (ScoresheetModel.PlayerStats player : model.getPlayerStats(team.getName()).values()) {
             String[] values = new String[] {
                     activity.playerNum(player.playerNum),
-                    "--",
+                    team.activePlayerName(player.playerNum),
                     Integer.toString(player.goals),
                     Integer.toString(player.assists),
                     Integer.toString(player.penaltyMins)
@@ -225,10 +225,10 @@ public class ReportFragment extends Fragment implements ModelAware {
 
     private void refreshReport() {
         if (view != null) {
-            addPlayerStats(model.homeTeamName(),model, reportHomeTeamHeader, tableHomeTeamStats);
+            addPlayerStats(model.getHomeTeam(),model, reportHomeTeamHeader, tableHomeTeamStats);
             addGoals(model.homeTeamName(), model, reportScoringHomeHeader, tableHomeScoring);
             addPenalties(model.homeTeamName(), model, reportPenaltiesHomeHeader, tableHomePenalties);
-            addPlayerStats(model.awayTeamName(),model, reportAwayTeamHeader, tableAwayTeamStats);
+            addPlayerStats(model.getAwayTeam(),model, reportAwayTeamHeader, tableAwayTeamStats);
             addGoals(model.awayTeamName(), model, reportScoringAwayHeader, tableAwayScoring);
             addPenalties(model.awayTeamName(), model, reportPenaltiesAwayHeader, tableAwayPenalties);
             addGoalTotals(model);
@@ -237,11 +237,11 @@ public class ReportFragment extends Fragment implements ModelAware {
         }
     }
 
-    private void addPlayerStats(String teamName, ScoresheetModel model, int headerId, int tableId) {
+    private void addPlayerStats(Team team, ScoresheetModel model, int headerId, int tableId) {
         TextView header = (TextView) view.findViewById(headerId);
-        header.setText(getString(R.string.reportTeamHeader,teamName.toUpperCase()));
+        header.setText(getString(R.string.reportTeamHeader,team.getName().toUpperCase()));
 
         TableLayout table = (TableLayout) view.findViewById(tableId);
-        addTeamRows(table, teamName, model);
+        addTeamRows(table, team, model);
     }
 }

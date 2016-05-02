@@ -32,7 +32,7 @@ public class JsonCodec {
 
     private static final SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    public static final String FORMAT_VERSION = "1.1.1";
+    public static final String FORMAT_VERSION = "1.2.0";
     public static final String TEAM_FORMAT_VERSION = "1.0.0";
 
     /**
@@ -49,10 +49,12 @@ public class JsonCodec {
         root.put("@content", "Ice Hockey Scoresheet Data");
         root.put("@version", FORMAT_VERSION);
         root.put("@exported", timeStampFormat.format(new Date()));
-        root.put("homeTeamName", model.getHomeTeam().getName());
-        root.put("awayTeamName", model.getAwayTeam().getName());
+        root.put("homeTeamName", model.getHomeTeam().getName());    // deprecated
+        root.put("awayTeamName", model.getAwayTeam().getName());    // deprecated
         root.put("location", model.getGameLocation());
         root.put("gameDate", dateOnlyFormat.format(model.getGameDateTime()));
+        root.put("homeTeam", teamJson(model.getHomeTeam()));
+        root.put("awayTeam", teamJson(model.getAwayTeam()));
 
         JSONArray jsonEvents = new JSONArray();
         for (GameEvent event : model.getEvents()) {
@@ -80,6 +82,13 @@ public class JsonCodec {
         return root.toString(4);
     }
 
+    private JSONObject teamJson(Team team) throws JSONException {
+        JSONObject jsonTeam = new JSONObject();
+        jsonTeam.put("name", team.getName());
+        jsonTeam.put("players", teamPlayerListJson(team));
+        return jsonTeam;
+    }
+
     /**
      * Populates a model from a JSON string representation.
      *
@@ -97,8 +106,13 @@ public class JsonCodec {
 
         JSONObject root = new JSONObject(json);
 
-        model.getHomeTeam().setName(root.optString("homeTeamName","Home"));
-        model.getAwayTeam().setName(root.optString("awayTeamName","Home"));
+        if (root.has("homeTeam")) {
+            loadTeam(root.getJSONObject("homeTeam"), model.getHomeTeam());
+            loadTeam(root.getJSONObject("awayTeam"), model.getAwayTeam());
+        } else {
+            model.getHomeTeam().setName(root.optString("homeTeamName", "Home"));
+            model.getAwayTeam().setName(root.optString("awayTeamName", "Home"));
+        }
         model.setGameLocation(root.optString("location",""));
 
         model.setGameDateTime(getDate(root.optString("gameDate","")));
@@ -129,6 +143,11 @@ public class JsonCodec {
 
             model.addEvent(event);
         }
+    }
+
+    private void loadTeam(JSONObject jsonTeam, Team team) throws JSONException {
+        team.setName(jsonTeam.optString("name",""));
+        loadTeamPlayers(jsonTeam.getJSONArray("players"), team);
     }
 
     public static Date getDate(String dateStr) {
@@ -166,6 +185,12 @@ public class JsonCodec {
         root.put("@version", TEAM_FORMAT_VERSION);
         root.put("@exported", timeStampFormat.format(new Date()));
         root.put("shortName", team.getName());
+        JSONArray jsonPlayers = teamPlayerListJson(team);
+        root.put("players", jsonPlayers);
+        return root.toString(4);
+    }
+
+    private JSONArray teamPlayerListJson(Team team) throws JSONException {
         JSONArray jsonPlayers = new JSONArray();
         for (Player player : team.getPlayers().values()) {
             JSONObject jsonPlayer = new JSONObject();
@@ -174,8 +199,7 @@ public class JsonCodec {
             jsonPlayer.put("active", player.isPlaying());
             jsonPlayers.put(jsonPlayer);
         }
-        root.put("players", jsonPlayers);
-        return root.toString(4);
+        return jsonPlayers;
     }
 
     /**
@@ -192,6 +216,11 @@ public class JsonCodec {
         team.setName(root.optString("shortName",""));
 
         JSONArray jsonPlayers = root.getJSONArray("players");
+        loadTeamPlayers(jsonPlayers, team);
+        return team;
+    }
+
+    private void loadTeamPlayers(JSONArray jsonPlayers, Team team) throws JSONException {
         for (int n = 0; n < jsonPlayers.length(); n++) {
             JSONObject jsonPlayer = (JSONObject) jsonPlayers.get(n);
 
@@ -202,6 +231,5 @@ public class JsonCodec {
 
             team.getPlayers().put(player.getNumber(), player);
         }
-        return team;
     }
 }

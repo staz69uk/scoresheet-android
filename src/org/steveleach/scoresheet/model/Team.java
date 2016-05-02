@@ -53,4 +53,17 @@ public class Team {
     public String playerName(int number) {
         return getPlayers().containsKey(number) ? getPlayers().get(number).getName() : null;
     }
+
+    /**
+     * If there is an active player with the specified number, returns their name, otherwise returns an empty string.
+     */
+    public String activePlayerName(int number) {
+        Player player = getPlayers().get(number);
+        if (player != null) {
+            if (player.isPlaying()) {
+                return player.getName();
+            }
+        }
+        return "";
+    }
 }

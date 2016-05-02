@@ -1,0 +1,124 @@
+{
+    "gameDate": "2016-05-02",
+    "awayTeam": {
+        "players": [
+            {
+                "number": 11,
+                "name": "M Messier",
+                "active": true
+            },
+            {
+                "number": 16,
+                "name": "T Linden",
+                "active": true
+            },
+            {
+                "number": 19,
+                "name": "M Naslund",
+                "active": true
+            }
+        ],
+        "name": "Reds"
+    },
+    "@version": "1.2.0",
+    "awayTeamName": "Reds",
+    "homeTeam": {
+        "players": [
+            {
+                "number": 10,
+                "name": "P Bure",
+                "active": true
+            },
+            {
+                "number": 30,
+                "name": "M Brodeur",
+                "active": true
+            },
+            {
+                "number": 66,
+                "name": "M Lenieux",
+                "active": true
+            },
+            {
+                "number": 99,
+                "name": "W Gretzky",
+                "active": true
+            }
+        ],
+        "name": "Blues"
+    },
+    "location": "Somewhere over the rainbow",
+    "@content": "Ice Hockey Scoresheet Data",
+    "homeTeamName": "Blues",
+    "@exported": "2016-05-02 08:27:16",
+    "events": [
+        {
+            "period": 1,
+            "gameTime": "00:10",
+            "assist2": 2,
+            "assist1": 13,
+            "subType": "E",
+            "eventType": "Goal",
+            "team": "Blues",
+            "player": 41
+        },
+        {
+            "period": 1,
+            "gameTime": "01:30",
+            "assist2": 0,
+            "assist1": 1,
+            "subType": "E",
+            "eventType": "Goal",
+            "team": "Reds",
+            "player": 2
+        },
+        {
+            "period": 1,
+            "gameTime": "04:45",
+            "minutes": 2,
+            "subType": "Hook",
+            "eventType": "Penalty",
+            "team": "Reds",
+            "player": 2,
+            "plusMins": 0
+        },
+        {
+            "period": 1,
+            "gameTime": "11:36",
+            "assist2": 41,
+            "assist1": 93,
+            "subType": "SH",
+            "eventType": "Goal",
+            "team": "Blues",
+            "player": 12
+        },
+        {
+            "period": 1,
+            "gameTime": "20:00",
+            "subType": "",
+            "eventType": "Period end",
+            "team": "",
+            "player": 0
+        },
+        {
+            "period": 2,
+            "gameTime": "21:47",
+            "assist2": 0,
+            "assist1": 41,
+            "subType": "PP",
+            "eventType": "Goal",
+            "team": "Blues",
+            "player": 24
+        },
+        {
+            "period": 2,
+            "gameTime": "27:47",
+            "minutes": 5,
+            "subType": "Fight",
+            "eventType": "Penalty",
+            "team": "Blues",
+            "player": 2,
+            "plusMins": 0
+        }
+    ]
+}

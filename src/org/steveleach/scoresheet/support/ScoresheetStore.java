@@ -211,5 +211,4 @@ public class ScoresheetStore {
     public boolean teamFileExists(String teamName) {
         return fileManager.exists(teamFile(teamName));
     }
-
 }

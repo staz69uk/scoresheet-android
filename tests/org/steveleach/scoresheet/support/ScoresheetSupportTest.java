@@ -260,6 +260,15 @@ public class ScoresheetSupportTest {
         model.setGameLocation("Somewhere over the rainbow");
         FastTestSuite.addTestEvents(model);
 
+        model.getHomeTeam().addPlayer(99, "W Gretzky");
+        model.getHomeTeam().addPlayer(10, "P Bure");
+        model.getHomeTeam().addPlayer(30, "M Brodeur");
+        model.getHomeTeam().addPlayer(66, "M Lenieux");
+
+        model.getAwayTeam().addPlayer(16, "T Linden");
+        model.getAwayTeam().addPlayer(11, "M Messier");
+        model.getAwayTeam().addPlayer(19, "M Naslund");
+
         String json = new JsonCodec().toJson(model);
         String versionStr = JsonCodec.FORMAT_VERSION.replace('.','_');
 

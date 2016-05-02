@@ -151,6 +151,9 @@ public class SavesFragment extends Fragment {
 
     private void loadSavedData(String item) {
         StoreResult result = store.loadInto(model, item);
+
+        loadTeams();
+
         model.setChanged(false);
         model.notifyListeners(new ModelUpdate("Model loaded"));
         if (result.success) {
@@ -159,6 +162,15 @@ public class SavesFragment extends Fragment {
             Toast.makeText(getActivity().getApplicationContext(), "Error " + result.text, Toast.LENGTH_LONG).show();
         }
         ((DefaultFragmentActivity)getActivity()).showDefaultFragment();
+    }
+
+    private void loadTeams() {
+        if (store.teamFileExists(model.homeTeamName())) {
+
+        }
+        if (store.teamFileExists(model.awayTeamName())) {
+
+        }
     }
 
     public void configure(ScoresheetModel model, ScoresheetStore store) {

@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TableRow;
 import org.steveleach.scoresheet.model.Player;
+import org.steveleach.scoresheet.model.Team;
 
 import static android.text.InputType.*;
 
@@ -33,15 +34,17 @@ import static android.text.InputType.*;
 public class PlayerTableRow
                 extends TableRow
                 implements View.OnFocusChangeListener, CompoundButton.OnCheckedChangeListener {
+    private final Team team;
     private Player player = null;
     private EditText numberField;
     private EditText nameField;
     private Switch activeSwitch;
 
-    public PlayerTableRow(Context context, Player player, int[] widths) {
+    public PlayerTableRow(Context context, Team team, Player player, int[] widths) {
         super(context);
 
         setPlayer(player);
+        this.team = team;
 
         numberField = makeField(context,widths[0]);
         numberField.setText(Integer.toString(player.getNumber()));
@@ -85,9 +88,19 @@ public class PlayerTableRow
     }
 
     private void updatePlayer() {
-        player.setNumber(Integer.parseInt("0" + numberField.getText().toString().trim()));
+        int newPlayerNum = getPlayerNumber();
+        if (newPlayerNum != player.getNumber()) {
+            // If player number has changed then need to move the player to the new key in the map
+            team.getPlayers().remove(player.getNumber());
+            player.setNumber(newPlayerNum);
+            team.getPlayers().put(newPlayerNum, player);
+        }
         player.setName(nameField.getText().toString().trim());
         player.setPlaying(activeSwitch.isChecked());
         Log.d("STAZ", player.toString());
+    }
+
+    private int getPlayerNumber() {
+        return Integer.parseInt("0" + numberField.getText().toString().trim());
     }
 }

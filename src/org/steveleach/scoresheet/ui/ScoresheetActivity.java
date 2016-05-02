@@ -156,6 +156,7 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
                     @Override
                     public void run() {
                         model.reset();
+                        model.notifyListeners(ModelUpdate.ALL_CHANGED);
                     }
                 });
     }

@@ -17,6 +17,7 @@ package org.steveleach.scoresheet.ui;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,8 @@ public class PlayersFragment extends Fragment implements ModelAware {
     private TableLayout playersTable;
     private Team team = null;
     private TextView title;
+    private Button addPlayerButton;
+    private int[] widths = new int[] {80,120,80};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,7 +54,21 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
         playersTable = (TableLayout) view.findViewById(R.id.playersTable);
 
+        addPlayerButton = (Button)view.findViewById(R.id.btnNewPlayer);
+        addPlayerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addPlayerRow();
+            }
+        });
+
         return view;
+    }
+
+    private void addPlayerRow() {
+        Player player = new Player(0,"");
+        team.getPlayers().put(0, player);
+        addPlayerRow(team, player);
     }
 
     @Override
@@ -75,28 +92,30 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
         playersTable.removeAllViews();
 
-        int[] widths = calculateColumnWidths();
+        calculateColumnWidths();
 
-        addHeaders(widths);
+        addHeaders();
 
-        addPlayerRows(team, widths);
+        addPlayerRows(team);
     }
 
-    private void addPlayerRows(Team team, int[] widths) {
+    private void addPlayerRows(Team team) {
         for (Player player : team.getPlayers().values()) {
-            PlayerTableRow row = new PlayerTableRow(activity,player,widths);
-            playersTable.addView(row);
+            addPlayerRow(team, player);
         }
     }
 
-    private int[] calculateColumnWidths() {
-        int[] widths = new int[] {80,120,80};
-        int totalWidth = getResources().getDisplayMetrics().widthPixels;
-        widths[1] = totalWidth - widths[0] - widths[2] - 12;
-        return widths;
+    private void addPlayerRow(Team team, Player player) {
+        PlayerTableRow row = new PlayerTableRow(activity,team,player,widths);
+        playersTable.addView(row);
     }
 
-    private void addHeaders(int[] widths) {
+    private void calculateColumnWidths() {
+        int totalWidth = getResources().getDisplayMetrics().widthPixels;
+        widths[1] = totalWidth - widths[0] - widths[2] - 12;
+    }
+
+    private void addHeaders() {
         TableRow headers = new TableRow(getActivity());
         addHeader(getString(R.string.playersNumHeader),headers,widths[0]);
         addHeader(getString(R.string.playersNameHeader),headers,widths[1]);
@@ -118,6 +137,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
         ScoresheetStore store = activity.scoresheetStore;
 
         if ((team.getPlayers().size() == 0) && store.teamFileExists(team.getName())) {
+            Log.i(activity.LOG_TAG, "Loading team file for " + team.getName());
             try {
                 Team savedTeam = store.loadTeam(team.getName());
                 // Just copy the players, don't replace all details

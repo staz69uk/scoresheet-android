@@ -19,42 +19,33 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:id="@+id/btnAddPlayer">
 
-    <LinearLayout
-            android:orientation="horizontal"
+    <TextView style="@style/AppHeader" android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:text="@string/playersHeader" android:id="@+id/playersHeader"
+              android:layout_gravity="center_horizontal"/>
+    <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" style="@style/AppHeader">
-        <TextView style="@style/AppHeader" android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:text="@string/playersHeader" android:id="@+id/playersHeader"
-                  android:layout_gravity="center_horizontal" android:layout_weight="1"/>
-    </LinearLayout>
+            android:layout_height="wrap_content" android:padding="12dp"
+            android:background="@color/applight">
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addPlayerButtonText"
+                android:id="@+id/btnNewPlayer" android:layout_gravity="center"/>
+    </FrameLayout>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:background="@color/applight" android:padding="6dp">
+            android:layout_height="match_parent" android:background="@color/applight" android:padding="6dp"
+            android:layout_weight="1">
         <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/scrollView5">
-            <LinearLayout
-                    android:orientation="vertical"
+                android:id="@+id/scrollView5" android:background="@color/applightest">
+            <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" android:layout_gravity="center_horizontal"
-                        android:id="@+id/playersTable" android:background="@color/applightest">
-                </TableLayout>
-                <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" android:layout_weight="1" android:padding="12dp"
-                        android:background="@color/applightest">
-                    <Button
-                            android:layout_width="160dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/addPlayerButtonText"
-                            android:id="@+id/btnNewPlayer" android:layout_gravity="center"/>
-                </FrameLayout>
-            </LinearLayout>
+                    android:layout_height="match_parent" android:layout_gravity="center_horizontal"
+                    android:id="@+id/playersTable" android:background="@color/applightest">
+            </TableLayout>
         </ScrollView>
     </LinearLayout>
 </LinearLayout>

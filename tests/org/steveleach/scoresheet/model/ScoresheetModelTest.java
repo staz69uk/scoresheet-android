@@ -408,4 +408,23 @@ public class ScoresheetModelTest {
         assertEquals(2, dest.getPlayers().size());
         assertEquals("Dest", dest.getName());
     }
+
+    @Test
+    public void testTeamPlayerName() {
+        Team team = new Team("Home");
+        team.addPlayer(23, "F Bloggs");
+        assertEquals("F Bloggs", team.playerName(23));
+        assertEquals(null, team.playerName(24));
+    }
+
+    @Test
+    public void testActiveTeamPlayerName() {
+        Team team = new Team("Home");
+        team.addPlayer(23, "F Bloggs");
+        team.addPlayer(24, "J Smith");
+        team.getPlayers().get(24).setPlaying(false);
+        assertEquals("F Bloggs", team.activePlayerName(23));
+        assertEquals("", team.activePlayerName(24));
+        assertEquals("", team.activePlayerName(25));
+    }
 }
