@@ -19,8 +19,16 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:background="@color/applight">
 
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
     <TextView style="@style/AppHeader" android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="@string/gameSaves" android:id="@+id/textView14" android:editable="false"/>
+              android:text="@string/gameSaves" android:id="@+id/textView14" android:editable="false"
+              android:layout_weight="1"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnCloseSaves" android:src="@drawable/ic_close_24dp" android:layout_marginTop="4dp"
+                android:onClick="closeFragmentButtonClicked"/>
+    </LinearLayout>
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

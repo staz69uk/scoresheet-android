@@ -16,11 +16,22 @@
 -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuGameDetails" android:title="Game Details" />
     <item android:id="@+id/menuNewGame" android:title="New Game" />
-    <item android:id="@+id/menuSave" android:title="Save Game" />
-    <item android:id="@+id/menuLoad" android:title="Load Game" />
-    <item android:id="@+id/menuRefresh" android:title="Refresh Screen" />
+    <item android:id="@+id/menuSave"
+          android:title="Save Game"
+          android:icon="@drawable/ic_save_24dp"
+          android:showAsAction="always"
+    />
+    <item android:id="@+id/menuLoad" android:title="Load Game"
+          android:icon="@drawable/ic_folder_open_24dp"
+          android:showAsAction="ifRoom"
+    />
+    <item android:id="@+id/menuGameDetails" android:title="Game Details" />
+    <item android:id="@+id/menuRefresh"
+          android:title="Refresh Screen"
+          android:icon="@drawable/ic_refresh_24dp"
+          android:showAsAction="ifRoom"
+    />
     <item android:id="@+id/menuHelp" android:title="Help" />
     <item android:id="@+id/menuAbout" android:title="About" />
     <item android:id="@+id/menuTest" android:title="Test" android:visible="false"/>

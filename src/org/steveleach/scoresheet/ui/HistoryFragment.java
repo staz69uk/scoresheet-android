@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import org.steveleach.ihscoresheet.*;
 import org.steveleach.scoresheet.model.*;
@@ -39,12 +40,13 @@ public class HistoryFragment extends Fragment implements ModelAware {
     private HistoryAdapter adapter = null;
     private ScoresheetModel model = new ScoresheetModel();
     private Button nextPeriodButton;
+    private View view;
     private TextView title = null;
     private ListView eventList = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.historyfragment, container, false);
+        view = inflater.inflate(R.layout.historyfragment, container, false);
 
         activity = (ScoresheetActivity) getActivity();
         eventList = (ListView)view.findViewById(R.id.historyList2);
@@ -116,7 +118,18 @@ public class HistoryFragment extends Fragment implements ModelAware {
     @Override
     public void onResume() {
         super.onResume();
+        hideSoftKeyboard();
         refreshList();
+    }
+
+    private void hideSoftKeyboard() {
+        InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        View focused = getActivity().getCurrentFocus();
+        if (focused == null) {
+            // http://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
+            focused = new View(getActivity());
+        }
+        imgr.hideSoftInputFromWindow(focused.getWindowToken(), 0);
     }
 
     private void refreshList() {

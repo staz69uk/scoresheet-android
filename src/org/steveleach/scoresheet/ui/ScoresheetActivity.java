@@ -15,10 +15,7 @@
 
 package org.steveleach.scoresheet.ui;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.app.*;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -128,6 +125,16 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         showFragment(fragment);
     }
 
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 1) {
+            closeLatestFragment();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public void showFragment(Fragment fragment) {
         FragmentTransaction tx = getFragmentManager().beginTransaction();
         tx.replace(R.id.fragmentContainer, fragment, MAIN_FRAGMENT);
@@ -141,8 +148,19 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
         showFragment(h);
     }
 
+    public void closeFragmentButtonClicked(View view) {
+        closeLatestFragment();
+    }
+
     public void reportButtonClicked(View view) {
         showGameReport();
+    }
+
+    public void closeLatestFragment() {
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStackImmediate();
+        }
     }
 
     private void showGameReport() {

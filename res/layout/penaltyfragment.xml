@@ -20,10 +20,18 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content" android:weightSum="1">
 
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal"
+                  android:background="@color/applight">
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
               android:text="Penalty"
               android:id="@+id/txtPenaltyTitle" android:editable="false"
-              android:layout_gravity="center_horizontal" style="@style/AppHeader"/>
+              android:layout_gravity="center_horizontal" style="@style/AppHeader" android:layout_weight="1"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton3" android:layout_marginTop="4dp"
+                android:onClick="closeFragmentButtonClicked" android:src="@drawable/ic_close_24dp"/>
+    </LinearLayout>
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -65,8 +65,6 @@ public class GoalFragment extends Fragment implements ModelAware {
         assist2Field = (EditText)view.findViewById(R.id.fldAssist2);
         goalTypeField = (AutoCompleteTextView)view.findViewById(R.id.fldGoalType);
 
-        //goalTypeField.setImeOptions(IME_ACTION_NEXT|TYPE_CLASS_TEXT|TYPE_TEXT_FLAG_CAP_CHARACTERS|TYPE_TEXT_VARIATION_SHORT_MESSAGE|TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-
         clockField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(4) });
         periodField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(1) });
         scorerField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });

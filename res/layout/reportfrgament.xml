@@ -20,14 +20,23 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:weightSum="1">
 
-    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
-              android:text="@string/reportFragmentTitle"
-              android:id="@+id/reportTitle" android:editable="false"
-              style="@style/AppHeader"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="horizontal" android:background="@color/applight">
+        <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:text="@string/reportFragmentTitle"
+                  android:id="@+id/reportTitle" android:editable="false"
+                  style="@style/AppHeader" android:layout_weight="1"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnCloseReport" android:src="@drawable/ic_close_24dp"
+                android:background="@color/applight" android:padding="4dp" android:layout_marginTop="4dp"
+                android:onClick="closeFragmentButtonClicked"/>
+    </LinearLayout>
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/scrollView3" android:background="@color/applight" android:padding="4dp">
+            android:id="@+id/scrollView3" android:background="@color/applight">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
