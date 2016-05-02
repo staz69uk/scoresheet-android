@@ -26,7 +26,10 @@
           android:icon="@drawable/ic_folder_open_24dp"
           android:showAsAction="ifRoom"
     />
-    <item android:id="@+id/menuGameDetails" android:title="Game Details" />
+    <item android:id="@+id/menuGameDetails" android:title="Game Details"
+          android:icon="@drawable/ic_description_24dp"
+          android:showAsAction="ifRoom"
+    />
     <item android:id="@+id/menuRefresh"
           android:title="Refresh Screen"
           android:icon="@drawable/ic_refresh_24dp"
