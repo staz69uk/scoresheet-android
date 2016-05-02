@@ -17,6 +17,7 @@ package org.steveleach.scoresheet.ui;
 
 import android.app.*;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -348,13 +349,27 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
 
         ContextThemeWrapper wrapper = new ContextThemeWrapper(this, R.style.AppDialog);
         AlertDialog.Builder builder = new AlertDialog.Builder(wrapper);
-        builder
+        AlertDialog dialog = builder
                 .setTitle(getString(R.string.confirmAlertTitle))
                 .setMessage(prompt)
-                .setPositiveButton(yesButton,listener)
-                .setNegativeButton(noButton,listener)
-                .show();
+                .setPositiveButton(yesButton, listener)
+                .setNegativeButton(noButton, listener)
+                .create();
 
+        dialog.show();
+
+        int color = getResources().getColor(R.color.appdark);
+
+        TextView tv = (TextView)getDialogView(dialog,"android:id/alertTitle");
+        tv.setTextColor(color);
+
+        View divider = getDialogView(dialog,"android:id/titleDivider");
+        divider.setBackgroundColor(color);
+    }
+
+    private View getDialogView(AlertDialog dialog, String resourceName) {
+        int textViewId = dialog.getContext().getResources().getIdentifier(resourceName, null, null);
+        return dialog.findViewById(textViewId);
     }
 
     @Override
