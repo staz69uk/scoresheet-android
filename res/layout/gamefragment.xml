@@ -42,11 +42,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/fldHomeTeamName" android:layout_weight="1" android:inputType="textCapWords|text"/>
-                <Button
+                <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/playersButtonText"
-                        android:id="@+id/btnHomePlayers" android:paddingTop="0dp" android:paddingBottom="0dp"/>
+                        android:id="@+id/btnHomePlayers" android:src="@drawable/ic_people_black_24dp"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -60,8 +59,10 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/fldAwayTeamName" android:inputType="textCapWords|text"
                         android:layout_weight="1"/>
-                <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/playersButtonText" android:id="@+id/btnAwayPlayers"/>
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnAwayPlayers" android:src="@drawable/ic_people_black_24dp"/>
             </LinearLayout>
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
                           android:layout_height="match_parent" android:padding="4dp">
