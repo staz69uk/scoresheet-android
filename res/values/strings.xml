@@ -88,6 +88,9 @@
     <string name="playersNumHeader">Num</string>
     <string name="playersNameHeader">Name</string>
     <string name="playersActiveHeader">Active?</string>
+    <string name="saveTeamPlayersPrompt">Do you want to save this player list for reuse in future games?</string>
+    <string name="teamSavedMessage">Saved team to %s</string>
+    <string name="teamNotSavedMessage">Error saving %s!</string>
     <string-array name="goalCodes">
         <item>E</item>
         <item>PP</item>

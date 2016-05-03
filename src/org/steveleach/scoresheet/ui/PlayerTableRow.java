@@ -97,7 +97,6 @@ public class PlayerTableRow
         }
         player.setName(nameField.getText().toString().trim());
         player.setPlaying(activeSwitch.isChecked());
-        Log.d("STAZ", player.toString());
     }
 
     private int getPlayerNumber() {

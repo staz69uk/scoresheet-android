@@ -29,6 +29,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btnAddPlayer" android:layout_weight="0"
                 android:src="@drawable/ic_person_add_black_24dp"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSavePlayers" android:src="@drawable/ic_save_black_24dp"/>
         <Space
                 android:layout_width="32px"
                 android:layout_height="match_parent"
@@ -36,7 +40,7 @@
         <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton5" android:layout_marginTop="4dp"
+                android:id="@+id/btnClosePlayers" android:layout_marginTop="4dp"
                 android:onClick="closeFragmentButtonClicked" android:src="@drawable/ic_close_black_24dp"/>
     </LinearLayout>
     <LinearLayout

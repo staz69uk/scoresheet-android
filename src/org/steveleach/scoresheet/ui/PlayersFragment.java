@@ -15,7 +15,6 @@
 package org.steveleach.scoresheet.ui;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -62,7 +61,38 @@ public class PlayersFragment extends Fragment implements ModelAware {
             }
         });
 
+        ImageButton savePlayersButton = (ImageButton)view.findViewById(R.id.btnSavePlayers);
+        savePlayersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                askToSavePlayers();
+            }
+        });
+
+
         return view;
+    }
+
+    private void askToSavePlayers() {
+        String text = getString(R.string.saveTeamPlayersPrompt);
+        activity.yesNoDialog(text, new Runnable() {
+            @Override
+            public void run() {
+                savePlayers();
+            }
+        });
+    }
+
+    private void savePlayers() {
+        ScoresheetStore store = activity.scoresheetStore;
+        try {
+            store.saveTeam(team);
+            activity.toast(getString(R.string.teamSavedMessage,team.getName()));
+        } catch (JSONException|IOException e) {
+            String message = getString(R.string.teamNotSavedMessage,team.getName());
+            Log.e(activity.LOG_TAG, message, e);
+            activity.toast(message);
+        }
     }
 
     private void addPlayerRow() {
