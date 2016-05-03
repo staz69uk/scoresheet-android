@@ -41,7 +41,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
     private TableLayout playersTable;
     private Team team = null;
     private TextView title;
-    private Button addPlayerButton;
+    private ImageButton addPlayerButton;
     private int[] widths = new int[] {80,120,80};
 
     @Override
@@ -54,7 +54,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
 
         playersTable = (TableLayout) view.findViewById(R.id.playersTable);
 
-        addPlayerButton = (Button)view.findViewById(R.id.btnNewPlayer);
+        addPlayerButton = (ImageButton)view.findViewById(R.id.btnAddPlayer);
         addPlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

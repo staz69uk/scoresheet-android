@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton3" android:layout_marginTop="4dp"
-                android:onClick="closeFragmentButtonClicked" android:src="@drawable/ic_close_24dp"/>
+                android:onClick="closeFragmentButtonClicked" android:src="@drawable/ic_close_black_24dp"/>
     </LinearLayout>
     <ScrollView
             android:layout_width="match_parent"

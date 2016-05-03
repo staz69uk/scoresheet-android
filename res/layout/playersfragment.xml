@@ -17,7 +17,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:id="@+id/btnAddPlayer">
+              android:layout_height="match_parent" android:id="@+id/panelAddPlayer">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal"
                   android:background="@color/applight">
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton5" android:layout_marginTop="4dp"
-                android:onClick="closeFragmentButtonClicked" android:src="@drawable/ic_close_24dp"/>
+                android:onClick="closeFragmentButtonClicked" android:src="@drawable/ic_close_black_24dp"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -38,11 +38,16 @@
                 android:layout_width="20px"
                 android:layout_height="20px"
                 android:layout_weight="1"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAddPlayer" android:layout_weight="0"
+                android:src="@drawable/ic_person_add_black_24dp"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/addPlayerButtonText"
-                android:id="@+id/btnNewPlayer" android:layout_gravity="center" android:visibility="visible"/>
+                android:id="@+id/btnNewPlayer" android:layout_gravity="center" android:visibility="invisible"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"

@@ -19,20 +19,20 @@
     <item android:id="@+id/menuNewGame" android:title="New Game" />
     <item android:id="@+id/menuSave"
           android:title="Save Game"
-          android:icon="@drawable/ic_save_24dp"
+          android:icon="@drawable/ic_save_black_24dp"
           android:showAsAction="always"
     />
     <item android:id="@+id/menuLoad" android:title="Load Game"
-          android:icon="@drawable/ic_folder_open_24dp"
+          android:icon="@drawable/ic_folder_open_black_24dp"
           android:showAsAction="ifRoom"
     />
     <item android:id="@+id/menuGameDetails" android:title="Game Details"
-          android:icon="@drawable/ic_description_24dp"
+          android:icon="@drawable/ic_settings_applications_black_24dp"
           android:showAsAction="ifRoom"
     />
     <item android:id="@+id/menuRefresh"
           android:title="Refresh Screen"
-          android:icon="@drawable/ic_refresh_24dp"
+          android:icon="@drawable/ic_refresh_black_24dp"
           android:showAsAction="ifRoom"
     />
     <item android:id="@+id/menuHelp" android:title="Help" />

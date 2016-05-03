@@ -29,7 +29,7 @@
         <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnCloseReport" android:src="@drawable/ic_close_24dp"
+                android:id="@+id/btnCloseReport" android:src="@drawable/ic_close_black_24dp"
                 android:background="@color/applight" android:padding="4dp" android:layout_marginTop="4dp"
                 android:onClick="closeFragmentButtonClicked"/>
     </LinearLayout>

@@ -26,7 +26,7 @@
         <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnCloseSaves" android:src="@drawable/ic_close_24dp" android:layout_marginTop="4dp"
+                android:id="@+id/btnCloseSaves" android:src="@drawable/ic_close_black_24dp" android:layout_marginTop="4dp"
                 android:onClick="closeFragmentButtonClicked"/>
     </LinearLayout>
     <FrameLayout
