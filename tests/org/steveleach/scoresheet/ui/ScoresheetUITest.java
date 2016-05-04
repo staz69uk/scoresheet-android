@@ -527,6 +527,8 @@ public class ScoresheetUITest extends AbstractUITest {
         String json = fm.readTextFileContent(new File("testdata/team-v1_0_0.json"));
         Team team = new JsonCodec().teamFromJson(json);
 
+        assertEquals("J Jenkins",team.playerName(11));
+
         FakeFileManager ffm = new FakeFileManager();
         activity.getStore().setFileManager(ffm);
 
@@ -538,5 +540,50 @@ public class ScoresheetUITest extends AbstractUITest {
 
         click(btnHomePlayers);
         assertEquals(PlayersFragment.class, visibleFragmentClass());
+
+        TableLayout table = (TableLayout) activity.findViewById(playersTable);
+        assertEquals(6, table.getChildCount()); // 5 players plus a header
+        PlayerTableRow firstRow = (PlayerTableRow)table.getChildAt(1);  // Skip header row
+        assertEquals("11",firstRow.numberField.getText().toString());
+        assertEquals("J Jenkins",firstRow.nameField.getText().toString());
+        firstRow.numberField.setText("12");
+        firstRow.onFocusChange(firstRow.numberField,false);
+        firstRow.onCheckedChanged(firstRow.activeSwitch,false);
+
+        assertNull(model.getHomeTeam().playerName(11));
+        assertEquals("J Jenkins",model.getHomeTeam().playerName(12));
+
+        click(btnAddPlayer);
+        assertEquals(7, table.getChildCount());
+
+        click(btnClosePlayers);
+        assertEquals(GameFragment.class, visibleFragmentClass());
+    }
+
+    @Test
+    public void testPlayerListSave() {
+        FakeFileManager ffm = new FakeFileManager();
+        activity.getStore().setFileManager(ffm);
+
+        model.getHomeTeam().addPlayer(21,"A Player");
+
+        clickMenuItem(menuGameDetails);
+        assertEquals(GameFragment.class, visibleFragmentClass());
+        setField(fldHomeTeamName,"Test");
+
+        click(btnHomePlayers);
+        assertEquals(PlayersFragment.class, visibleFragmentClass());
+
+        assertEquals("Test", model.homeTeamName());
+
+        click(btnSavePlayers);
+        verifyAlertDialogShowing("save this player list");
+
+        clickDialogButton(DialogInterface.BUTTON_POSITIVE);
+
+        assertEquals(1, ffm.fileCount());
+
+        String firstFileName = ffm.files.keySet().iterator().next();
+        assertTrue(firstFileName.endsWith("test.json"));
     }
 }

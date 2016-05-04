@@ -36,9 +36,9 @@ public class PlayerTableRow
                 implements View.OnFocusChangeListener, CompoundButton.OnCheckedChangeListener {
     private final Team team;
     private Player player = null;
-    private EditText numberField;
-    private EditText nameField;
-    private Switch activeSwitch;
+    public EditText numberField;
+    public EditText nameField;
+    public Switch activeSwitch;
 
     public PlayerTableRow(Context context, Team team, Player player, int[] widths) {
         super(context);
