@@ -24,10 +24,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import org.steveleach.ihscoresheet.R;
-import org.steveleach.scoresheet.model.ModelAware;
-import org.steveleach.scoresheet.model.ModelUpdate;
-import org.steveleach.scoresheet.model.PenaltyEvent;
-import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.model.*;
 
 /**
  * Implementation code for the new Penalty UI fragment.
@@ -74,11 +71,13 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         plusMinsField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(2) });
         playerField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
 
-        clockField.setOnFocusChangeListener(new ClockFieldFocusListener(periodField,model));
-        playerField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
-        periodField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
-        minutesField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
-        penaltyField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
+        Team teamData = model.getTeam(team);
+
+        ScoresheetFocusChangeListener.setClockField(clockField,periodField,model);
+        ScoresheetFocusChangeListener.setPlayerNumField(playerField,view.findViewById(R.id.txtPenaltyPlayer),teamData);
+        periodField.setOnFocusChangeListener(new ScoresheetFocusChangeListener());
+        minutesField.setOnFocusChangeListener(new ScoresheetFocusChangeListener());
+        penaltyField.setOnFocusChangeListener(new ScoresheetFocusChangeListener());
 
         String[] penaltyCodes = getActivity().getResources().getStringArray(R.array.penaltyCodes);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line,penaltyCodes);

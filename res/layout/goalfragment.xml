@@ -118,6 +118,11 @@
                         android:inputType="number"
                         android:ems="10"
                         android:id="@+id/fldScoredBy"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/txtGoalScorerName" android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -129,6 +134,9 @@
                           android:id="@+id/textView6" android:textColor="#a7a7a7"/>
                 <EditText android:layout_width="120dp" android:layout_height="wrap_content" android:inputType="number"
                           android:ems="10" android:id="@+id/fldAssist1"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/txtAssist1Name"
+                          android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -140,6 +148,9 @@
                           android:id="@+id/textView13" android:textColor="#a7a7a7"/>
                 <EditText android:layout_width="120dp" android:layout_height="wrap_content" android:inputType="number"
                           android:ems="10" android:id="@+id/fldAssist2"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/txtAssist2Name"
+                          android:layout_weight="1"/>
             </LinearLayout>
 
         </LinearLayout>

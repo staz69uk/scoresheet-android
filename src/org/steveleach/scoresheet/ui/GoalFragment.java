@@ -24,10 +24,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import org.steveleach.ihscoresheet.*;
-import org.steveleach.scoresheet.model.GoalEvent;
-import org.steveleach.scoresheet.model.ModelAware;
-import org.steveleach.scoresheet.model.ModelUpdate;
-import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.model.*;
 
 /**
  * Implementation code for the new Goal UI fragment.
@@ -72,10 +69,14 @@ public class GoalFragment extends Fragment implements ModelAware {
         assist2Field.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
         goalTypeField.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(3) });
 
-        clockField.setOnFocusChangeListener(new ClockFieldFocusListener(periodField,model));
-        scorerField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
-        periodField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
-        goalTypeField.setOnFocusChangeListener(new MinLengthFocusChangeListener(1));
+        Team teamData = model.getTeam(team);
+
+        ScoresheetFocusChangeListener.setClockField(clockField,periodField,model);
+        ScoresheetFocusChangeListener.setPlayerNumField(scorerField,view.findViewById(R.id.txtGoalScorerName),teamData);
+        ScoresheetFocusChangeListener.setPlayerNumField(assist1Field,view.findViewById(R.id.txtAssist1Name),teamData);
+        ScoresheetFocusChangeListener.setPlayerNumField(assist2Field,view.findViewById(R.id.txtAssist2Name),teamData);
+        periodField.setOnFocusChangeListener(new ScoresheetFocusChangeListener());
+        goalTypeField.setOnFocusChangeListener(new ScoresheetFocusChangeListener());
 
         String[] goalCodes = getActivity().getResources().getStringArray(R.array.goalCodes);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line,goalCodes);

@@ -427,4 +427,12 @@ public class ScoresheetModelTest {
         assertEquals("", team.activePlayerName(24));
         assertEquals("", team.activePlayerName(25));
     }
+
+    @Test
+    public void testTeamFromName() {
+        ScoresheetModel model = new ScoresheetModel();
+        assertNotNull(model.getTeam("Home"));
+        assertNotNull(model.getTeam("Away"));
+        assertNull(model.getTeam("Nothing"));
+    }
 }

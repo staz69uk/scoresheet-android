@@ -445,7 +445,7 @@ public class ScoresheetUITest extends AbstractUITest {
     public void testMinLengthFocusChangeListener() {
         EditText field = new EditText(activity);
 
-        MinLengthFocusChangeListener listener = new MinLengthFocusChangeListener(3);
+        ScoresheetFocusChangeListener listener = new ScoresheetFocusChangeListener(3);
 
         assertNull(field.getError());
 

@@ -366,6 +366,19 @@ public class ScoresheetModel {
         }
     }
 
+    /**
+     * Returns the team with the specified name.
+     */
+    public Team getTeam(String teamName) {
+        if (homeTeamName().equals(teamName)) {
+            return homeTeam;
+        }
+        if (awayTeamName().equals(teamName)) {
+            return awayTeam;
+        }
+        return null;
+    }
+
     public class PlayerStats {
         public int playerNum = 0;
         public int goals = 0;
