@@ -16,6 +16,7 @@ package org.steveleach.scoresheet.support;
 
 import org.junit.Test;
 import org.steveleach.scoresheet.model.ScoresheetModel;
+import org.steveleach.scoresheet.model.Team;
 import org.steveleach.scoresheet.support.FileManager;
 import org.steveleach.scoresheet.support.JsonCodec;
 
@@ -23,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -67,7 +69,7 @@ public class LoadOldGameFileTest {
     }
 
     @Test
-    public void testLoadAll() throws IOException {
+    public void testLoadAllGames() throws IOException {
         for (String fileName : testDataDir.list()) {
             if (fileName.contains("gamedata")) {
                 ScoresheetModel model = loadModel(fileName);
@@ -80,5 +82,23 @@ public class LoadOldGameFileTest {
         ScoresheetModel model = new ScoresheetModel();
         new JsonCodec().fromJson(model, fm.readTextFileContent(new File(testDataDir,fileName)));
         return model;
+    }
+
+    @Test
+    public void testLoadAllTeams() throws IOException {
+        File teamsDir = new File(testDataDir,"Teams");
+        for (String fileName : teamsDir.list()) {
+            Team team = new JsonCodec().teamFromJson(fm.readTextFileContent(new File(teamsDir, fileName)));
+            assertNotNull(team);
+            assertTrue(team.getPlayers().size() > 0);
+            //dumpTeam(team);
+        }
+    }
+
+    private void dumpTeam(Team team) {
+        System.out.println(team.getName());
+        for (int num : team.getPlayers().keySet()) {
+            System.out.println(String.format("  %2d : %s", num, team.playerName(num)));
+        }
     }
 }

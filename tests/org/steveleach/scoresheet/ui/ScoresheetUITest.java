@@ -524,7 +524,7 @@ public class ScoresheetUITest extends AbstractUITest {
     public void testPlayerList() throws IOException {
         // Read the sample file
         FileManager fm = new FileManager();
-        String json = fm.readTextFileContent(new File("testdata/team-v1_0_0.json"));
+        String json = fm.readTextFileContent(new File("testdata/Teams/team-v1_0_0.json"));
         Team team = new JsonCodec().teamFromJson(json);
 
         assertEquals("J Jenkins",team.playerName(11));
