@@ -668,7 +668,11 @@ public class ScoresheetUITest extends AbstractUITest {
         ScoresheetFragment fragment = new ScoresheetFragment() {};
 
         assertTrue( fragment.onContextItemSelected(item) );
-
     }
 
+    @Test
+    public void testSetViewImage() {
+        ImageView view = new ImageView(activity);
+        ScoresheetFragment.setViewImage(view,-123);
+    }
 }

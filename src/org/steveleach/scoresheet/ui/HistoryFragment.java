@@ -217,11 +217,7 @@ public class HistoryFragment extends ScoresheetFragment {
             }
 
             ImageView image = (ImageView) rowView.findViewById(R.id.idImage);
-            try {
-                image.setImageResource(imageId);
-            } catch (Resources.NotFoundException e) {
-                Log.e(ScoresheetActivity.LOG_TAG,"Error loading drawable" + imageId, e);
-            }
+            setViewImage(image,imageId);
             image.setColorFilter(color);
 
             return rowView;

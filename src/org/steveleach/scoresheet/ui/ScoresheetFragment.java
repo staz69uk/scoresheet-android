@@ -15,10 +15,12 @@
 package org.steveleach.scoresheet.ui;
 
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import org.steveleach.scoresheet.model.ModelAware;
 import org.steveleach.scoresheet.model.ModelUpdate;
 import org.steveleach.scoresheet.model.ScoresheetModel;
@@ -60,5 +62,13 @@ public abstract class ScoresheetFragment extends Fragment implements ModelAware 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         return handleContextMenu(item.getItemId(), ScoresheetActivity.listContextMenuPosition(item));
+    }
+
+    public static void setViewImage(ImageView view, int imageId) {
+        try {
+            view.setImageResource(imageId);
+        } catch (Resources.NotFoundException e) {
+            Log.e(ScoresheetActivity.LOG_TAG, "Error loading drawable" + imageId, e);
+        }
     }
 }
