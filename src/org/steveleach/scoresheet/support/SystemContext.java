@@ -28,4 +28,6 @@ public interface SystemContext {
     File getScoresheetFolder();
 
     String applicationVersion();
+
+    String defaultLanguage();
 }

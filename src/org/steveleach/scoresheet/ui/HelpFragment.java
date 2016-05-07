@@ -24,6 +24,7 @@ import android.webkit.WebView;
 import java.util.Locale;
 
 import org.steveleach.ihscoresheet.*;
+import org.steveleach.scoresheet.support.SystemContext;
 
 /**
  * Implementation code for the new Help UI fragment.
@@ -34,10 +35,15 @@ public class HelpFragment extends Fragment {
     private View view;
     public static final String DEFAULT_LANGUAGE = "en";
     private String[] supportedLanguages = {DEFAULT_LANGUAGE};
+    SystemContext context = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.helpfragment, container, false);
+
+        if (context == null) {
+            context = new AndroidSystemContext(getActivity());
+        }
 
         WebView webView = (WebView) view.findViewById(R.id.helpWebView);
         webView.loadUrl("file:///android_asset/html/help-"+getSupportedLanguage()+".html");
@@ -49,8 +55,8 @@ public class HelpFragment extends Fragment {
      * Returns the current device default language, if it is supported.
      * Returns "en" otherwise.
      */
-    private String getSupportedLanguage() {
-        String language = Locale.getDefault().getLanguage();
+    public String getSupportedLanguage() {
+        String language = context.defaultLanguage();
 
         boolean isSupported = false;
         for (String lang : supportedLanguages) {

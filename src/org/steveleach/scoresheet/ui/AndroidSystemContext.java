@@ -22,6 +22,7 @@ import org.steveleach.scoresheet.support.SystemContext;
 import org.steveleach.ihscoresheet.R;
 
 import java.io.File;
+import java.util.Locale;
 
 /**
  * Abstraction for system context, Android implementation.
@@ -61,4 +62,11 @@ public class AndroidSystemContext implements SystemContext {
             return "Unknown!";
         }
     }
+
+    @Override
+    public String defaultLanguage() {
+        return Locale.getDefault().getLanguage();
+    }
+
+
 }

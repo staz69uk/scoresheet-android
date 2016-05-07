@@ -163,7 +163,7 @@ public class PlayersFragment extends Fragment implements ModelAware {
         headers.addView(view);
     }
 
-    private void loadTeamFile() {
+    public void loadTeamFile() {
         ScoresheetStore store = activity.scoresheetStore;
 
         if ((team.getPlayers().size() == 0) && store.teamFileExists(team.getName())) {

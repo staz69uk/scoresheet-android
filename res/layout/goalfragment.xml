@@ -93,7 +93,8 @@
                                       android:selectAllOnFocus="true" android:focusable="true"
                                       android:imeOptions="actionNext"
                                       android:singleLine="true"
-                                      android:text="E" android:autoText="false"/>
+                                      android:text="E" android:autoText="false"
+                                      android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"

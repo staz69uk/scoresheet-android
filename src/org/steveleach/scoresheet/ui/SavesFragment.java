@@ -37,9 +37,8 @@ import java.util.List;
  *
  * @author Steve Leach
  */
-public class SavesFragment extends Fragment {
+public class SavesFragment extends ScoresheetFragment {
 
-    private ScoresheetModel model = null;
     private ArrayAdapter<String> adapter = null;
     private ScoresheetStore store = null;
     private ListView savesList = null;
@@ -76,16 +75,11 @@ public class SavesFragment extends Fragment {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getActivity().getMenuInflater().inflate(R.menu.filescontextmenu, menu);
+    protected int contextMenuId() {
+        return R.menu.filescontextmenu;
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        return handleContextMenu(item.getItemId(), ScoresheetActivity.listContextMenuPosition(item));
-    }
-
     public boolean handleContextMenu(int selection, int position) {
         boolean handled = false;
         String selectedItem = (String) savesList.getItemAtPosition(position);

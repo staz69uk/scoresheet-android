@@ -30,17 +30,23 @@ import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.internal.Shadow;
 import org.robolectric.shadows.ShadowAlertDialog;
+import org.steveleach.ihscoresheet.R;
 import org.steveleach.scoresheet.AbstractUITest;
 import org.steveleach.scoresheet.FakeFileManager;
 import org.steveleach.scoresheet.model.*;
 import org.steveleach.scoresheet.support.FileManager;
 import org.steveleach.scoresheet.support.JsonCodec;
+import org.steveleach.scoresheet.support.ScoresheetStore;
+import org.steveleach.scoresheet.support.SystemContext;
 import org.steveleach.scoresheet.ui.*;
 
 import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.steveleach.ihscoresheet.R.id.*;
 
 /**
@@ -170,6 +176,8 @@ public class ScoresheetUITest extends AbstractUITest {
         setField(fldPenaltyPlayer,player);
         setField(fldPenaltyMins,minutes);
         setField(fldPenaltyCode,subtype);
+
+        ((ModelAware)activity.getVisibleFragment()).onModelUpdated(ModelUpdate.GAME_CHANGED);
 
         click(btnPenaltyDone);
     }
@@ -429,7 +437,7 @@ public class ScoresheetUITest extends AbstractUITest {
 
         assertEquals(2, list.getAdapter().getCount());
 
-        fragment.askToDelete(model.getEvents().get(0));
+        fragment.handleContextMenu(historyMenuDelete,1);
 
         verifyAlertDialogShowing("delete this game event");
         clickDialogButton(DialogInterface.BUTTON_POSITIVE);
@@ -474,6 +482,14 @@ public class ScoresheetUITest extends AbstractUITest {
     public void miscTests() {
         // Basically a bunch of silly stuff to get coverage up to help avoid "broken window syndrome"
         new GoalFragment().onModelUpdated(ModelUpdate.ALL_CHANGED);
+
+        ScoresheetFragment fragment = new ScoresheetFragment() {};
+        assertEquals(0, fragment.contextMenuId());
+        assertEquals(R.menu.historycontextenu, new HistoryFragment().contextMenuId());
+        assertEquals(R.menu.filescontextmenu, new SavesFragment().contextMenuId());
+
+        fragment.onCreateContextMenu(null,null,null);
+
     }
 
     @Test
@@ -541,6 +557,8 @@ public class ScoresheetUITest extends AbstractUITest {
         click(btnHomePlayers);
         assertEquals(PlayersFragment.class, visibleFragmentClass());
 
+        ((ModelAware)activity.getVisibleFragment()).onModelUpdated(ModelUpdate.GAME_CHANGED);
+
         TableLayout table = (TableLayout) activity.findViewById(playersTable);
         assertEquals(6, table.getChildCount()); // 5 players plus a header
         PlayerTableRow firstRow = (PlayerTableRow)table.getChildAt(1);  // Skip header row
@@ -586,4 +604,71 @@ public class ScoresheetUITest extends AbstractUITest {
         String firstFileName = ffm.files.keySet().iterator().next();
         assertTrue(firstFileName.endsWith("test.json"));
     }
+
+    @Test
+    public void testChangeListener() {
+        EditText field = new EditText(activity);
+        TextView nameView = new TextView(activity);
+        Team team = new Team();
+        team.addPlayer(41,"Fred");
+
+        ScoresheetFocusChangeListener.setPlayerNumField(field,nameView,team);
+
+        field.setText("41");
+        field.getOnFocusChangeListener().onFocusChange(field, false);
+
+        assertEquals("Fred", nameView.getText().toString());
+    }
+
+    @Test
+    public void testPlayersFragmentStoreLoadFailure() throws IOException {
+        FileManager fm = mock(FileManager.class);
+        activity.getStore().setFileManager(fm);
+
+        when(fm.readTextFileContent(any())).thenThrow(IOException.class);
+
+        clickMenuItem(menuGameDetails);
+        assertEquals(GameFragment.class, visibleFragmentClass());
+        setField(fldHomeTeamName,"Test");
+
+        click(btnHomePlayers);
+        assertEquals(PlayersFragment.class, visibleFragmentClass());
+    }
+
+    @Test
+    public void testSupportedLanguages() {
+        HelpFragment fragment = new HelpFragment();
+        fragment.context = mock(SystemContext.class);
+
+        when(fragment.context.defaultLanguage()).thenReturn("xx");
+
+        assertEquals("en",fragment.getSupportedLanguage());
+    }
+
+    @Test
+    public void testBackPress() {
+        clickMenuItem(menuGameDetails);
+        assertEquals(GameFragment.class, visibleFragmentClass());
+
+        activity.onBackPressed();
+        assertEquals(HistoryFragment.class, visibleFragmentClass());
+
+        activity.onBackPressed();
+        assertEquals(HistoryFragment.class, visibleFragmentClass());
+    }
+
+    @Test
+    public void testListContextMenu() {
+        AdapterView view = mock(AdapterView.class);
+        AdapterView.AdapterContextMenuInfo info = new AdapterView.AdapterContextMenuInfo(view,21,32);
+        MenuItem item = mock(MenuItem.class);
+        when(item.getMenuInfo()).thenReturn(info);
+        assertEquals(21, ScoresheetActivity.listContextMenuPosition(item));
+
+        ScoresheetFragment fragment = new ScoresheetFragment() {};
+
+        assertTrue( fragment.onContextItemSelected(item) );
+
+    }
+
 }

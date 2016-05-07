@@ -35,10 +35,9 @@ import java.util.List;
  *
  * @author Steve Leach
  */
-public class HistoryFragment extends Fragment implements ModelAware {
+public class HistoryFragment extends ScoresheetFragment {
     private ScoresheetActivity activity = null;
     private HistoryAdapter adapter = null;
-    private ScoresheetModel model = new ScoresheetModel();
     private Button nextPeriodButton;
     private View view;
     private TextView title = null;
@@ -61,17 +60,19 @@ public class HistoryFragment extends Fragment implements ModelAware {
         return view;
     }
 
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//        getActivity().getMenuInflater().inflate(R.menu.historycontextenu, menu);
+//    }
+
+
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getActivity().getMenuInflater().inflate(R.menu.historycontextenu, menu);
+    protected int contextMenuId() {
+        return R.menu.historycontextenu;
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        return handleContextMenu(item.getItemId(), ScoresheetActivity.listContextMenuPosition(item));
-    }
-
     public boolean handleContextMenu(int selection, int position) {
         boolean handled = false;
         GameEvent selectedItem = (GameEvent) eventList.getItemAtPosition(position);
@@ -151,8 +152,7 @@ public class HistoryFragment extends Fragment implements ModelAware {
 
     @Override
     public void setModel(ScoresheetModel model) {
-        this.model = model;
-        model.addListener(this);
+        super.setModel(model);
         refreshList();
     }
 

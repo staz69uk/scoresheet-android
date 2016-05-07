@@ -244,9 +244,9 @@ public class ScoresheetActivity extends Activity implements ModelAware, DefaultF
                 showHelp();
                 consumed = true;
                 break;
-            case R.id.menuTest:
-                consumed = true;
-                break;
+            //case R.id.menuTest:
+            //   consumed = true;
+            //    break;
         }
         return consumed;
     }

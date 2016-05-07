@@ -31,9 +31,8 @@ import org.steveleach.scoresheet.model.*;
  *
  * @author Steve Leach
  */
-public class PenaltyFragment extends Fragment implements ModelAware {
+public class PenaltyFragment extends ScoresheetFragment {
 
-    private ScoresheetModel model = null;
     private View view;
     private EditText periodField;
     private EditText clockField;
@@ -139,16 +138,6 @@ public class PenaltyFragment extends Fragment implements ModelAware {
         imgr.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         ((DefaultFragmentActivity)getActivity()).showDefaultFragment();
-    }
-
-    @Override
-    public void setModel(ScoresheetModel model) {
-        this.model = model;
-    }
-
-    @Override
-    public void onModelUpdated(ModelUpdate update) {
-
     }
 
     public void setEventToEdit(PenaltyEvent event) {
