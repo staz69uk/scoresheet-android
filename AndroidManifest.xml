@@ -14,4 +14,5 @@
             </intent-filter>
         </activity>
     </application>
+    <instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="org.steveleach.ihscoresheet.test" />
 </manifest>

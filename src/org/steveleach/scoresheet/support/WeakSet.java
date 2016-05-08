@@ -87,7 +87,7 @@ public class WeakSet<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         removeDeadItems();
 
-        Iterator<WeakReference<T>> iterator = references.iterator();
+        final Iterator<WeakReference<T>> iterator = references.iterator();
         return new Iterator<T>() {
             @Override
             public boolean hasNext() {

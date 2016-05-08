@@ -105,7 +105,7 @@ public class HistoryFragment extends ScoresheetFragment {
         }
     }
 
-    public void askToDelete(GameEvent event) {
+    public void askToDelete(final GameEvent event) {
         String text = getString(R.string.deleteEventPrompt, event.toString());
         ((ScoresheetActivity)getActivity()).yesNoDialog(text, new Runnable() {
             @Override
