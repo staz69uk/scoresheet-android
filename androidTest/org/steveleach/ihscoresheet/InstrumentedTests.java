@@ -1,4 +1,4 @@
-package org.steveleach.ihscoresheet.test;
+package org.steveleach.ihscoresheet;
 
 import android.test.ActivityInstrumentationTestCase2;
 import org.steveleach.scoresheet.ui.HistoryFragment;
@@ -16,7 +16,7 @@ public class InstrumentedTests  extends ActivityInstrumentationTestCase2<Scoresh
     protected void setUp() throws Exception {
         super.setUp();
         setActivityInitialTouchMode(true);
-        //activity = (ScoresheetActivity)getActivity();
+        activity = (ScoresheetActivity)getActivity();
     }
 
     //@Test
