@@ -60,13 +60,6 @@ public class HistoryFragment extends ScoresheetFragment {
         return view;
     }
 
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        getActivity().getMenuInflater().inflate(R.menu.historycontextenu, menu);
-//    }
-
-
     @Override
     protected int contextMenuId() {
         return R.menu.historycontextenu;
@@ -161,7 +154,11 @@ public class HistoryFragment extends ScoresheetFragment {
         refreshList();
     }
 
-    class HistoryAdapter extends BaseAdapter {
+    public HistoryAdapter adapter() {
+        return adapter;
+    }
+
+    public class HistoryAdapter extends BaseAdapter {
         private final ScoresheetActivity activity;
         private final LayoutInflater inflater;
         private List<GameEvent> events = new LinkedList<>();
